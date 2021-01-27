@@ -1,23 +1,4 @@
-<a href="https://www.creative-tim.com/campaign?utm_medium=social&utm_source=github&utm_campaign=bf-readme-2020">
-<img border="0" alt="Creative Tim Black Friday Offer" src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/bf-github-banner.png" >
-</a>
 
-
-
-# [Vue Paper Dashboard](https://cristijora.github.io/vue-paper-dashboard/)
-
-> Admin dashboard based on paper dashboard UI template + vue-router
-
-This project is a vue version of [Paper-dashboard](https://www.creative-tim.com/product/paper-dashboard)
-designed for vue js.The dashboard includes vue-router
-
-Check the [Live Demo here](https://cristijora.github.io/vue-paper-dashboard).
-
-[Nuxt Version (outdated Bootstrap 3)](https://github.com/cristijora/vue-paper-dashboard-nuxt)
-![](http://i.imgur.com/3iC1hOs.gif)
-
-## Documentation
-Link to [Documentation](http://vuejs.creative-tim.com/vue-paper-dashboard/documentation/)
 
 ## Build Setup
 

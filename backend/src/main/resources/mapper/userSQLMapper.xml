@@ -18,8 +18,21 @@
    </update>
    
    <insert id="insert" parameterType="UserDTO">
-   		insert into user(email, name, password, phone)
-        values(#{email}, #{name}, #{password}, #{phone})
+         insert into user(userid, email, name, password, phone)
+        values(#{userid}, #{email}, #{name}, #{password}, #{phone})
+   </insert>
+   
+   <select id="checkout" parameterType="String" resultType="UserDTO">
+        select email
+        from getout
+        where email=#{passemail}
+   </select>
+   
+   <insert id="withdraw" parameterType="UserDTO">
+        insert into getout(userid,email,name,password,phone)
+        select userid, email, name, password, phone 
+        from user
+        where email=#{email}
    </insert>
    
 </mapper>

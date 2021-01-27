@@ -28,4 +28,17 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return urepo.update(user);
 	}
+	
+	@Override
+	   public int checkOut(String passemail) throws Exception {
+	      // TODO Auto-generated method stub
+	      return urepo.checkOut(passemail);
+	}
+	
+	@Override
+	public int withdraw(UserDto user) {
+		// TODO Auto-generated method stub
+		return urepo.withdraw(user);
+	}
+
 }

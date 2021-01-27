@@ -45,4 +45,20 @@ public class UserRepository {
 
 		return res;
 	}
+	
+	public int checkOut(String passemail) {
+	      String result = "default";
+	      if(session.selectOne("ssafy.user.checkout", passemail) != null) return 0;  // 탈퇴한 회원인 경우
+	      else return 1; // 탈퇴 회원이 아닌 경우
+	}
+	
+	
+	public int withdraw(UserDto user) {
+		int result = session.insert("ssafy.user.withdraw", user);
+		if(result>0) {
+			return result;
+		}else {
+			return 0;
+		}
+	}
 }

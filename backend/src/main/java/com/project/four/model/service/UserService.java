@@ -13,4 +13,8 @@ public interface UserService {
 	public int checkOut(String passemail) throws Exception;
 	
 	public int withdraw(UserDto user);
+	
+	UserDto overid(String line) throws Exception; //KY userid 중복확인할꺼에요~
+	UserDto overemail(String email) throws Exception; //KY useremail 중복확인
+
 }

@@ -63,6 +63,19 @@ public class UserController {
       made.append(b);
       System.out.println(made);
       String line = made.toString();
+
+      
+		// 중복확인을 해줄꺼야
+		UserDto overlap_id = userservice.overid(line);
+		String find_email = util.encrypt(user.getEmail());
+		UserDto overlap_eamil = userservice.overemail(find_email);
+
+		if (overlap_id != null || overlap_eamil != null) {
+			resultMap.put("message", "회원가입 실패");
+			return false;
+		}
+
+		// 중복이 없다면 userid 셋팅끝!
       user.setUserid(line); // userid 셋팅끝!
       
       String email = user.getEmail();

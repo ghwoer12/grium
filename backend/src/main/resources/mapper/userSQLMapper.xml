@@ -35,4 +35,12 @@
         where email=#{email}
    </insert>
    
+   <select id="overid" parameterType="String" resultType="UserDTO">
+     select * from user where userid=#{userid}
+</select>
+
+<select id="overemail" parameterType="String" resultType="UserDTO">
+     select * from user where email=#{email}
+</select>
+
 </mapper>

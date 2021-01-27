@@ -41,4 +41,18 @@ public class UserServiceImpl implements UserService{
 		return urepo.withdraw(user);
 	}
 
+		
+	@Override
+	public UserDto overid(String line) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.overid(line);
+	}
+	   
+	   @Override
+	public UserDto overemail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.overemail(email);
+	}
+
+
 }

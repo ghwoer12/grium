@@ -61,4 +61,16 @@ public class UserRepository {
 			return 0;
 		}
 	}
+	
+	public UserDto overid(String id) throws Exception{
+		UserDto dto;
+		dto = session.selectOne("ssafy.user.overid", id);
+		return dto;
+	}
+	
+	public UserDto overemail(String email) throws Exception{
+		UserDto dto;
+		dto = session.selectOne("ssafy.user.overeamil", email);
+		return dto;
+	}
 }

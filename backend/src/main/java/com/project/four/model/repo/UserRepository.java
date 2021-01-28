@@ -73,4 +73,15 @@ public class UserRepository {
 		dto = session.selectOne("ssafy.user.overemail", email);
 		return dto;
 	}
+	
+	public UserDto findPassword(String email, String name) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("email", email);
+        map.put("name", name);
+
+        UserDto dto;
+        dto = session.selectOne("ssafy.user.findpw", map);
+
+        return dto;
+    }
 }

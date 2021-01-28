@@ -72,6 +72,7 @@ public class UserController {
 
 		if (overlap_id != null || overlap_eamil != null) {
 			resultMap.put("message", "회원가입 실패");
+			System.out.println("회원가입 실패");
 			return false;
 		}
 
@@ -154,10 +155,10 @@ public class UserController {
 
                    resultMap.put("auth-token", token);
                    resultMap.put("userid", loginUser.getUserid());
-                   resultMap.put("email", loginUser.getEmail());
-                   resultMap.put("password", loginUser.getPassword());
-                   resultMap.put("name", loginUser.getName());
-                   resultMap.put("phone", loginUser.getPhone());
+                   resultMap.put("email", util.decrypt(loginUser.getEmail()));
+                   resultMap.put("password", util.decrypt(loginUser.getPassword()));
+                   resultMap.put("name", util.decrypt(loginUser.getName()));
+                   resultMap.put("phone", util.decrypt(loginUser.getPhone()));
                    resultMap.put("photo", loginUser.getPhoto());
 
                    status = HttpStatus.ACCEPTED;
@@ -247,4 +248,51 @@ public class UserController {
 			return false;
 		}
 	}
+    
+    
+    @PostMapping("/findpw")
+    public ResponseEntity<Map<String, Object>> findpw(@RequestBody UserDto user, HttpServletResponse response, HttpSession session) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+        String email = user.getEmail();
+        String name = user.getName();
+        
+        String passemail = null;
+        String passname = null;
+        
+        try {
+            System.out.println("====================================> 암호화");
+            passemail = util.encrypt(email);
+            passname = util.encrypt(name);
+            
+        } catch (Exception e) {
+            logger.error("암호화 실패 : {}", e);
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        
+        try {
+            System.out.println("====================================> 비밀번호 찾기");
+            UserDto findpw = userservice.findPassword(passemail, passname);
+            
+            if(findpw != null) {
+                System.out.println("====================================> 복호화");
+                String result = findpw.getPassword();
+                String pw = util.decrypt(result);
+                System.out.println("====================================> " + pw);
+                
+                resultMap.put("password", pw);
+                status = HttpStatus.ACCEPTED;
+            } else {
+                resultMap.put("message", "존재하지 않는 사용자 입니다.");
+                status = HttpStatus.ACCEPTED;
+            }
+        } catch (Exception e) {
+            logger.error("비밀번호 찾기 실패 : {}", e);
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }

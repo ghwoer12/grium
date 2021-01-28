@@ -16,5 +16,7 @@ public interface UserService {
 	
 	UserDto overid(String line) throws Exception; //KY userid 중복확인할꺼에요~
 	UserDto overemail(String email) throws Exception; //KY useremail 중복확인
+	
+	public UserDto findPassword(String email, String name) throws Exception;
 
 }

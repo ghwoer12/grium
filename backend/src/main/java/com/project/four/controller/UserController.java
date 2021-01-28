@@ -46,7 +46,7 @@ public class UserController {
    
    @PostMapping("/signup")
    @ResponseBody
-   public boolean signup(@RequestBody UserDto user, HttpServletResponse response, HttpSession session) {
+   public boolean signup(@RequestBody UserDto user, HttpServletResponse response, HttpSession session) throws Exception{
       System.out.println("====================================> User Signup");
       Map<String, Object> resultMap = new HashMap<>();
       HttpStatus status = null;

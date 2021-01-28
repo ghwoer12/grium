@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-md-5">
           <fg-input
-            type="text"
+            type="password"
             id="password"
             v-model="user.password"
             required

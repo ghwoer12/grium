@@ -101,7 +101,6 @@ export default new Vuex.Store({
         .post(`${SERVER_URL}/user/findpw`, user)
         .then((response) => {
           context.commit("FINDPW", response.data);
-          if(`${response.data["auth-token"]}` == "undefined") reject();
           axios.defaults.headers.common["auth-token"] = `${response.data["auth-token"]}`;
           sessionStorage.setItem('auth-token', `${response.data["auth-token"]}`)
         })

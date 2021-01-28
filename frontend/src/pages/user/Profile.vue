@@ -55,14 +55,15 @@ export default {
       user: {
         email: "",
         name: "",
-        phone: ""
+        phone: "",
+        password: ""
       }
     };
   },
   methods: {
     withdraw: function() {
       axios
-        .delete(`${SERVER_URL}/user/withdraw`)
+        .post(`${SERVER_URL}/user/withdraw`, this.user).default
         .then(response => {
           console.log(response);
           this.$store.dispatch("LOGOUT").then(() => this.$router.replace("/"));
@@ -79,18 +80,10 @@ export default {
     }
   },
   created() {
-    axios
-      .get(`${SERVER_URL}/user/info`)
-      .then(response => {
-        this.user.email = response.data.user.email;
-        this.user.name = response.data.user.name;
-        this.user.phone = response.data.user.phone;
-      })
-      .catch(() => {
-        this.$store.dispatch("LOGOUT").then(() => {
-          this.$router.replace("/");
-        });
-      });
+    this.user.email = this.$store.getters["getEmail"];
+    this.user.name = this.$store.getters["getName"];
+    this.user.phone = this.$store.getters["getPhone"];
+    this.user.password = this.$store.getters["getPassword"];
   }
 };
 </script>

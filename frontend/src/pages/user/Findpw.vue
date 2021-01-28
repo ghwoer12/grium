@@ -25,7 +25,6 @@
           ></fg-input>
         </div>
       </div>
-
     </form>
     <b-button type="button" variant="dark" class="m-1" @click="findpw"
       >비밀번호 찾기</b-button
@@ -69,16 +68,13 @@ export default {
       // 서버와 통신(axios)을 해 토큰값을 얻어야 하므로 Actions를 호출.
       this.$store
         .dispatch("FINDPW", this.user)
-        // .then(() => this.$router.push(`/dashboard`))
-        .then(({ message }) => (this.message = "성공입니다 이메일 보십숑")
-        )
-        // .then(() => this.$router.replace(`/${this.nextRoute}`))
+        .then(() => this.$router.push('/user/findpwsuccess'))
+        //.then(({ message }) => (this.message = "성공입니다 이메일 보십숑"))
+        // .then(() => this.$router.replace(/${this.nextRoute}))
         .catch(
           ({ message }) => (this.message = "아이디와 이름을 확인해주세요.")
         );
     },
-  },
+  }
 };
 </script>
-
-

@@ -11,6 +11,7 @@
         </fg-input>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-6">
         <fg-input
@@ -59,16 +60,7 @@ export default {
     }
   },
   created() {
-    axios
-      .get(`${SERVER_URL}/user/info`)
-      .then(response => {
-        this.user.email = response.data.user.email;
-      })
-      .catch(() => {
-        this.$store.dispatch("LOGOUT").then(() => {
-          this.$router.replace("/");
-        });
-      });
+    this.user.email = this.$store.getters["getEmail"];
   }
 };
 </script>

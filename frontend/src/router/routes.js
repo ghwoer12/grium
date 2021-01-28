@@ -27,6 +27,7 @@ import Profile from "@/pages/user/Profile.vue";
 import Update from "@/pages/user/Update.vue";
 import PassCheck from "@/pages/user/PassCheck.vue";
 import Findpw from "@/pages/user/Findpw.vue";
+import FindpwSuccess from "@/pages/user/FindpwSuccess.vue";
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
@@ -139,6 +140,11 @@ const routes = [
         name: "PassCheck",
         component: PassCheck,
         beforeEnter: requireAuth()
+      },
+      {
+        path: "/user/findpwsuccess",
+        name: "FindpwSuccess",
+        component: FindpwSuccess
       }
     ]
   },

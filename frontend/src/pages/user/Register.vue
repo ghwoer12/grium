@@ -31,6 +31,7 @@
               name="password"
               placeholder="Enter your Password"
               v-model="user.password"
+
             />
             <div
               class="alert-danger"
@@ -86,6 +87,7 @@
 </template>
 
 <script>
+// import func from "../../../vue-temp/vue-editor-bridge";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
@@ -119,7 +121,30 @@ export default {
         .catch(({ message }) => {
           this.msg = message;
         });
-    }
+    },
+    // checkpass: function() {
+    //   var pw = $("#password").val();
+    //   var num = pw.search(/[0-9]/g);
+    //   var eng = pw.search(/[a-z]/gi);
+    //   var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+    //   if (pw.length < 10 || pw.length > 20) {
+    //     alert("10자리 ~ 20자리 이내로 입력해주세요.");
+    //     return false;
+    //   } else if (pw.search(/\s/) != -1) {
+    //     alert("비밀번호는 공백 없이 입력해주세요.");
+    //     return false;
+    //   } else if (
+    //     (num < 0 && eng < 0)
+    //     (eng < 0 && spe < 0)
+    //     (spe < 0 && num < 0)
+    //   ) {
+    //     alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+    //     return false;
+    //   } else {
+    //     console.log("통과");
+    //   }
+    // }
   }
 };
 </script>

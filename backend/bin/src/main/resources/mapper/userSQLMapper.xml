@@ -4,43 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ssafy.user">
-   
-   <select id="login" parameterType="map" resultType="UserDTO">
-        select email, name, password, photo, phone
-        from user
-        where email=#{email} and password=#{password}
-   </select>   
 
-   <update id="update" parameterType="map">
-        update user
-        set name=#{name}, password=#{password}, photo=#{photo}, phone=#{phone}
-        where email=#{email}
-   </update>
-   
-   <insert id="insert" parameterType="UserDTO">
-         insert into user(userid, email, name, password, phone)
-        values(#{userid}, #{email}, #{name}, #{password}, #{phone})
-   </insert>
-   
-   <select id="checkout" parameterType="String" resultType="UserDTO">
-        select email
-        from getout
-        where email=#{passemail}
-   </select>
-   
-   <insert id="withdraw" parameterType="UserDTO">
-        insert into getout(userid,email,name,password,phone)
-        select userid, email, name, password, phone 
-        from user
-        where email=#{email}
-   </insert>
-   
-   <select id="overid" parameterType="String" resultType="UserDTO">
-     select * from user where userid=#{userid}
-</select>
+	<select id="login" parameterType="map" resultType="UserDTO">
+		select email, name, password, photo, phone
+		from user
+		where email=#{email} and password=#{password}
+	</select>
 
-<select id="overemail" parameterType="String" resultType="UserDTO">
-     select * from user where email=#{email}
-</select>
+	<update id="update" parameterType="map">
+		update user
+		set name=#{name}, password=#{password}, photo=#{photo}, phone=#{phone}
+		where email=#{email}
+	</update>
+
+	<insert id="insert" parameterType="UserDTO">
+		insert into user(userid, email, name, password, phone)
+		values(#{userid}, #{email}, #{name}, #{password}, #{phone})
+	</insert>
+
+	<select id="checkout" parameterType="String"
+		resultType="UserDTO">
+		select email
+		from getout
+		where email=#{passemail}
+	</select>
+
+	<insert id="withdraw" parameterType="UserDTO">
+		insert into getout(userid,email,name,password,phone)
+		select userid, email, name, password, phone
+		from user
+		where email=#{email}
+	</insert>
+
+	<select id="overid" parameterType="String" resultType="UserDTO">
+		select * from user where userid=#{userid}
+	</select>
+
+	<select id="overemail" parameterType="String"
+		resultType="UserDTO">
+		select * from user where email=#{email}
+	</select>
+
+	<select id="findpw" parameterType="String" resultType="UserDTO">
+		select password
+		from user
+		where email=#{email} and name=#{name}
+	</select>
 
 </mapper>

@@ -1,5 +1,5 @@
 <template>
-  <card class="card" title="regist" sub-title="내 정보 수정페이지입니다.">
+  <card class="card" title="UPDATE" sub-title="내 정보 수정페이지입니다.">
     <div class="row">
       <div class="col-md-5">
         <fg-input
@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-md-5">
         <fg-input
-          type="password"
+          type="text"
           label="password"
           v-model="user.password"
         >
@@ -85,19 +85,10 @@ export default {
     }
   },
   created() {
-    axios
-      .get(`${SERVER_URL}/user/info`)
-      .then(response => {
-        this.user.email = response.data.user.email;
-        this.user.name = response.data.user.name;
-        this.user.password = response.data.user.password;
-        this.user.phone = response.data.user.phone;
-      })
-      .catch(() => {
-        this.$store.dispatch("LOGOUT").then(() => {
-          this.$router.replace("/");
-        });
-      });
+    this.user.email = this.$store.getters["getEmail"];
+    this.user.name = this.$store.getters["getName"];
+    this.user.password = this.$store.getters["getPassword"];
+    this.user.phone = this.$store.getters["getPhone"];
   }
 };
 </script>

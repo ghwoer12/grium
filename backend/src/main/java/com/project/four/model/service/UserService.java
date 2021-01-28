@@ -19,6 +19,8 @@ public interface UserService {
 	
 	public UserDto findPassword(String email, String name) throws Exception;
 
-	public UserDto newPassword(String email) throws Exception; //KY 임시비밀번호발급
+	public UserDto existGet(String email)throws Exception; //KY getout에 존재 확인
+
+	public int newPassword(String email, String newPassword) throws Exception; //KY 임시비밀번호발급
 
 }

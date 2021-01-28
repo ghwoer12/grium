@@ -61,9 +61,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto newPassword(String email) throws Exception {
+	public UserDto existGet(String email) throws Exception {
 		// TODO Auto-generated method stub
-		return urepo.newPassword(email);
+		return urepo.existGet(email);
 	}
 
+	@Override
+	public int newPassword(String email, String newPassword) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.newPassword(email, newPassword);
+	}
 }

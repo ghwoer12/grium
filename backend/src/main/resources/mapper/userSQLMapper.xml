@@ -51,10 +51,12 @@
 		where email=#{email} and name=#{name}
 	</select>
 
-	<select id="newPassword" parameterType="String" resultType="UserDTO">
-		select 
-
-
+	<select id="existGet" parameterType="String" resultType="UserDTO">
+		select * from getout where email=#{email}
 	</select>
+	
+	<update id="newPassword" parameterType="map">
+		update user set password=#{password} where email=#{email}	
+	</update>
  
 </mapper>

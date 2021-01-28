@@ -287,17 +287,42 @@ public class UserController {
 			UserDto findpw = userservice.findPassword(passemail, passname);
 			//KY  아이디랑 이메일을 통해서 비밀번호로 DTO 가져왔고
 			// 가져온애로 getout테이블에 있는지 확인해보고 난수생성한 애로 pw 해야지
-			UserDto newpw = userservice.newPassword(passemail);
+			if (findpw != null) { //user테이블에 있는지 확인한번하고
 
-			if (findpw != null) {
-				System.out.println("====================================> 복호화");
-				String result = findpw.getPassword();
-				String pw = util.decrypt(result);
-				System.out.println("====================================> " + pw);
+				// KY 아이디랑 이메일을 통해서 비밀번호로 DTO 가져왔고
+				// 가져온애로 getout테이블에 있는지 확인해보고 난수생성한 애로 pw 해야지
+				UserDto noGetout = userservice.existGet(passemail); // getout에 있는지 확인
+				if (noGetout != null) {
+					resultMap.put("message", "탈퇴한 사용자 입니다.");
+					status = HttpStatus.ACCEPTED;
+				}else {
+					// null값이라면 탈퇴한회원이아니란거니까 비밀번호 난수생성해드릴꼐영				
+					// set tempPassword
+					StringBuffer made = new StringBuffer();
+					
+					for (int i = 0; i < 5; i++) {
+						char a = (char) ((Math.random() * 26) + 97); // 소문자
+						int ann = (int) (Math.random() * 9) + 1; // 숫자
+						made.append(a);
+						made.append(ann);
+					}
+					
+					String line = made.toString();
+					System.out.println("안녕하세요 저는 생성된 임시 비밀번호에요 : " + line);
+					String newPw = util.encrypt(line); // 새로생성한 암호 암호화해서 세팅
+					System.out.println("안녕하세요 저는 암호화된 비밀번호예요 : "+ newPw);
+					int result = userservice.newPassword(passemail, newPw);
+					if (result > 0) {
+						System.out.println("성공 : " + result);
+					} else {
+						System.out.println("실패했어 으흐흐흐흑");
+					}
+					
+					resultMap.put("password", line);
+					status = HttpStatus.ACCEPTED;
 
-				resultMap.put("password", pw);
-				status = HttpStatus.ACCEPTED;
-			} else {
+				}
+			 } else {
 				resultMap.put("message", "존재하지 않는 사용자 입니다.");
 				status = HttpStatus.ACCEPTED;
 			}

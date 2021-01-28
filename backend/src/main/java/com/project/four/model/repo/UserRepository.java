@@ -85,9 +85,18 @@ public class UserRepository {
         return dto;
 	}
 	
-	public UserDto newPassword(String email){
+	public UserDto existGet(String email) {
 		UserDto dto;
-		dto = session.selectOne("ssafy.user.newPassword", email);
+		dto = session.selectOne("ssafy.user.existGet", email);
 		return dto;
+	}
+	
+	public int newPassword(String email, String password){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("password", password);
+		int result = session.update("ssafy.user.newPassword", map);
+		
+		return result;
 	}
 }

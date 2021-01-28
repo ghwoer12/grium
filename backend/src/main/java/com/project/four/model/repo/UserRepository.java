@@ -70,7 +70,7 @@ public class UserRepository {
 	
 	public UserDto overemail(String email) throws Exception{
 		UserDto dto;
-		dto = session.selectOne("ssafy.user.overeamil", email);
+		dto = session.selectOne("ssafy.user.overemail", email);
 		return dto;
 	}
 }

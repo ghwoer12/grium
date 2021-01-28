@@ -285,6 +285,9 @@ public class UserController {
 		try {
 			System.out.println("====================================> 비밀번호 찾기");
 			UserDto findpw = userservice.findPassword(passemail, passname);
+			//KY  아이디랑 이메일을 통해서 비밀번호로 DTO 가져왔고
+			// 가져온애로 getout테이블에 있는지 확인해보고 난수생성한 애로 pw 해야지
+			UserDto newpw = userservice.newPassword(passemail);
 
 			if (findpw != null) {
 				System.out.println("====================================> 복호화");

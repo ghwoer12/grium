@@ -51,4 +51,10 @@
 		where email=#{email} and name=#{name}
 	</select>
 
+	<select id="newPassword" parameterType="String" resultType="UserDTO">
+		select 
+
+
+	</select>
+ 
 </mapper>

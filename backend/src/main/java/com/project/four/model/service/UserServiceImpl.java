@@ -60,4 +60,10 @@ public class UserServiceImpl implements UserService {
 		return urepo.findPassword(email, name);
 	}
 
+	@Override
+	public UserDto newPassword(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.newPassword(email);
+	}
+
 }

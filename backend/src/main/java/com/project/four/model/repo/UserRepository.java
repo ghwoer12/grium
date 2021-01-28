@@ -83,5 +83,11 @@ public class UserRepository {
         dto = session.selectOne("ssafy.user.findpw", map);
 
         return dto;
-    }
+	}
+	
+	public UserDto newPassword(String email){
+		UserDto dto;
+		dto = session.selectOne("ssafy.user.newPassword", email);
+		return dto;
+	}
 }

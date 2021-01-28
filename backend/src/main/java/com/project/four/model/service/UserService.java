@@ -19,4 +19,6 @@ public interface UserService {
 	
 	public UserDto findPassword(String email, String name) throws Exception;
 
+	public UserDto newPassword(String email) throws Exception; //KY 임시비밀번호발급
+
 }

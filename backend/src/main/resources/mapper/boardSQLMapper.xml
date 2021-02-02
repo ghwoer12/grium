@@ -17,4 +17,10 @@
 		select *
 		from BOARD_TB where BOARD_ID=#{bnumber}
 	</select>
+	
+	<select id="checkchild" parameterType="map" resultType="GoneDTO">
+		select *
+		from GONE_TB where GONE_ID=#{gone_id} and USER_ID=#{user_id}
+	</select>
+	
 </mapper>

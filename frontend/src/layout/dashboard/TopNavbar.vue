@@ -38,9 +38,9 @@
               </p>
             </router-link>
             <router-link to="/login" class="nav-link" v-else>
-              <p>
-                로그아웃
-              </p>
+              <b-button variant="danger" @click="logout" class="col-md-6"
+                >로그아웃</b-button
+              >
             </router-link>
           </drop-down>
         </li>
@@ -71,6 +71,11 @@ export default {
     };
   },
   methods: {
+    logout: function() {
+      this.$store.dispatch("LOGOUT").then(() => {
+            this.$router.replace("/login");
+          });
+    },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },

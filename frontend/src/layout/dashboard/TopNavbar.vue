@@ -13,46 +13,38 @@
         <span class="navbar-toggler-bar"></span>
         <span class="navbar-toggler-bar"></span>
       </button>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="ti-panel"></i>
-              <p>Stats</p>
-            </a>
-          </li> -->
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <drop-down
+          class="nav-item"
+          title="5 Notifications"
+          title-classes="nav-link"
+          icon="ti-bell"
+        >
+          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
+          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
+        </drop-down>
+        <li class="nav-item">
           <drop-down
             class="nav-item"
-            title="5 Notifications"
+            title="회원관리"
             title-classes="nav-link"
-            icon="ti-bell"
+            icon="ti-user"
           >
-            <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-            <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-            <a class="dropdown-item" href="#">앨범에 대한 신고 2건입니다.</a>
-            <a class="dropdown-item" href="#">앨범에 대한 신고 2건입니다.</a>
+            <router-link to="/login" class="nav-link" v-if="getName === ''">
+              <p>
+                로그인
+              </p>
+            </router-link>
+            <router-link to="/login" class="nav-link" v-else>
+              <p>
+                로그아웃
+              </p>
+            </router-link>
           </drop-down>
-          <li class="nav-item">
-            <drop-down
-              class="nav-item"
-              title="회원관리"
-              title-classes="nav-link"
-              icon="ti-user"
-            >
-              <router-link to="/login" class="nav-link" v-if="getName === ''">
-                <p>
-                  로그인
-                </p>
-              </router-link>
-              <router-link to="/login" class="nav-link" v-else>
-                <p>
-                  로그아웃
-                </p>
-              </router-link>
-            </drop-down>
-          </li>
-        </ul>
-      </div>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>

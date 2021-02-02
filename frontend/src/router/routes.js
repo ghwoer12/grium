@@ -29,6 +29,10 @@ import PassCheck from "@/pages/user/PassCheck.vue";
 import Findpw from "@/pages/user/Findpw.vue";
 import FindpwSuccess from "@/pages/user/FindpwSuccess.vue";
 
+// Board
+import BoardList from "@/pages/board/BoardList.vue";
+import BoardInsert from "@/pages/board/BoardInsert.vue";
+
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
   const nextRoute = to.path;
@@ -51,22 +55,17 @@ const routes = [
         // beforeEnter: requireAuth()
       },
       {
-        path: "/login",
-        name: "Login",
-        component: Login
-        // beforeEnter: requireAuth()
-      },
-
-      {
         path: "/login/:nextRoute",
         name: "LoginNextRoute",
-        component: Login
+        component: Login,
+        beforeEnter: requireAuth()
       },
       {
         path: "dashboard",
         name: "dashboard",
         component: Dashboard
       },
+      // qna
       {
         path: "/qna",
         name: "QnaList",
@@ -113,6 +112,7 @@ const routes = [
         name: "SearchHouse",
         component: SearchHouse
       },
+      // user
       {
         path: "/user/register",
         name: "Register",
@@ -133,7 +133,7 @@ const routes = [
       {
         path: "/user/findpw",
         name: "Findpw",
-        component: Findpw,
+        component: Findpw
       },
       {
         path: "/user/passcheck",
@@ -145,6 +145,19 @@ const routes = [
         path: "/user/findpwsuccess",
         name: "FindpwSuccess",
         component: FindpwSuccess
+      },
+      // board
+      {
+        path: "/boardlist",
+        name: "BoardList",
+        component: BoardList,
+        beforeEnter: requireAuth()
+      },
+      {
+        path: "/boardinsert",
+        name: "BoardInsert",
+        component: BoardInsert,
+        // beforeEnter: requireAuth()
       }
     ]
   },

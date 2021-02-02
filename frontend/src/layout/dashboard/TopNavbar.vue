@@ -33,14 +33,10 @@
             icon="ti-user"
           >
             <router-link to="/login" class="nav-link" v-if="getName === ''">
-              <p>
                 로그인
-              </p>
             </router-link>
-            <router-link to="/login" class="nav-link" v-else>
-              <b-button variant="danger" @click="logout" class="col-md-6"
-                >로그아웃</b-button
-              >
+            <router-link @click.native="logout" to="/" class="nav-link" v-else>
+              로그아웃
             </router-link>
           </drop-down>
         </li>

@@ -78,7 +78,7 @@ public class UserController {
 		}
 
 		// 중복이 없다면 userid 셋팅끝!
-		user.setUserid(line); // userid 셋팅끝!
+		user.setUser_id(line); // userid 셋팅끝!
 
 		String email = user.getEmail();
 		String password = user.getPassword();
@@ -156,12 +156,11 @@ public class UserController {
 					logger.trace("로그인 토큰정보 : {}", token);
 
 					resultMap.put("auth-token", token);
-					resultMap.put("userid", loginUser.getUserid());
+					resultMap.put("userid", loginUser.getUser_id());
 					resultMap.put("email", util.decrypt(loginUser.getEmail()));
 					resultMap.put("password", util.decrypt(loginUser.getPassword()));
 					resultMap.put("name", util.decrypt(loginUser.getName()));
 					resultMap.put("phone", util.decrypt(loginUser.getPhone()));
-					resultMap.put("photo", loginUser.getPhoto());
 
 					status = HttpStatus.ACCEPTED;
 				} else {
@@ -247,6 +246,7 @@ public class UserController {
 			int result = userservice.withdraw(user);
 
 			if (result > 0) {
+				System.out.println("탈퇴 완료!!! 넘어가는 중");
 				return true;
 			} else {
 				resultMap.put("message", "회원탈퇴 실패");

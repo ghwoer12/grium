@@ -11,11 +11,10 @@ export default new Vuex.Store({
     accessToken: null,
     email: "",
     name: "",
-    password: '',
+    password: "",
     phone: "",
-    photo: "",
+    photo: ""
     // roll : "",
-
   },
   getters: {
     getAccessToken(state) {
@@ -35,7 +34,7 @@ export default new Vuex.Store({
     },
     getPhoto(state) {
       return state.photo;
-    },
+    }
     // getRoll(state) {
     //   return state.roll;
     // }
@@ -45,46 +44,50 @@ export default new Vuex.Store({
       state.accessToken = payload["auth-token"];
       state.email = payload["email"];
       state.name = payload["name"];
-      state.password = payload['password'];
+      state.password = payload["password"];
       state.phone = payload["phone"];
-      state.photo = payload["photo"];
+      // state.photo = payload["photo"];
       // state.roll = payload["roll"];
     },
     LOGOUT(state) {
       state.accessToken = null;
       state.email = "";
       state.name = "";
-      state.password = '';
+      state.password = "";
       state.phone = "";
-      state.photo = "";
+      // state.photo = "";
       // state.roll = "";
     },
     FINDPW(state, payload) {
       state.accessToken = payload["auth-token"];
       state.email = payload["email"];
       state.name = payload["name"];
-      state.password = payload['password'];
+      state.password = payload["password"];
       // state.roll = payload["roll"];
     },
     UPDATE(state, payload) {
       state.accessToken = payload["auth-token"];
       state.email = payload["email"];
       state.name = payload["name"];
-      state.phone = payload['phone'];
+      state.phone = payload["phone"];
       // state.roll = payload["roll"];
-    },
+    }
   },
   actions: {
     LOGIN(context, user) {
       return axios
         .post(`${SERVER_URL}/user/confirm/login`, user)
-        .then((response) => {
+        .then(response => {
           context.commit("LOGIN", response.data);
-          if(`${response.data["auth-token"]}` == "undefined") reject();
-          axios.defaults.headers.common["auth-token"] = `${response.data["auth-token"]}`;
-          sessionStorage.setItem('auth-token', `${response.data["auth-token"]}`)
-          sessionStorage.setItem("phone", `${response.data["phone"]}`
+          if (`${response.data["auth-token"]}` == "undefined") reject();
+          axios.defaults.headers.common[
+            "auth-token"
+          ] = `${response.data["auth-token"]}`;
+          sessionStorage.setItem(
+            "auth-token",
+            `${response.data["auth-token"]}`
           );
+          sessionStorage.setItem("phone", `${response.data["phone"]}`);
         })
         .catch(() => {
           reject();
@@ -93,16 +96,21 @@ export default new Vuex.Store({
     LOGOUT(context) {
       context.commit("LOGOUT");
       axios.defaults.headers.common["auth-token"] = undefined;
-      sessionStorage.removeItem('auth-token');
+      sessionStorage.removeItem("auth-token");
     },
 
     FINDPW(context, user) {
       return axios
         .post(`${SERVER_URL}/user/findpw`, user)
-        .then((response) => {
+        .then(response => {
           context.commit("FINDPW", response.data);
-          axios.defaults.headers.common["auth-token"] = `${response.data["auth-token"]}`;
-          sessionStorage.setItem('auth-token', `${response.data["auth-token"]}`)
+          axios.defaults.headers.common[
+            "auth-token"
+          ] = `${response.data["auth-token"]}`;
+          sessionStorage.setItem(
+            "auth-token",
+            `${response.data["auth-token"]}`
+          );
         })
         .catch(() => {
           reject();
@@ -111,7 +119,7 @@ export default new Vuex.Store({
     UPDATE(context, user) {
       return axios
         .post(`${SERVER_URL}/user/update`, user)
-        .then((response) => {
+        .then(response => {
           context.commit("UPDATE", response.data);
           if (`${response.data["auth-token"]}` == "undefined") reject();
           axios.defaults.headers.common[
@@ -125,7 +133,7 @@ export default new Vuex.Store({
         .catch(() => {
           reject();
         });
-    },
+    }
   },
   modules: {}
 });

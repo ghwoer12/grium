@@ -63,10 +63,12 @@ export default {
   methods: {
     withdraw: function() {
       axios
-        .post(`${SERVER_URL}/user/withdraw`, this.user).default
-        .then(response => {
-          console.log(response);
-          this.$store.dispatch("LOGOUT").then(() => this.$router.replace("/"));
+        .post(`${SERVER_URL}/user/withdraw`, this.user)
+        .default.then(response => {
+          // this.$router.replace("/user/profile");
+          this.$store.dispatch("LOGOUT").then(() => {
+            this.$router.replace("/login");
+          });
         })
         .catch(() => {
           console.log("err");

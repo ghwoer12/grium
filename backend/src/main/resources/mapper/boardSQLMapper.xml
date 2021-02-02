@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ssafy.board">
+
+	<insert id="insert" parameterType="BoardDTO">
+		insert into BOARD_TB(GONE_ID,
+		TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET)
+		values(#{GONE_ID},
+		#{TITLE}, #{WRITER}, #{CONTENT},
+		now(), 0, #{SECRET})
+	</insert>
+
+	<select id="overid" parameterType="String" resultType="BoardDTO">
+		select *
+		from BOARD_TB where BOARD_ID=#{bnumber}
+	</select>
+</mapper>

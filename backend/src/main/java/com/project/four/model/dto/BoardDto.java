@@ -10,13 +10,14 @@ public class BoardDto {
 	private String board_dt;
 	private int count;
 	private int secret;
+	private int flag;
 	
 	public BoardDto() {
 		super();
 	}
 
 	public BoardDto(String board_id, String gone_id, String title, String writer, String content, String board_dt,
-			int count, int secret) {
+			int count, int secret, int flag) {
 		super();
 		this.board_id = board_id;
 		this.gone_id = gone_id;
@@ -26,6 +27,7 @@ public class BoardDto {
 		this.board_dt = board_dt;
 		this.count = count;
 		this.secret = secret;
+		this.flag = flag;
 	}
 
 	public String getBoard_id() {
@@ -92,10 +94,18 @@ public class BoardDto {
 		this.secret = secret;
 	}
 
+	public int getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [board_id=" + board_id + ", gone_id=" + gone_id + ", title=" + title + ", writer=" + writer
-				+ ", content=" + content + ", board_dt=" + board_dt + ", count=" + count + ", secret=" + secret + "]";
+				+ ", content=" + content + ", board_dt=" + board_dt + ", count=" + count + ", secret=" + secret
+				+ ", flag=" + flag + "]";
 	}
-	
 }

@@ -7,20 +7,46 @@
 
 	<insert id="insert" parameterType="BoardDTO">
 		insert into BOARD_TB(GONE_ID,
-		TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET)
+		TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET, FLAG)
 		values(#{GONE_ID},
 		#{TITLE}, #{WRITER}, #{CONTENT},
-		now(), 0, #{SECRET})
+		now(), 0, #{SECRET},
+		0)
 	</insert>
 
-	<select id="overid" parameterType="String" resultType="BoardDTO">
-		select *
-		from BOARD_TB where BOARD_ID=#{bnumber}
-	</select>
-	
 	<select id="checkchild" parameterType="map" resultType="GoneDTO">
 		select *
 		from GONE_TB where GONE_ID=#{gone_id} and USER_ID=#{user_id}
 	</select>
-	
+
+	<select id="listall" parameterType="Pagination"
+		resultType="GoneDTO">
+		select *
+		from BOARD_TB
+		<if test="isOwner == 0">
+			where SECRET=0 and FLAG=0
+		</if>
+		<if test="isOwner == 1">
+			where FLAG=0
+		</if>
+		limit #{startList}, #{listSize}
+	</select>
+
+	<select id="getCnt" parameterType="int" resultType="int">
+		select count(*) as listCnt
+		from BOARD_TB
+		<if test="isOwner == 0">
+			where SECRET=0 and FLAG=0
+		</if>
+		<if test="isOwner == 1">
+			where FLAG=0
+		</if>
+	</select>
+
+	<select id="listpart" resultType="GoneDTO">
+		select *
+		from BOARD_TB where
+		SECRET=0
+	</select>
+
 </mapper>

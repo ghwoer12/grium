@@ -5,8 +5,8 @@
         <sidebar-link to="/dashboard" name="Main" icon="ti-panel" />
         <sidebar-link to="/user/profile" name="My page" icon="ti-user" />
         <sidebar-link
-          to="/search/house"
-          name="Online Feed"
+          to="/album/photo"
+          name="Album"
           icon="ti-view-list-alt"
         />
         <!-- <sidebar-link to="/typography" name="Typography" icon="ti-text" /> -->

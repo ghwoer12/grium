@@ -10,25 +10,12 @@ npm install
 ```
 npm run dev
 ```
-### build for production with minification
+### 새로고침 Setup
 ```
-npm run build
+- npm install vuex-persistedstate
+- npm install --dev node-pre-gyp
 ```
-### lint
+### 비밀번호 규칙 Setup
 ```
-npm run lint
+- npm install --save email-validator password-validator
 ```
-## Contribution guide
-* Fork the repository
-* `npm install` or `yarn install`
-* Make changes
-* Open Pull Request
-
-For detailed explanation on how things work, checkout the [guide](https://github.com/vuejs/vue-cli/blob/dev/docs/README.md)
-- [CHANGELOG](./CHANGELOG.md)
-- [version-badge](https://img.shields.io/badge/version-2.0.0-blue.svg)
-- [license-badge](https://img.shields.io/badge/license-MIT-blue.svg)
-
-## License
-
-[MIT](https://github.com/creativetimofficial/vue-paper-dashboard/blob/master/LICENSE.md)

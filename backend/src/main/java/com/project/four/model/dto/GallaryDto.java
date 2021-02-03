@@ -29,6 +29,7 @@ public class GallaryDto {
 	private Timestamp photo_dt;
 	private int count;
 	private int secret;
+	
 	public int getPhoto_id() {
 		return photo_id;
 	}
@@ -83,6 +84,11 @@ public class GallaryDto {
 	public void setSecret(int secret) {
 		this.secret = secret;
 	}
+	
+	public GallaryDto() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public GallaryDto(int photo_id, String gone_id, String server_photo, String photo_path, String origin_photo,
 			String writer, Timestamp photo_dt, int count, int secret) {
 		super();

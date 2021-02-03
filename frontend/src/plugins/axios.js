@@ -49,6 +49,7 @@ Plugin.install = function(Vue) {
   Object.defineProperties(Vue.prototype, {
     axios: {
       get() {
+        console.log(options);
         return _axios;
       }
     },

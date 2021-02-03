@@ -13,6 +13,13 @@
         <!-- <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2" /> -->
         <!-- <sidebar-link to="/maps" name="지도" icon="ti-map" /> -->
         <sidebar-link to="/qna/list" name="질문" icon="ti-bell" />
+
+        <!-- 예비 게시판 추가 -->
+        <sidebar-link
+          to="/boardlist"
+          name="예비 게시판"
+          icon="ti-pencil-alt2"
+        />
       </template>
       <mobile-menu>
         <!-- <li class="nav-item">

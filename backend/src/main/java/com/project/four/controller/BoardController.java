@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.four.model.dto.BoardDto;
@@ -83,8 +84,8 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Board initial list", notes="게시판 create 글 목록")
-	@PostMapping("/makelist")
-	public ResponseEntity<Map<String, Object>> makeList(@RequestBody BoardDto board) {
+	@GetMapping("/makelist")
+	public ResponseEntity<Map<String, Object>> makeList(@RequestParam String gone_id, @RequestParam String user_id) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
 
@@ -92,8 +93,6 @@ public class BoardController {
 		int range = (page / 10) + 1;
 		int listCnt = 0;
 		int isOwner = 0;
-		String gone_id = board.getGone_id();
-		String user_id = board.getUser_id();
 		List<BoardDto> list = null;
 		
 		// 상주 확인 => 상주는 1
@@ -133,16 +132,14 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Board page list", notes="게시판 페이지 글 목록")
-	@PostMapping("/list/{page}")
-	public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @RequestBody BoardDto board) {
+	@GetMapping("/list/{page}")
+	public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @RequestParam String gone_id, @RequestParam String user_id) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		int range = (page / 10) + 1;
 		int listCnt = 0;
 		int isOwner = 0;
-		String gone_id = board.getGone_id();
-		String user_id = board.getUser_id();
 		List<BoardDto> list = null;
 		
 		// 상주 확인

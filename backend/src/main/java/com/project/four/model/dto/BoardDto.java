@@ -4,6 +4,7 @@ public class BoardDto {
 	
 	private String board_id;
 	private String gone_id;
+	private String user_id;
 	private String title;
 	private String writer;
 	private String content;
@@ -30,6 +31,21 @@ public class BoardDto {
 		this.flag = flag;
 	}
 
+	public BoardDto(String board_id, String gone_id, String user_id, String title, String writer, String content,
+			String board_dt, int count, int secret, int flag) {
+		super();
+		this.board_id = board_id;
+		this.gone_id = gone_id;
+		this.user_id = user_id;
+		this.title = title;
+		this.writer = writer;
+		this.content = content;
+		this.board_dt = board_dt;
+		this.count = count;
+		this.secret = secret;
+		this.flag = flag;
+	}
+
 	public String getBoard_id() {
 		return board_id;
 	}
@@ -44,6 +60,14 @@ public class BoardDto {
 
 	public void setGone_id(String gone_id) {
 		this.gone_id = gone_id;
+	}
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getTitle() {

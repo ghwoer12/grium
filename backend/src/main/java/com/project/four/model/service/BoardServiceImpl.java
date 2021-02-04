@@ -35,14 +35,38 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardDto> getpartList() throws Exception {
-		// TODO Auto-generated method stub
-		return brepo.getpartList();
-	}
-
-	@Override
 	public int getcnt(int isOwner) throws Exception {
 		// TODO Auto-generated method stub
 		return brepo.getcnt(isOwner);
+	}
+
+	@Override
+	public int update(BoardDto board) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.update(board);
+	}
+
+	@Override
+	public int delete(BoardDto board) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.delete(board);
+	}
+
+	@Override
+	public BoardDto callmodi(String board_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.callmodi(board_id);
+	}
+
+	@Override
+	public int checkAuth(int board_id, String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checkAuth(board_id, user_id);
+	}
+
+	@Override
+	public BoardDto callboard(int board_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.callboard(board_id);
 	}
 }

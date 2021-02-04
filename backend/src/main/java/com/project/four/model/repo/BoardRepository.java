@@ -39,14 +39,38 @@ public class BoardRepository {
 		return list;
 	}
 
-	public List<BoardDto> getpartList() throws Exception{
-		List<BoardDto> list;
-		list = session.selectList("ssafy.board.listpart");
-		return list;
-	}
-
 	public int getcnt(int isOwner) {
 		int result = session.selectOne("ssafy.board.getCnt", isOwner);
 		return result;
+	}
+
+	public int update(BoardDto board) throws Exception{
+		int result = session.update("ssafy.board.upBoard", board);
+		return result;
+	}
+
+	public int delete(BoardDto board) throws Exception{
+		int result = session.update("ssafy.board.delBoard", board);
+		return result;
+	}
+
+	public BoardDto callmodi(String board_id) throws Exception{
+		BoardDto dto;
+		dto = session.selectOne("ssafy.board.callboard", board_id);
+		return dto;
+	}
+
+	public int checkAuth(int board_id, String user_id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_id", board_id);
+		map.put("user_id", user_id);
+		int result = session.selectOne("ssafy.board.checkAuth", map);
+		return result;
+	}
+
+	public BoardDto callboard(int board_id) {
+		BoardDto dto;
+		dto = session.selectOne("ssafy.board.callboard", board_id);
+		return dto;
 	}
 }

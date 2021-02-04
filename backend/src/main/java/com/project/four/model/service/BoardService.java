@@ -14,8 +14,16 @@ public interface BoardService {
 
 	List<BoardDto> getallList(Pagination pagination) throws Exception;
 
-	List<BoardDto> getpartList() throws Exception;
-
 	int getcnt(int isOwner) throws Exception;
+
+	int update(BoardDto board) throws Exception;
+
+	int delete(BoardDto board) throws Exception;
+
+	BoardDto callmodi(String board_id) throws Exception;
+
+	int checkAuth(int board_id, String user_id) throws Exception;
+
+	BoardDto callboard(int board_id) throws Exception;
 
 }

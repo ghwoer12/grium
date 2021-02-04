@@ -6,12 +6,9 @@
 <mapper namespace="ssafy.board">
 
 	<insert id="insert" parameterType="BoardDTO">
-		insert into BOARD_TB(GONE_ID,
-		TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET, FLAG)
-		values(#{GONE_ID},
-		#{TITLE}, #{WRITER}, #{CONTENT},
-		now(), 0, #{SECRET},
-		0)
+		insert into BOARD_TB(GONE_ID, TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET, FLAG)
+		values(#{gone_id}, #{title}, #{writer}, #{content},
+		now(), 0, #{secret}, 0)
 	</insert>
 
 	<select id="checkchild" parameterType="map" resultType="GoneDTO">
@@ -20,7 +17,7 @@
 	</select>
 
 	<select id="listall" parameterType="Pagination"
-		resultType="GoneDTO">
+		resultType="BoardDTO">
 		select *
 		from BOARD_TB
 		<if test="isOwner == 0">
@@ -42,11 +39,28 @@
 			where FLAG=0
 		</if>
 	</select>
-
-	<select id="listpart" resultType="GoneDTO">
+	
+	<select id="callboard" parameterType="String" resultType="BoardDTO">
 		select *
-		from BOARD_TB where
-		SECRET=0
+		from BOARD_TB where BOARD_ID=#{board_id}
+	</select>
+	
+	<update id="upBoard" parameterType="BoardDTO">
+		update BOARD_TB
+		set TITLE=#{title}, CONTENT=#{content}, BOARD_DT=now(), SECRET=#{secret}
+		where BOARD_ID=#{board_id}
+	</update>
+	
+	<update id="delBoard" parameterType="BoardDTO">
+		update BOARD_TB
+		set FLAG=1
+		where BOARD_ID=#{board_id}
+	</update>
+	
+	<select id="checkAuth" parameterType="map" resultType="int">
+		select count(*) as listCnt
+		from BOARD_TB
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
 	</select>
 
 </mapper>

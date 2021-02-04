@@ -29,9 +29,11 @@ import com.project.four.model.service.BoardService;
 import com.project.four.util.AES256Util;
 import com.project.four.util.Pagination;
 
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping("/board")
+@RequestMapping(value = "/board")
 public class BoardController {
 
 	public static final Logger logger = LoggerFactory.getLogger(BoardController.class);
@@ -42,16 +44,17 @@ public class BoardController {
 	@Autowired
 	private BoardService boardservice;
 	
+	@ApiOperation(value="Board Insert", notes="게시판 글 등록")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insert(@RequestBody BoardDto board, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> insert(@RequestBody BoardDto board) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
-		// 작성자 암호화
+		// 개인정보 암호화
 		try {
-			System.out.println("====================================> 작성자 암호화");
+			logger.info("====================================> 암호화");
 			board.setWriter(util.encrypt(board.getWriter()));
+//			board.setUser_id(util.encrypt(board.getUser_id()));
 		} catch (Exception e) {
 			logger.error("암호화 실패 : {}", e);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -60,11 +63,11 @@ public class BoardController {
 
 		// DB글등록
 		try {
-			System.out.println("====================================> 글 등록 시작");
+			logger.info("====================================> 글 등록 시작");
 			int result = boardservice.insert(board);
 			
 			if (result == 1) {
-				System.out.println("====================================> 글 등록 성공");
+				logger.info("====================================> 글 등록 성공");
 				resultMap.put("message", "글 등록에 성공하였습니다.");
 				status = HttpStatus.ACCEPTED;
 			} else {
@@ -79,23 +82,23 @@ public class BoardController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@ApiOperation(value="Board initial list", notes="게시판 create 글 목록")
 	@PostMapping("/makelist")
-	public ResponseEntity<Map<String, Object>> makeList(@RequestBody BoardDto board, @RequestBody UserDto user, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> makeList(@RequestBody BoardDto board) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
-		
+
 		int page = 1;
 		int range = (page / 10) + 1;
 		int listCnt = 0;
 		int isOwner = 0;
 		String gone_id = board.getGone_id();
-		String user_id = user.getUser_id();
+		String user_id = board.getUser_id();
 		List<BoardDto> list = null;
 		
 		// 상주 확인 => 상주는 1
 		try {
-			System.out.println("====================================> 상주 확인");
+			logger.info("====================================> 상주 확인");
 			GoneDto gone = boardservice.checkchild(gone_id, user_id);
 			if(gone != null) isOwner = 1;
 			
@@ -103,12 +106,17 @@ public class BoardController {
 			listCnt = boardservice.getcnt(isOwner);
 			
 			// 페이지 처리
-			System.out.println("====================================> 페이징");
+			logger.info("====================================> 페이징");
 			Pagination pagination = new Pagination();
 			pagination.pageInfo(page, range, listCnt, isOwner);
 			
-			System.out.println("====================================> 글 목록 받기");
+			logger.info("====================================> 글 목록 받기");
 			list = boardservice.getallList(pagination);
+			
+			// 복호화
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
+			}
 			
 			resultMap.put("pagination", pagination);
 			resultMap.put("list", list);
@@ -124,33 +132,44 @@ public class BoardController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@GetMapping("/list/{page}")
-	public ResponseEntity<List<BoardDto>> allList(@PathVariable int page, @RequestBody BoardDto board, @RequestBody UserDto user, HttpServletResponse response,
-			HttpSession session) {
+	@ApiOperation(value="Board page list", notes="게시판 페이지 글 목록")
+	@PostMapping("/list/{page}")
+	public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @RequestBody BoardDto board) {
 		HttpStatus status = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		int range = (page / 10) + 1;
 		int listCnt = 0;
 		int isOwner = 0;
 		String gone_id = board.getGone_id();
-		String user_id = user.getUser_id();
+		String user_id = board.getUser_id();
 		List<BoardDto> list = null;
 		
 		// 상주 확인
 		try {
-			System.out.println("====================================> 상주 확인");
+			logger.info("====================================> 상주 확인");
 			GoneDto gone = boardservice.checkchild(gone_id, user_id);
+			if(gone != null) isOwner = 1;
 			
-			// 글 리스트 불러오기
-			if(gone != null) {
-				System.out.println("====================================> 상주 버전 리스트업");
-//				list = boardservice.getallList();
-				status = HttpStatus.ACCEPTED;
-			} else {
-				System.out.println("====================================> 조문객 버전 리스트업");
-				list = boardservice.getpartList();
-				status = HttpStatus.ACCEPTED;
+			// 총 게시물 개수
+			listCnt = boardservice.getcnt(isOwner);
+			
+			// 페이지 처리
+			logger.info("====================================> 페이징");
+			Pagination pagination = new Pagination();
+			pagination.pageInfo(page, range, listCnt, isOwner);
+			
+			logger.info("====================================> 글 목록 받기");
+			list = boardservice.getallList(pagination);
+			
+			// 복호화
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
 			}
+			
+			resultMap.put("pagination", pagination);
+			resultMap.put("list", list);
+			status = HttpStatus.ACCEPTED;
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -159,32 +178,147 @@ public class BoardController {
 			e.printStackTrace();
 		}
 		
-		return new ResponseEntity<List<BoardDto>>(list, status);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@ApiOperation(value="Call Modify", notes="게시판 수정 내용 불러오기")
+	@PostMapping("/callmodi")
+	public ResponseEntity<Map<String, Object>> callmodi(@RequestBody BoardDto board) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		String board_id = board.getBoard_id();
+		
+		try {
+			logger.info("====================================> 수정 내용 부르기");
+			BoardDto dto = boardservice.callmodi(board_id);
+			
+			if(dto != null) {
+				logger.info("====================================> 글 부르기 성공");
+				// 복호화
+				dto.setWriter(util.decrypt(dto.getWriter()));
+				
+				resultMap.put("board", dto);
+				resultMap.put("message", "글 부르기에 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", "글 부르기에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("글 부르기 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@ApiOperation(value="Board Modify", notes="게시판 글 수정")
 	@PutMapping("/modify")
-	public ResponseEntity<Map<String, Object>> modify(@RequestBody BoardDto board, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> modify(@RequestBody BoardDto board) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		
+		try {
+			logger.info("====================================> 내용 수정");
+			int result = boardservice.update(board);
+			
+			if(result == 1) {
+				System.out.println("====================================> 수정 성공");
+				resultMap.put("message", "글 수정에 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", "글 수정에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("글 수정 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@ApiOperation(value="Board delete", notes="게시판 글 삭제")
 	@DeleteMapping("/delete")
-	public ResponseEntity<Map<String, Object>> delete(@RequestBody BoardDto board, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> delete(@RequestBody BoardDto board) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		
+		try {
+			logger.info("====================================> 내용 삭제");
+			int result = boardservice.delete(board);
+			
+			if(result == 1) {
+				logger.info("====================================> 삭제 성공");
+				resultMap.put("message", "글 삭제에 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", "글 삭제에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("글 삭제 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	@ApiOperation(value="Board Call", notes="게시판 글 하나 불러오기")
 	@GetMapping("/getboard/{board_id}")
-	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestBody BoardDto board, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestBody BoardDto board) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		
+		String user_id = board.getUser_id();
+		boolean isAuth = false;
+		
+		// 수정, 삭제 버튼에 대한 권한 체크
+		try {
+			logger.info("====================================> 버튼 권한 체크");
+			user_id = util.encrypt(user_id);
+			int check = boardservice.checkAuth(board_id, user_id);
+			
+			if(check > 0) {
+				logger.info("====================================> 작성자");
+				isAuth = true;
+				resultMap.put("isAuth", isAuth);
+			} else {
+				logger.info("====================================> 비 작성자");
+				resultMap.put("isAuth", isAuth);
+			}
+			
+			logger.info("====================================> 내용 부르기");
+			BoardDto dto = boardservice.callboard(board_id);
+			
+			if(dto != null) {
+				logger.info("====================================> 글 부르기 성공");
+				// 복호화
+				dto.setWriter(util.decrypt(dto.getWriter()));
+				
+				resultMap.put("board", dto);
+				resultMap.put("message", "글 부르기에 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", "글 부르기에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("현재글 불러오기 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}

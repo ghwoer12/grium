@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-md-6">
         <fg-input
-          type="text"
+          type="password"
           label="Password Confirm"
           placeholder="본인의 비밀번호를 입력해주세요"
           v-model="user.password"

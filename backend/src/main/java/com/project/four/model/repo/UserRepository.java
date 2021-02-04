@@ -24,7 +24,6 @@ public class UserRepository {
 		}
 	}
 
-
 	public UserDto userLogin(String email, String password) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("email", email);
@@ -39,7 +38,6 @@ public class UserRepository {
 		map.put("email", user.getEmail());
 		map.put("name", user.getName());
 		map.put("password", user.getPassword());
-		map.put("photo", user.getPhoto());
 		map.put("phone", user.getPhone());
 		int res = session.update("ssafy.user.update", map);
 

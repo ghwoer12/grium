@@ -7,11 +7,17 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.project.four.model.dto.UserDto" alias="UserDTO" />
+        <typeAlias type="com.project.four.model.dto.BoardDto" alias="BoardDTO" />
+        <typeAlias type="com.project.four.model.dto.GoneDto" alias="GoneDTO" />
+        <typeAlias type="com.project.four.model.dto.GallaryDto" alias="GallaryDTO" />
+        
     </typeAliases>
     
 	<!-- 이곳에 주거나 application.xml에 둘중 하나만 주면 된다. -->
   <mappers>
     <mapper resource="mapper/userSQLMapper.xml" />
+    <mapper resource="mapper/boardSQLMapper.xml" />
+    <mapper resource="mapper/gallarySQLMapper.xml" />
   </mappers>
 
 </configuration>

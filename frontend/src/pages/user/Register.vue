@@ -17,11 +17,17 @@
               class="form-control"
               name="email"
               placeholder="Enter your Email"
-              v-model="user.email"
+              v-model="email"
+              v-bind:class="{
+                error: error.email,
+                complete: !error.email && email.length !== 0
+              }"
             />
             <div class="alert-danger" v-if="submitted && errors.has('email')">
               {{ errors.first("email") }}
             </div>
+            <div class="error-text" v-if="error.email">{{ error.email }}</div>
+            <!-- v-bind, div error text추가 -->
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -30,8 +36,11 @@
               class="form-control"
               name="password"
               placeholder="Enter your Password"
-              v-model="user.password"
-
+              v-model="password"
+              v-bind:class="{
+                error: error.password,
+                complete: !error.password && password.length !== 0
+              }"
             />
             <div
               class="alert-danger"
@@ -39,6 +48,10 @@
             >
               {{ errors.first("password") }}
             </div>
+            <div class="error-text" v-if="error.password">
+              {{ error.password }}
+            </div>
+            <!-- v-bind, div error text추가 -->
           </div>
 
           <div class="form-group">
@@ -48,7 +61,7 @@
               class="form-control"
               name="name"
               placeholder="Enter your Name"
-              v-model="user.name"
+              v-model="name"
             />
             <div class="alert-danger" v-if="submitted && errors.has('name')">
               {{ errors.first("name") }}
@@ -61,7 +74,7 @@
               class="form-control"
               name="phone"
               placeholder="'-' 없이 입력하세요"
-              v-model="user.phone"
+              v-model="phone"
             />
             <div class="alert-danger" v-if="submitted && errors.has('phone')">
               {{ errors.first("phone") }}
@@ -87,22 +100,57 @@
 </template>
 
 <script>
+// 이메일과 비밀번호를 검사하는 npm 프로그램 import
+import PV from "password-validator";
+import * as EmailValidator from "email-validator";
+
 // import func from "../../../vue-temp/vue-editor-bridge";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "register",
+  created() {
+    this.passwordSchema
+      // 최소 길이 2
+      .is()
+      .min(2)
+      // 최대 길이 100
+      .is()
+      .max(100)
+      // 1 자리 이상
+      .has()
+      .digits(1)
+      // 스페이스바 금지
+      .has()
+      .not()
+      .spaces();
+    // 대문자가 있어야 함
+    // .has().uppercase()
+    // 소문자가 있어야 함
+    // .has().lowercase()
+    // 만들면 안 되는 비밀번호 - 블랙리스트 등록
+    // .is().not().oneOf(['블랙리스트비번', '블랙리스트비번']);
+  },
+
   data() {
     return {
-      user: {
-        email: "",
-        password: "",
-        name: "",
-        phone: ""
-      },
+      email: "",
+      password: "",
+      name: "",
+      phone: "",
+
       submitted: false,
       successful: false,
-      message: ""
+      message: "",
+
+      // 비밀번호 검사, error 검사
+      passwordSchema: new PV(),
+      error: {
+        email: false,
+        passowrd: false
+      },
+      isSubmit: false,
+      component: this
     };
   },
   // mounted() {
@@ -110,18 +158,51 @@ export default {
   //     this.$router.push('/');
   //   }
   // },
+
+  // 계속 지켜보는 게 watch : 바뀔 때마다 확인함
+  watch: {
+    password: function(v) {
+      this.checkForm();
+    },
+    email: function(v) {
+      this.checkForm();
+    }
+  },
+
   methods: {
+    // checkForm() 추가
+    checkForm() {
+      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
+        this.error.email = "이메일 형식이 아닙니다.";
+      else this.error.email = false;
+
+      if (
+        this.password.length >= 0 &&
+        !this.passwordSchema.validate(this.password)
+      )
+        this.error.password = "영문, 숫자 포함 8자리 이상이어야 합니다.";
+      else this.error.password = false;
+
+      let isSubmit = true;
+      Object.values(this.error).map(v => {
+        if (v) isSubmit = false;
+      });
+      this.isSubmit = isSubmit;
+    },
+
     regist: function() {
-      let user = this.user;
+      let { email, password, name, phone } = this;
+      let user = { email, password, name, phone };
+
       axios
-        .post(`${SERVER_URL}user/signup`, user)
+        .post(`${SERVER_URL}/user/signup`, user)
         .then(response => {
           this.$router.push("/login");
         })
         .catch(({ message }) => {
           this.msg = message;
         });
-    },
+    }
     // checkpass: function() {
     //   var pw = $("#password").val();
     //   var num = pw.search(/[0-9]/g);

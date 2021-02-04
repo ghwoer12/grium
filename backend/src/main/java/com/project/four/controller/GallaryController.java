@@ -89,7 +89,7 @@ public class GallaryController {
 
 	@PostMapping("/upload")
 	public ResponseEntity<Map<String, Object>> upload(@RequestBody GallaryDto gallary, @RequestParam("upfile") MultipartFile[] files,HttpServletResponse response, HttpSession session){
-		
+		//System.out.println("not working");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		

@@ -54,7 +54,7 @@ public class BoardRepository {
 		return result;
 	}
 
-	public BoardDto callmodi(String board_id) throws Exception{
+	public BoardDto callmodi(int board_id) throws Exception{
 		BoardDto dto;
 		dto = session.selectOne("ssafy.board.callboard", board_id);
 		return dto;

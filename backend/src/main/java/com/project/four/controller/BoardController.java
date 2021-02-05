@@ -179,11 +179,10 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Call Modify", notes="게시판 수정 내용 불러오기")
-	@PostMapping("/callmodi")
-	public ResponseEntity<Map<String, Object>> callmodi(@RequestBody BoardDto board) {
+	@GetMapping("/callmodi")
+	public ResponseEntity<Map<String, Object>> callmodi(@RequestParam int board_id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
-		String board_id = board.getBoard_id();
 		
 		try {
 			logger.info("====================================> 수정 내용 부르기");
@@ -272,19 +271,18 @@ public class BoardController {
 	
 	@ApiOperation(value="Board Call", notes="게시판 글 하나 불러오기")
 	@GetMapping("/getboard/{board_id}")
-	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestBody BoardDto board) {
+	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestParam String user_id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
-		String user_id = board.getUser_id();
 		boolean isAuth = false;
 		
 		// 수정, 삭제 버튼에 대한 권한 체크
 		try {
 			logger.info("====================================> 버튼 권한 체크");
-			user_id = util.encrypt(user_id);
+			// 상주 권한 추가?
 			int check = boardservice.checkAuth(board_id, user_id);
-			
+			System.out.println(board_id);
 			if(check > 0) {
 				logger.info("====================================> 작성자");
 				isAuth = true;
@@ -316,6 +314,24 @@ public class BoardController {
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@ApiOperation(value="Board good", notes="게시판 글 추천")
+	@PostMapping("/good")
+	public ResponseEntity<Map<String, Object>> good(@RequestBody BoardDto board) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@ApiOperation(value="Board report", notes="게시판 글 신고")
+	@PostMapping("/report")
+	public ResponseEntity<Map<String, Object>> report(@RequestBody BoardDto board) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}

@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardDto callmodi(String board_id) throws Exception {
+	public BoardDto callmodi(int board_id) throws Exception {
 		// TODO Auto-generated method stub
 		return brepo.callmodi(board_id);
 	}

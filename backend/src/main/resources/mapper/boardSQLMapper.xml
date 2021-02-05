@@ -6,8 +6,8 @@
 <mapper namespace="ssafy.board">
 
 	<insert id="insert" parameterType="BoardDTO">
-		insert into BOARD_TB(GONE_ID, TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET, FLAG)
-		values(#{gone_id}, #{title}, #{writer}, #{content},
+		insert into BOARD_TB(GONE_ID, USER_ID, TITLE, WRITER, CONTENT, BOARD_DT, COUNT, SECRET, FLAG)
+		values(#{gone_id}, #{user_id}, #{title}, #{writer}, #{content},
 		now(), 0, #{secret}, 0)
 	</insert>
 
@@ -40,7 +40,7 @@
 		</if>
 	</select>
 	
-	<select id="callboard" parameterType="String" resultType="BoardDTO">
+	<select id="callboard" parameterType="int" resultType="BoardDTO">
 		select *
 		from BOARD_TB where BOARD_ID=#{board_id}
 	</select>

@@ -20,7 +20,7 @@ public interface BoardService {
 
 	int delete(BoardDto board) throws Exception;
 
-	BoardDto callmodi(String board_id) throws Exception;
+	BoardDto callmodi(int board_id) throws Exception;
 
 	int checkAuth(int board_id, String user_id) throws Exception;
 

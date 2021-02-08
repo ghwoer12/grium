@@ -65,7 +65,7 @@ export default {
         name: "",
         password: "",
         phone: ""
-      }
+      },
     };
   },
   methods: {

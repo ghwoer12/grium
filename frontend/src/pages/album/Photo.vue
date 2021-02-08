@@ -15,7 +15,10 @@
           id="upfile"
           multiple="multiple"
         />
-        <button @click="onUpload">Upload</button>
+        <div>
+          <input type="number" name="type" value="0" v-model="photo.type" />
+          <button @click="onUpload">Upload</button>
+        </div>
       </div>
       <div class="text-center" style="margin-top: 25px">
         <p><strong>SHARE YOUR PHOTOS</strong></p>
@@ -144,8 +147,10 @@ export default {
   data() {
     return {
       selectedFile: null,
-      user: {
+      photo: {
         email: "",
+        name: "",
+        type: 0,
       },
     };
   },
@@ -159,17 +164,18 @@ export default {
     },
 
     onUpload() {
-      let user = this.user;
+      let photo = this.photo;
 
       const fd = new FormData();
       fd.append("image", this.selectedFile, this.selectedFile.name);
-      axios.post("${SERVER_URL}/gallary/upload", fd, user).then((res) => {
+      axios.post("${SERVER_URL}/gallary/upload", fd, photo).then((res) => {
         console.log(res);
       });
     },
   },
   created() {
     this.user.email = this.$store.getters["getEmail"];
+    this.user.name = this.$store.getters["getName"];
   },
 };
 </script>

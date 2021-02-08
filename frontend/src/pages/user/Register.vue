@@ -31,7 +31,6 @@
               name="password"
               placeholder="Enter your Password"
               v-model="user.password"
-
             />
             <div
               class="alert-danger"
@@ -121,7 +120,7 @@ export default {
         .catch(({ message }) => {
           this.msg = message;
         });
-    },
+    }
     // checkpass: function() {
     //   var pw = $("#password").val();
     //   var num = pw.search(/[0-9]/g);

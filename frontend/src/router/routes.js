@@ -18,7 +18,7 @@ import AnswerDetail from "@/components/qna/AnswerDetail";
 import QuestionUpdate from "@/pages/qna/QuestionUpdate";
 
 // search pages
-import SearchHouse from "@/pages/search/House";
+import Photo from "@/pages/album/Photo.vue";
 
 // user pages
 import Login from "@/pages/Login.vue";
@@ -108,9 +108,9 @@ const routes = [
         component: AnswerDetail
       },
       {
-        path: "/search/house",
-        name: "SearchHouse",
-        component: SearchHouse
+        path: "/album/photo",
+        name: "Photo",
+        component: Photo
       },
       // user
       {

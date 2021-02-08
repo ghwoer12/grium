@@ -1,6 +1,5 @@
 /.metadata/
 *.pem
-
 #/frontend/
 
 #/backend/src/main/resources/application.properties

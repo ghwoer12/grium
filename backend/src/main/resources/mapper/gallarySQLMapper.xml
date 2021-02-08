@@ -6,10 +6,27 @@
 <mapper namespace="ssafy.gallary">
 
 	<insert id="insert" parameterType="GallaryDTO">
-		insert into BOARD_TB(GONE_ID,
-		SERVER_PHOTO, PHOTO_PATH,ORIGIN_PHOTO,WRITER, COUNT, SECRET)
-		values(#{gone_id},#{server_photo}, #{photo_path}, #{origin_photo},
-		#{writer}, 0, #{secret})
+		insert into BOARD_TB(GONE_ID,WRITER, COUNT, SECRET)
+		values(#{gone_id}, #{writer}, 0, #{secret})
+		<selectKey resultType="int" keyProperty="photo_id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
+	
+	<insert id="fileregist" parameterType="GallaryDTO">
+		insert into Gaddress_TB(PHOTO_ID, SERVER_PHOTO, SERVER_PATH, ORIGIN_PHOTO)	
+		values
+		<foreach collection="list" item="item" separator=" , ">
+		(#{photo_id}, #{server_photo}, #{server_path}, #{origin_path})
+		</foreach>	
+	</insert>
+	
+	<resultMap type="GaddressDto" id="gaddresslist">
+		<result property="photo_id" column="PHOTO_ID"></result>
+		<result property="server_photo" column="SERVER_PHOTO"></result>
+		<result property="server_path" column="SERVER_PATH"></result>
+		<result property="origin_photo" column="ORIGIN_PATH"></result>
+	
+	</resultMap>
 	
 </mapper>

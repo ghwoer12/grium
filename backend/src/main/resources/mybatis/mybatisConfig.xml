@@ -10,6 +10,7 @@
         <typeAlias type="com.project.four.model.dto.BoardDto" alias="BoardDTO" />
         <typeAlias type="com.project.four.model.dto.GoneDto" alias="GoneDTO" />
         <typeAlias type="com.project.four.model.dto.GallaryDto" alias="GallaryDTO" />
+        <typeAlias type="com.project.four.model.dto.GaddressDto" alias="GaddressDTO"/>
         
     </typeAliases>
     

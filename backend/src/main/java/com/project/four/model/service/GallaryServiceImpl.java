@@ -27,14 +27,12 @@ public class GallaryServiceImpl implements GallaryService{
 	
 	@Override
 	@Transactional
-	public void upload(List<GallaryDto> dtoList) {
+	public void upload(GallaryDto gallary) {
 		// TODO Auto-generated method stub
-		for(GallaryDto dto : dtoList) {
-			grepo.upload(dto);
-		}
-		
+		grepo.upload(gallary);
+		System.out.println(gallary.getPhoto_id());
+		grepo.registfile(gallary);
 	}
-	
 	/*
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket; //버킷 이름

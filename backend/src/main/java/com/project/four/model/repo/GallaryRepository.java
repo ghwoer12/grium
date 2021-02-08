@@ -15,5 +15,9 @@ public class GallaryRepository {
 	public void upload(GallaryDto gallary) {
 		session.insert("ssafy.gallary.insert", gallary);
 	}
+	
+	public void registfile(GallaryDto gallary) {
+		session.insert("ssafy.gallary.fileregist", gallary);
+	}
 
 }

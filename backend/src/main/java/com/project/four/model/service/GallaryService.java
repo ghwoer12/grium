@@ -8,5 +8,5 @@ import com.project.four.model.dto.GallaryDto;
 
 public interface GallaryService {
 	
-	void upload(List<GallaryDto> dtoList);
+	void upload(GallaryDto gallary);
 }

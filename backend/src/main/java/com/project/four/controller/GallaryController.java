@@ -30,6 +30,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.project.four.model.dto.BoardDto;
+import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GallaryDto;
 import com.project.four.model.service.GallaryService;
 import com.project.four.util.AES256Util;
@@ -92,9 +93,10 @@ public class GallaryController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
-		List<GallaryDto> galinfo = new ArrayList<>();
+		List<GaddressDto> galinfo = new ArrayList<>();
+		GallaryDto dto = new GallaryDto();
 		for(MultipartFile mfile : files) {
-			GallaryDto dto = new GallaryDto();
+			GaddressDto add = new GaddressDto();
 			String originName = mfile.getOriginalFilename();
 			
 			String url;
@@ -102,7 +104,7 @@ public class GallaryController {
 			String saveFileName = UUID.randomUUID().toString()+ext; //파일이름 암호화한거야
 			String path = System.getProperty("user.dir")+saveFileName;
 			//현재 작업하고있는 파일 디렉토리 + 암호화한 파일이름
-			File file = new File(path);
+			File file = new File(path); //여기까지 convert
 			//경로이름을 넣는거야 . 이 경로에 file이라는 객체를 만듣꺼야
 			//file 생성시 user/dir이라는 디렉토리에 생성되도록 하기 위해서 경로를 없어오고
 			
@@ -112,19 +114,21 @@ public class GallaryController {
 			//현재 작업하고있는 파일 디렉토리래
 			System.out.println("path : "+ path);
 			
-			dto.setOrigin_photo(originName); //원본이름
-			dto.setServer_photo(saveFileName); //서버에 올라간 이름
-			dto.setPhoto_path(path); //path인데 이게 주소가 뒤에 파일이름까지 올라가는지 모르게센
+			add.setOrigin_photo(originName); //원본이름
+			add.setServer_photo(saveFileName); //서버에 올라간 이름
+			add.setServer_path(path); //path인데 이게 주소가 뒤에 파일이름까지 올라가는지 모르게센
 			
 			
 			try {
+				s3util.setS3Client().putObject(new PutObjectRequest(bucket, path, file).withCannedAcl(CannedAccessControlList.PublicRead));
 				mfile.transferTo(file); //현재 진행하는 디렉토리에 파일이 저장이 되고 
 				s3util.setS3Client().putObject(bucket, path, file); //업로드
 				//업로드했는데 경로가 투명해 그럼면 path에 앞에 /이걸로 시작한거야 지워주면돼
 				//path 경로에 있는 객체에 file을 넣어준거야 
 				url = defaultUrl + path;
 				//이제 service에 db 저장하기있어야지
-				galinfo.add(dto);
+				System.out.println(">>url > " + url);
+				galinfo.add(add);
 				file.delete(); // 업로드가 끝났으니까 파일을 삭제하나봐
 				
 						
@@ -135,8 +139,9 @@ public class GallaryController {
 			
 			
 		}
+		gallary.setGaddress(galinfo);
 		
-		gservice.upload(galinfo);
+		gservice.upload(gallary);
 		
 		
 		

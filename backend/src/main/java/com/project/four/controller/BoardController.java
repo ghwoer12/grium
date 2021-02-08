@@ -271,7 +271,7 @@ public class BoardController {
 	
 	@ApiOperation(value="Board Call", notes="게시판 글 하나 불러오기")
 	@GetMapping("/getboard/{board_id}")
-	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestParam String user_id) {
+	public ResponseEntity<Map<String, Object>> getboard(@PathVariable int board_id, @RequestParam String user_id, @RequestParam String gone_id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
@@ -280,10 +280,10 @@ public class BoardController {
 		// 수정, 삭제 버튼에 대한 권한 체크
 		try {
 			logger.info("====================================> 버튼 권한 체크");
-			// 상주 권한 추가?
 			int check = boardservice.checkAuth(board_id, user_id);
-			System.out.println(board_id);
-			if(check > 0) {
+			GoneDto gone = boardservice.checkchild(gone_id, user_id);
+			
+			if(check > 0 || gone != null) {
 				logger.info("====================================> 작성자");
 				isAuth = true;
 				resultMap.put("isAuth", isAuth);

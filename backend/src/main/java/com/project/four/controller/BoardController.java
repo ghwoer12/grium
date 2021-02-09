@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.BoardDto;
 import com.project.four.model.dto.GoneDto;
+import com.project.four.model.dto.RipDto;
 import com.project.four.model.dto.UserDto;
 import com.project.four.model.service.BoardService;
 import com.project.four.util.AES256Util;
@@ -179,8 +181,8 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Call Modify", notes="게시판 수정 내용 불러오기")
-	@GetMapping("/callmodi")
-	public ResponseEntity<Map<String, Object>> callmodi(@RequestParam int board_id) {
+	@GetMapping("/callmodi/{board_id}")
+	public ResponseEntity<Map<String, Object>> callmodi(@PathVariable int board_id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
@@ -319,19 +321,68 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Board good", notes="게시판 글 추천")
-	@PostMapping("/good")
-	public ResponseEntity<Map<String, Object>> good(@RequestBody BoardDto board) {
+	@PostMapping("/rip")
+	public ResponseEntity<Map<String, Object>> rip(@RequestBody RipDto rip) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		int good = 0;
+		
+		try {
+			int checkrip = boardservice.checkrip(rip);
+			if(checkrip == 1) {
+				logger.info("====================================> 좋아요 취소");
+				good = boardservice.cancle(rip);
+				status = HttpStatus.ACCEPTED;
+			} else if (checkrip == 2) {
+				logger.info("====================================> 빈 좋아요 상태/최초");
+				good = boardservice.pressrip(rip);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.info("====================================> 빈 좋아요 > 좋아요");
+				good = boardservice.updaterip(rip);
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("추천 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
 	@ApiOperation(value="Board report", notes="게시판 글 신고")
-	@PostMapping("/report")
-	public ResponseEntity<Map<String, Object>> report(@RequestBody BoardDto board) {
+	@PostMapping("/alert")
+	public ResponseEntity<Map<String, Object>> alert(@RequestBody AlertDto alert) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		int report = 0;
+		
+		try {
+			int checkalert = boardservice.checkalert(alert);
+			if(checkalert == 1) {
+				logger.info("====================================> 신고 취소");
+				report = boardservice.canalert(alert);
+				status = HttpStatus.ACCEPTED;
+			} else if (checkalert == 2) {
+				logger.info("====================================> 빈 신고 상태/최초");
+				report = boardservice.pressralert(alert);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.info("====================================> 신고 취소 > 재신고");
+				// Type이 0으로 돌아간 상태
+				report = boardservice.upalert(alert);
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("신고 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}

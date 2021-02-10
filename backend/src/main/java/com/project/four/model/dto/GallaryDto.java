@@ -15,10 +15,12 @@ public class GallaryDto {
 
 	private int photo_id;
 	private String gone_id;
+	private String user_id;
 	private String writer; // 아마 userid이지 않을까?
 	private Timestamp photo_dt;
 	private int count;
 	private int secret;
+	private int flag;
 	private List<GaddressDto> gaddress;
 
 	public int getPhoto_id() {
@@ -77,26 +79,47 @@ public class GallaryDto {
 		this.gaddress = gaddress;
 	}
 
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public int getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+	
 	public GallaryDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GallaryDto(int photo_id, String gone_id, String writer, Timestamp photo_dt, int count, int secret,
-			List<GaddressDto> gaddress) {
+	public GallaryDto(int photo_id, String gone_id, String user_id, String writer, Timestamp photo_dt, int count,
+			int secret, int flag, List<GaddressDto> gaddress) {
 		super();
 		this.photo_id = photo_id;
 		this.gone_id = gone_id;
+		this.user_id = user_id;
 		this.writer = writer;
 		this.photo_dt = photo_dt;
 		this.count = count;
 		this.secret = secret;
+		this.flag = flag;
 		this.gaddress = gaddress;
 	}
 
 	@Override
 	public String toString() {
-		return "GallaryDto [photo_id=" + photo_id + ", gone_id=" + gone_id + ", writer=" + writer + ", photo_dt="
-				+ photo_dt + ", count=" + count + ", secret=" + secret + ", gaddress=" + gaddress + "]";
+		return "GallaryDto [photo_id=" + photo_id + ", gone_id=" + gone_id + ", user_id=" + user_id + ", writer="
+				+ writer + ", photo_dt=" + photo_dt + ", count=" + count + ", secret=" + secret + ", flag=" + flag
+				+ ", gaddress=" + gaddress + "]";
 	}
-
+	
+	
+	
 }

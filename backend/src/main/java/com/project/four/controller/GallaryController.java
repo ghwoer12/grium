@@ -62,34 +62,33 @@ public class GallaryController {
 	public GallaryController(AmazonS3Client amazonS3Client) {
 		this.amazonS3Client = amazonS3Client;
 	}
+
+	
+//	public String regist(MultipartFile file) {
+//		String fileName = file.getOriginalFilename();
+//		
+//		try {
+//			//putObject 업로드하는 메소드
+//			//putObject ( PutObejctReqeust / String, String ,file ) 2가지 방법존재
+//			//String bucketName, String key, File file 이 방법써볼께
+//			//bucketname이랑 key는 bucket안에 저장될 경로를의미해 (bucket안에 우리가 디렉토리 구조를 만들수있어)
+//			//key는 그 경로를 말하는거야 file은 우리가 생성한 file을 의미하고!
+//			s3util.setS3Client().putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+//					.withCannedAcl(CannedAccessControlList.PublicRead)); //외부에 공개할 사진이여서 public read를 추가한거래
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return s3util.setS3Client().getUrl(bucket, fileName).toString(); //저장한 url 가져오는거야 db 저장용
+//		
+//		
+//	}
 	
 	
-	public String regist(MultipartFile file) {
-		String fileName = file.getOriginalFilename();
-		
-		try {
-			//putObject 업로드하는 메소드
-			//putObject ( PutObejctReqeust / String, String ,file ) 2가지 방법존재
-			//String bucketName, String key, File file 이 방법써볼께
-			//bucketname이랑 key는 bucket안에 저장될 경로를의미해 (bucket안에 우리가 디렉토리 구조를 만들수있어)
-			//key는 그 경로를 말하는거야 file은 우리가 생성한 file을 의미하고!
-			s3util.setS3Client().putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-					.withCannedAcl(CannedAccessControlList.PublicRead)); //외부에 공개할 사진이여서 public read를 추가한거래
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return s3util.setS3Client().getUrl(bucket, fileName).toString(); //저장한 url 가져오는거야 db 저장용
-		
-		
-	}
-	
-	
-	//
 	
 
 	@PostMapping("/upload")
-	public ResponseEntity<Map<String, Object>> upload(@RequestBody GallaryDto gallary, @RequestParam("upfile") MultipartFile[] files,HttpServletResponse response, HttpSession session){
+	public ResponseEntity<Map<String, Object>> upload(@RequestBody GallaryDto gallary, @RequestParam("upfile") MultipartFile[] files){
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		

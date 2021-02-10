@@ -212,6 +212,7 @@ export default {
       // alert("WRITER : " + gallery.writer);
       // alert("SECRET : " + gallery.secret);
       let gallery = this.gallery;
+      let hiru;
       const fd = new FormData();
       fd.append("image", this.selectedFile, this.selectedFile.name);
       axios.post("${SERVER_URL}/gallary/upload", fd, gallery).then(res => {

@@ -36,11 +36,8 @@
               class="form-control"
               name="password"
               placeholder="Enter your Password"
-              v-model="password"
-              v-bind:class="{
-                error: error.password,
-                complete: !error.password && password.length !== 0
-              }"
+
+              v-model="user.password"
             />
             <div
               class="alert-danger"

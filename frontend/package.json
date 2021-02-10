@@ -11,9 +11,9 @@
     "dev": "npm run serve"
   },
   "dependencies": {
-    "axios": "^0.21.0",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.19.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
     "chartist": "^0.11.0",
     "email-validator": "^2.0.4",
     "es6-promise": "^4.2.4",
@@ -21,12 +21,12 @@
     "moment": "^2.29.1",
     "node-pre-gyp": "^0.17.0",
     "password-validator": "^5.1.1",
-    "portfinder": "^1.0.21",
+    "portfinder": "^1.0.28",
     "vue": "^2.6.10",
     "vue-clickaway": "^2.1.0",
     "vue-notifyjs": "^0.3.0",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.6.0",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {

@@ -2,11 +2,18 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 
+// 새로고침을 했을 때 로그인이 풀리는 걸 방지하는 npm 설치 프로그램
+import createPersistedState from 'vuex-persistedstate';
+
 Vue.use(Vuex);
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default new Vuex.Store({
+  // 플러그인으로 설치해준다.
+  plugins:[
+    createPersistedState()
+  ],
   state: {
     accessToken: null,
     email: "",
@@ -15,6 +22,7 @@ export default new Vuex.Store({
     phone: "",
     photo: ""
     // roll : "",
+
   },
   getters: {
     getAccessToken(state) {
@@ -87,16 +95,42 @@ export default new Vuex.Store({
             "auth-token",
             `${response.data["auth-token"]}`
           );
-          sessionStorage.setItem("phone", `${response.data["phone"]}`);
+          sessionStorage.setItem("email", `${response.data["email"]}`);
+          sessionStorage.setItem("passwoard", `${response.data["password"]}`);
         })
         .catch(() => {
           reject();
         });
     },
+    // getMemberInfo(context, user) {
+    //   let token = localStorage.getItem(
+    //     "auth-token",
+    //     `${response.data["auth-token"]}`
+    //   );
+    //   axios
+    //   .get(`${SERVER_URL}/user/confirm/login`, token)
+    //   .then(response => {
+    //     let userInfo = {
+    //       email: `${response.data["email"]}`,
+    //       passwoard: `${response.data["password"]}`
+    //     }
+    //     context.commit("LOGIN", response.data);
+    //   })
+    //   .catch(() => {
+    //     reject();
+    //   });
+
+
+
+
+    // },
+
     LOGOUT(context) {
       context.commit("LOGOUT");
       axios.defaults.headers.common["auth-token"] = undefined;
       sessionStorage.removeItem("auth-token");
+      // sessionStorage.removeItem("email", `${response.data["email"]}`);
+      // sessionStorage.removeItem("passwoard", `${response.data["password"]}`);
     },
 
     FINDPW(context, user) {
@@ -133,7 +167,7 @@ export default new Vuex.Store({
         .catch(() => {
           reject();
         });
-    }
+    },
   },
   modules: {}
 });

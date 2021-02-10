@@ -32,12 +32,8 @@
 
     <div class="row">
       <div class="col-md-6">
-        <b-button variant="primary" @click="checkform" class="col-md-6"
+        <b-button variant="dark" @click="checkform" class="col-md-6"
           >정보수정</b-button
-        >
-
-        <b-button variant="danger" @click="withdraw" class="col-md-6"
-          >회원탈퇴</b-button
         >
       </div>
     </div>
@@ -45,7 +41,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -61,22 +56,6 @@ export default {
     };
   },
   methods: {
-    withdraw: function() {
-      axios
-        .post(`${SERVER_URL}/user/withdraw`, this.user)
-        .default.then(response => {
-          // this.$router.replace("/user/profile");
-          this.$store.dispatch("LOGOUT").then(() => {
-            this.$router.replace("/login");
-          });
-        })
-        .catch(() => {
-          console.log("err");
-        });
-    },
-    // updateform: function() {
-    //   this.$router.push("/user/update");
-    // },
     checkform: function() {
       this.$router.replace("/user/passcheck");
     }

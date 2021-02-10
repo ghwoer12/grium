@@ -13,11 +13,7 @@
     </div>
     <div class="row">
       <div class="col-md-5">
-        <fg-input
-          type="text"
-          label="password"
-          v-model="user.password"
-        >
+        <fg-input type="text" label="password" v-model="user.password">
         </fg-input>
       </div>
     </div>
@@ -46,7 +42,12 @@
 
     <div class="row">
       <div class="col-md-5">
-        <b-button variant="primary" @click="update">수정완료</b-button>
+        <b-button variant="primary" @click="update" class="col-md-6"
+          >정보수정</b-button
+        >
+        <b-button variant="danger" @click="withdraw" class="col-md-6"
+          >회원탈퇴</b-button
+        >
       </div>
     </div>
   </card>
@@ -62,7 +63,7 @@ export default {
       user: {
         email: "",
         name: "",
-        password:"",
+        password: "",
         phone: ""
       }
     };
@@ -75,12 +76,27 @@ export default {
         .put(`${SERVER_URL}/user/edit`, user)
         .then(response => {
           // this.$router.replace("/user/profile");
-          this.$store.dispatch("LOGOUT").then(() => {
-            this.$router.replace("/login");
-          });
+          // this.$store.dispatch("LOGOUT").then(() => {
+            this.$router.replace("/user/profile");
+          // });
         })
         .catch(({ message }) => {
           this.msg = message;
+        });
+    },
+    withdraw: function() {
+      let user = this.user;
+      console.log(user);
+      axios
+        .post(`${SERVER_URL}/user/withdraw`, user)
+        .then(response => {
+          // this.$router.replace("/user/profile");
+          this.$store.dispatch("LOGOUT").then(() => {
+            this.$router.replace("/user/register");
+          });
+        })
+        .catch(() => {
+          console.log("err");
         });
     }
   },

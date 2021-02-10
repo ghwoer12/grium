@@ -46,7 +46,7 @@ public class UserController {
 
 	@PostMapping("/signup")
 	@ResponseBody
-	public boolean signup(@RequestBody UserDto user, HttpServletResponse response, HttpSession session)
+	public boolean signup(@RequestBody UserDto user)
 			throws Exception {
 		System.out.println("====================================> User Signup");
 		Map<String, Object> resultMap = new HashMap<>();
@@ -120,8 +120,7 @@ public class UserController {
 	}
 
 	@PostMapping("/confirm/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto user, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		String email = user.getEmail();
@@ -180,7 +179,7 @@ public class UserController {
 	}
 
 	@PutMapping("/edit")
-	public boolean edit(@RequestBody UserDto user, HttpServletResponse response, HttpSession session) {
+	public boolean edit(@RequestBody UserDto user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		System.out.println("edit>>>" + user);
@@ -228,7 +227,7 @@ public class UserController {
 
 	@PostMapping("/withdraw")
 	@ResponseBody
-	public boolean withdraw(@RequestBody UserDto user, HttpServletResponse response, HttpSession session) {
+	public boolean withdraw(@RequestBody UserDto user) {
 		System.out.println("====================================> User Withdraw");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
@@ -261,8 +260,7 @@ public class UserController {
 	}
 
 	@PostMapping("/findpw")
-	public ResponseEntity<Map<String, Object>> findpw(@RequestBody UserDto user, HttpServletResponse response,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> findpw(@RequestBody UserDto user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		String email = user.getEmail();

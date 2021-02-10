@@ -35,10 +35,6 @@
         <b-button variant="primary" @click="checkform" class="col-md-6"
           >정보수정</b-button
         >
-
-        <b-button variant="danger" @click="withdraw" class="col-md-6"
-          >회원탈퇴</b-button
-        >
       </div>
     </div>
   </card>
@@ -61,22 +57,6 @@ export default {
     };
   },
   methods: {
-    withdraw: function() {
-      axios
-        .post(`${SERVER_URL}/user/withdraw`, this.user)
-        .default.then(response => {
-          // this.$router.replace("/user/profile");
-          this.$store.dispatch("LOGOUT").then(() => {
-            this.$router.replace("/login");
-          });
-        })
-        .catch(() => {
-          console.log("err");
-        });
-    },
-    // updateform: function() {
-    //   this.$router.push("/user/update");
-    // },
     checkform: function() {
       this.$router.replace("/user/passcheck");
     }

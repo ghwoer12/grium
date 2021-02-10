@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ssafy.alert">
+	
+	<select id="checkalert" parameterType="AlertDTO" resultType="int">
+		select
+		TYPE
+		from ALERT_TB
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</select>
+	
+	<insert id="pressalert" parameterType="AlertDTO">
+		insert into ALERT_TB(BOARD_ID, USER_ID, ALERT_DT, READ_CHECK, TYPE)
+		values(#{board_id}, #{user_id}, now(), 0, 1)
+	</insert>
+	
+	<update id="upalert" parameterType="AlertDTO">
+		update ALERT_TB
+		set TYPE=1
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</update>
+	
+	<update id="canalert" parameterType="AlertDTO">
+		update ALERT_TB
+		set TYPE=0
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</update>
+	
+	<select id="checktype" parameterType="map" resultType="int">
+		select
+		TYPE
+		from RIP_TB
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</select>
+	
+</mapper>

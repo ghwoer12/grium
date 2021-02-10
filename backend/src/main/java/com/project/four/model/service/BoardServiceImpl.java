@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.BoardDto;
 import com.project.four.model.dto.GoneDto;
+import com.project.four.model.dto.RipDto;
 import com.project.four.model.repo.BoardRepository;
 import com.project.four.util.Pagination;
 
@@ -69,4 +71,59 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return brepo.callboard(board_id);
 	}
+
+	@Override
+	public int checkrip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checkrip(rip);
+	}
+
+	@Override
+	public int pressrip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.pressrip(rip);
+	}
+
+	@Override
+	public int updaterip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.updaterip(rip);
+	}
+
+	@Override
+	public int cancle(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.cancle(rip);
+	}
+
+	@Override
+	public int checkalert(AlertDto alert) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checkalert(alert);
+	}
+
+	@Override
+	public int pressralert(AlertDto alert) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.pressalert(alert);
+	}
+
+	@Override
+	public int upalert(AlertDto alert) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.upalert(alert);
+	}
+
+	@Override
+	public int canalert(AlertDto alert) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.canalert(alert);
+	}
+
+	@Override
+	public int checktype(int board_id, String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checktype(board_id, user_id);
+	}
+
 }

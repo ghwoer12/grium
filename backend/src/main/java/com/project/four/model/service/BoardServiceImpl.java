@@ -120,4 +120,10 @@ public class BoardServiceImpl implements BoardService{
 		return brepo.canalert(alert);
 	}
 
+	@Override
+	public int checktype(int board_id, String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checktype(board_id, user_id);
+	}
+
 }

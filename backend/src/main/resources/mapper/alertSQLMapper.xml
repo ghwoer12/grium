@@ -29,4 +29,11 @@
 		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
 	</update>
 	
+	<select id="checktype" parameterType="map" resultType="int">
+		select
+		TYPE
+		from RIP_TB
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</select>
+	
 </mapper>

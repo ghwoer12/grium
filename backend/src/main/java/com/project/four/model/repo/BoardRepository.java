@@ -120,4 +120,13 @@ public class BoardRepository {
 		int result = session.update("ssafy.alert.canalert", alert);
 		return result;
 	}
+
+	public int checktype(int board_id, String user_id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_id", board_id);
+		map.put("user_id", user_id);
+		int result = 0;
+		if(session.selectOne("ssafy.alert.checktype", map) != null) result = session.selectOne("ssafy.alert.checktype", map);
+		return result;
+	}
 }

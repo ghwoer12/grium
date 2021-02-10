@@ -44,4 +44,6 @@ public interface BoardService {
 
 	int canalert(AlertDto alert) throws Exception;
 
+	int checktype(int board_id, String user_id) throws Exception;
+
 }

@@ -285,6 +285,9 @@ public class BoardController {
 			int check = boardservice.checkAuth(board_id, user_id);
 			GoneDto gone = boardservice.checkchild(gone_id, user_id);
 			
+			int type = boardservice.checktype(board_id, user_id);
+			resultMap.put("TYPE", type);
+			
 			if(check > 0 || gone != null) {
 				logger.info("====================================> 작성자");
 				isAuth = true;
@@ -332,14 +335,17 @@ public class BoardController {
 			if(checkrip == 1) {
 				logger.info("====================================> 좋아요 취소");
 				good = boardservice.cancle(rip);
+				resultMap.put("TYPE", 0);
 				status = HttpStatus.ACCEPTED;
 			} else if (checkrip == 2) {
 				logger.info("====================================> 빈 좋아요 상태/최초");
 				good = boardservice.pressrip(rip);
+				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.info("====================================> 빈 좋아요 > 좋아요");
 				good = boardservice.updaterip(rip);
+				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			}
 			
@@ -365,15 +371,18 @@ public class BoardController {
 			if(checkalert == 1) {
 				logger.info("====================================> 신고 취소");
 				report = boardservice.canalert(alert);
+				resultMap.put("TYPE", 0);
 				status = HttpStatus.ACCEPTED;
 			} else if (checkalert == 2) {
 				logger.info("====================================> 빈 신고 상태/최초");
 				report = boardservice.pressralert(alert);
+				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.info("====================================> 신고 취소 > 재신고");
 				// Type이 0으로 돌아간 상태
 				report = boardservice.upalert(alert);
+				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			}
 			

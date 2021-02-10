@@ -16,7 +16,27 @@
           multiple="multiple"
         />
         <div>
-          <input type="number" name="type" value="0" v-model="photo.type" />
+          <ToggleButton
+            id="onoff"
+            :defaultState="true"
+            v-on:change="triggerEvent"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="userid"
+            v-bind:value="this.gallery.userid"
+            v-on:input="updateUserid"
+          />
+          <input
+            type="text"
+            placeholder="writer"
+            v-bind:value="this.gallery.writer"
+            v-on:input="updateWriter"
+          />
+        </div>
+        <div>
           <button @click="onUpload">Upload</button>
         </div>
       </div>
@@ -137,26 +157,46 @@
 <script>
 import axios from "axios";
 import Card from "../../components/Cards/Card.vue";
+import ToggleButton from "../../components/ToggleButton.vue";
 
 export default {
   name: "Album",
   components: {
     Card,
+    ToggleButton
   },
 
   data() {
     return {
       selectedFile: null,
-      photo: {
-        email: "",
-        name: "",
-        type: 0,
-      },
+      active: false,
+      gallery: {
+        userid: "",
+        writer: "",
+        secret: 0
+      }
     };
   },
   methods: {
+    updateUserid: function(event) {
+      var updatedText = event.target.value;
+      this.gallery.userid = updatedText;
+    },
+    updateWriter: function(event) {
+      var updatedText = event.target.value;
+      this.gallery.writer = updatedText;
+    },
+    triggerEvent(value) {
+      this.active = value;
+      if (this.active) {
+        this.gallery.secret = 0;
+      } else {
+        this.gallery.secret = 1;
+      }
+      // alert(this.active);
+      // alert("secret값은 " + this.gallery.secret);
+    },
     fileopenclick() {
-      // alert("dddd");
       this.$refs.fileInput.click();
     },
     onFileSelected(event) {
@@ -164,19 +204,49 @@ export default {
     },
 
     onUpload() {
-      let photo = this.photo;
-
+      // let gallery = this.gallery;
+      // const fd = new FormData();
+      // fd.append("image", this.selectedFile, this.selectedFile.name);
+      // alert("selectedFile :" + this.selectedFile.name);
+      // alert("USERID : " + gallery.userid);
+      // alert("WRITER : " + gallery.writer);
+      // alert("SECRET : " + gallery.secret);
+      let gallery = this.gallery;
       const fd = new FormData();
       fd.append("image", this.selectedFile, this.selectedFile.name);
-      axios.post("${SERVER_URL}/gallary/upload", fd, photo).then((res) => {
+      axios.post("${SERVER_URL}/gallary/upload", fd, gallery).then(res => {
         console.log(res);
       });
-    },
+    }
   },
   created() {
     this.user.email = this.$store.getters["getEmail"];
     this.user.name = this.$store.getters["getName"];
-  },
+  }
 };
 </script>
-<style></style>
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+.box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.toggle_container {
+  margin: 0px auto;
+  background: #efefef;
+  width: 120px;
+  padding: 10px 0;
+  border-radius: 30px;
+  transition: all 0.25s;
+}
+.toggle_container.active {
+  background: #e9ffef;
+}
+</style>

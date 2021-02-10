@@ -49,6 +49,7 @@
           ref="fileInput"
           id="upfile"
           multiple="multiple"
+          enctype="multipart/form-data"
         />
         <div>
           <button @click="onUpload">Upload</button>
@@ -173,6 +174,7 @@
 import axios from "axios";
 import Card from "../../components/Cards/Card.vue";
 import ToggleButton from "../../components/ToggleButton.vue";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Album",
@@ -229,9 +231,15 @@ export default {
       let gallery = this.gallery;
       const fd = new FormData();
       fd.append("image", this.selectedFile, this.selectedFile.name);
-      axios.post("${SERVER_URL}/gallary/upload", fd, gallery).then(res => {
-        console.log(res);
-      });
+      axios
+        .post(`${SERVER_URL}/gallary/upload`, fd, gallery)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(() => {
+          console.log("err");
+          // alert("액시오스 전");
+        });
     }
   },
   created() {

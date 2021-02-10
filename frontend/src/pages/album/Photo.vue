@@ -3,10 +3,45 @@
     <card class="col-sm-6 col-md-3">
       <div class="text-center">
         <img
+          id="filechange"
           src="@/assets/img/add.png"
           alt="PHOTO"
           v-on:click="fileopenclick"
         />
+
+        <div>
+          <ToggleButton
+            id="onoff"
+            :defaultState="true"
+            v-on:change="triggerEvent"
+          />
+        </div>
+
+        <div>
+          <input
+            style="display: none"
+            type="text"
+            placeholder="userid"
+            v-bind:value="this.gallery.email"
+            v-on:input="updateUserid"
+            disabled
+          />
+          <input
+            style="display: none"
+            type="text"
+            placeholder="writer"
+            v-bind:value="this.gallery.writer"
+            v-on:input="updateWriter"
+            disabled
+          />
+          <input
+            style="display: none"
+            type="text"
+            placeholder="secret"
+            v-bind:value="this.gallery.secret"
+            disabled
+          />
+        </div>
         <input
           style="display: none"
           type="file"
@@ -15,27 +50,6 @@
           id="upfile"
           multiple="multiple"
         />
-        <div>
-          <ToggleButton
-            id="onoff"
-            :defaultState="true"
-            v-on:change="triggerEvent"
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="userid"
-            v-bind:value="this.gallery.userid"
-            v-on:input="updateUserid"
-          />
-          <input
-            type="text"
-            placeholder="writer"
-            v-bind:value="this.gallery.writer"
-            v-on:input="updateWriter"
-          />
-        </div>
         <div>
           <button @click="onUpload">Upload</button>
         </div>
@@ -51,6 +65,7 @@
           src="@/assets/img/report_basic.png"
           alt="PHOTO"
           style="margin-right: 25px; margin-bottom: 10px"
+          onmouseover="@click"
         />
         <img
           src="@/assets/img/condol_basic.png"
@@ -171,7 +186,7 @@ export default {
       selectedFile: null,
       active: false,
       gallery: {
-        userid: "",
+        email: "",
         writer: "",
         secret: 0
       }
@@ -180,7 +195,7 @@ export default {
   methods: {
     updateUserid: function(event) {
       var updatedText = event.target.value;
-      this.gallery.userid = updatedText;
+      this.gallery.email = updatedText;
     },
     updateWriter: function(event) {
       var updatedText = event.target.value;
@@ -220,8 +235,8 @@ export default {
     }
   },
   created() {
-    this.user.email = this.$store.getters["getEmail"];
-    this.user.name = this.$store.getters["getName"];
+    this.gallery.email = this.$store.getters["getEmail"];
+    this.gallery.writer = this.$store.getters["getName"];
   }
 };
 </script>

@@ -32,7 +32,7 @@
 
     <div class="row">
       <div class="col-md-6">
-        <b-button variant="primary" @click="checkform" class="col-md-6"
+        <b-button variant="dark" @click="checkform" class="col-md-6"
           >정보수정</b-button
         >
       </div>
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 

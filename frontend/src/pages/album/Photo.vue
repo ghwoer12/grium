@@ -3,18 +3,12 @@
     <card class="col-sm-6 col-md-3">
       <div class="text-center">
         <img
+          id="filechange"
           src="@/assets/img/add.png"
           alt="PHOTO"
           v-on:click="fileopenclick"
         />
-        <input
-          style="display: none"
-          type="file"
-          @change="onFileSelected"
-          ref="fileInput"
-          id="upfile"
-          multiple="multiple"
-        />
+
         <div>
           <ToggleButton
             id="onoff"
@@ -22,22 +16,42 @@
             v-on:change="triggerEvent"
           />
         </div>
+
         <div>
           <input
+            style="display: none"
             type="text"
             placeholder="userid"
-            v-bind:value="this.gallery.userid"
+            v-bind:value="this.gallery.email"
             v-on:input="updateUserid"
+            disabled
           />
           <input
+            style="display: none"
             type="text"
             placeholder="writer"
             v-bind:value="this.gallery.writer"
             v-on:input="updateWriter"
+            disabled
+          />
+          <input
+            style="display: none"
+            type="text"
+            placeholder="secret"
+            v-bind:value="this.gallery.secret"
+            disabled
           />
         </div>
+        <input
+          type="file"
+          @change="onFileSelected"
+          ref="files"
+          id="files"
+          multiple="multiple"
+        />
         <div>
-          <button @click="onUpload">Upload</button>
+          <button v-on:click="onUpload()">Upload</button>
+          <!-- <button v-on:click="submitFile()">Submit</button> -->
         </div>
       </div>
       <div class="text-center" style="margin-top: 25px">
@@ -51,6 +65,7 @@
           src="@/assets/img/report_basic.png"
           alt="PHOTO"
           style="margin-right: 25px; margin-bottom: 10px"
+          onmouseover="@click"
         />
         <img
           src="@/assets/img/condol_basic.png"
@@ -60,97 +75,7 @@
       </div>
     </card>
 
-    <card class="col-sm-6 col-md-3">
-      <div class="text-center">
-        <img src="@/assets/img/photo_basic.png" alt="PHOTO" />
-      </div>
-      <div class="text-center" style="margin-top: 25px">
-        <p><strong>SHARE YOUR PHOTOS</strong></p>
-        <p><mark>It'll be beautiful</mark></p>
-      </div>
-      <hr />
-      <div class="text-center">
-        <img
-          src="@/assets/img/report_basic.png"
-          alt="PHOTO"
-          style="margin-right: 25px; margin-bottom: 10px"
-        />
-        <img
-          src="@/assets/img/condol_basic.png"
-          alt="PHOTO"
-          style="margin-bottom: 10px"
-        />
-      </div>
-    </card>
 
-    <card class="col-sm-6 col-md-3">
-      <div class="text-center">
-        <img src="@/assets/img/photo_basic.png" alt="PHOTO" />
-      </div>
-      <div class="text-center" style="margin-top: 25px">
-        <p><strong>SHARE YOUR PHOTOS</strong></p>
-        <p><mark>It'll be beautiful</mark></p>
-      </div>
-      <hr />
-      <div class="text-center">
-        <img
-          src="@/assets/img/report_basic.png"
-          alt="PHOTO"
-          style="margin-right: 25px; margin-bottom: 10px"
-        />
-        <img
-          src="@/assets/img/condol_basic.png"
-          alt="PHOTO"
-          style="margin-bottom: 10px"
-        />
-      </div>
-    </card>
-
-    <card class="col-sm-6 col-md-3">
-      <div class="text-center">
-        <img src="@/assets/img/photo_basic.png" alt="PHOTO" />
-      </div>
-      <div class="text-center" style="margin-top: 25px">
-        <p><strong>SHARE YOUR PHOTOS</strong></p>
-        <p><mark>It'll be beautiful</mark></p>
-      </div>
-      <hr />
-      <div class="text-center">
-        <img
-          src="@/assets/img/report_basic.png"
-          alt="PHOTO"
-          style="margin-right: 25px; margin-bottom: 10px"
-        />
-        <img
-          src="@/assets/img/condol_basic.png"
-          alt="PHOTO"
-          style="margin-bottom: 10px"
-        />
-      </div>
-    </card>
-
-    <card class="col-sm-6 col-md-3">
-      <div class="text-center">
-        <img src="@/assets/img/photo_basic.png" alt="PHOTO" />
-      </div>
-      <div class="text-center" style="margin-top: 25px">
-        <p><strong>SHARE YOUR PHOTOS</strong></p>
-        <p><mark>It'll be beautiful</mark></p>
-      </div>
-      <hr />
-      <div class="text-center">
-        <img
-          src="@/assets/img/report_basic.png"
-          alt="PHOTO"
-          style="margin-right: 25px; margin-bottom: 10px"
-        />
-        <img
-          src="@/assets/img/condol_basic.png"
-          alt="PHOTO"
-          style="margin-bottom: 10px"
-        />
-      </div>
-    </card>
   </div>
 </template>
 
@@ -158,6 +83,7 @@
 import axios from "axios";
 import Card from "../../components/Cards/Card.vue";
 import ToggleButton from "../../components/ToggleButton.vue";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Album",
@@ -170,17 +96,21 @@ export default {
     return {
       selectedFile: null,
       active: false,
+      title: "",
+      files: [],
+      // galleryDatas: [],
       gallery: {
-        userid: "",
+        email: "",
         writer: "",
         secret: 0
       }
     };
   },
+
   methods: {
     updateUserid: function(event) {
       var updatedText = event.target.value;
-      this.gallery.userid = updatedText;
+      this.gallery.email = updatedText;
     },
     updateWriter: function(event) {
       var updatedText = event.target.value;
@@ -193,36 +123,40 @@ export default {
       } else {
         this.gallery.secret = 1;
       }
-      // alert(this.active);
-      // alert("secret값은 " + this.gallery.secret);
     },
     fileopenclick() {
-      this.$refs.fileInput.click();
+      this.$refs.files.click();
     },
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
+    onFileSelected() {
+      this.files = this.$refs.files.files;
+      console.log(this.files);
     },
 
     onUpload() {
-      // let gallery = this.gallery;
-      // const fd = new FormData();
-      // fd.append("image", this.selectedFile, this.selectedFile.name);
-      // alert("selectedFile :" + this.selectedFile.name);
-      // alert("USERID : " + gallery.userid);
-      // alert("WRITER : " + gallery.writer);
-      // alert("SECRET : " + gallery.secret);
-      let gallery = this.gallery;
-      let hiru;
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
-      axios.post("${SERVER_URL}/gallary/upload", fd, gallery).then(res => {
-        console.log(res);
-      });
+
+      for (let i = 0; i < this.files.length; i++) {
+        let gallery = this.gallery;
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("files", this.files[i]);
+        axios
+          .post('http://localhost:8081/api/gallery/upload', gallery, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
+          .then(function() {
+            console.log("SUCCESS!!");
+          })
+          .catch(function() {
+            console.log("FAILURE!!");
+          });
+      }
     }
   },
   created() {
-    this.user.email = this.$store.getters["getEmail"];
-    this.user.name = this.$store.getters["getName"];
+    this.gallery.email = this.$store.getters["getEmail"];
+    this.gallery.writer = this.$store.getters["getName"];
   }
 };
 </script>

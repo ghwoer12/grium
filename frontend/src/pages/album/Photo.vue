@@ -42,20 +42,17 @@
             disabled
           />
         </div>
+        <input
+          type="file"
+          @change="onFileSelected"
+          ref="files"
+          id="files"
+          multiple="multiple"
+        />
         <div>
-          <input
-            type="file"
-            v-on:change="handleFileUpload"
-            ref="upfile"
-            id="upfile"
-            multiple
-          />
-          <button v-on:click="submitFile()">담기</button>
+          <button v-on:click="onUpload()">Upload</button>
+          <!-- <button v-on:click="submitFile()">Submit</button> -->
         </div>
-
-        <!-- <div>
-          <button @click="onUpload">Upload</button>
-        </div> -->
       </div>
       <div class="text-center" style="margin-top: 25px">
         <p><strong>SHARE YOUR PHOTOS</strong></p>
@@ -77,17 +74,6 @@
         />
       </div>
     </card>
-    <!-- <div>
-      이미지 리스트 받아오기
-      <div v-for="(galleryData, index) in galleryDatas" :key="index">
-        {{ galleryData.title }}
-        <img
-          style="width: 120px;"
-          :src="galleryData.file_path"
-          alt="로드실패"
-        />
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -108,25 +94,15 @@ export default {
     return {
       active: false,
       title: "",
-      upfile: [],
-      galleryDatas: [],
+      files: [],
+      // galleryDatas: [],
       gallery: {
         email: "",
         writer: "",
         secret: 0
       }
     };
-  },
-  // mounted() {
-  //   axios
-  //     .get(`${SERVER_URL}/gallary/upload`)
-  //     .then(res => {
-  //       console.log(res.data);
-  //       this.galleryDatas = res.data;
-  //     })
-  //     .catch(error => console.log(error));
-  // },
-  methods: {
+  },  methods: {
     updateUserid: function(event) {
       var updatedText = event.target.value;
       this.gallery.email = updatedText;
@@ -143,6 +119,13 @@ export default {
         this.gallery.secret = 1;
       }
     },
+    fileopenclick() {
+      this.$refs.files.click();
+    },
+    onFileSelected() {
+      this.files = this.$refs.files.files;
+      console.log(this.files);
+    },
     // fileopenclick() {
     //   this.$refs.fileInput.click();
     // },
@@ -152,34 +135,15 @@ export default {
     //   console.log(this.selectedFile);
     // },
 
-    // onUpload() {
-    //   for (let i = 0; i < this.selectedFile.length; i++) {
-    //     let gallery = this.gallery;
-    //     const fd = new FormData();
-    //     fd.append("image", this.selectedFile, this.selectedFile.name);
-    //     axios
-    //       .post(`${SERVER_URL}/gallary/upload`, fd, gallery, {
-    //         headers: {
-    //           "Content-Type": "multipart/form-data"
-    //         }
-    //       })
-    //       .then(res => {
-    //         console.log(res);
-    //         alert("axios성공");
-    //       })
-    //       .catch(() => {
-    //         console.log("err");
-    //         // alert("액시오스 전");
-    //       });
-    //   }
-    // },
-    submitFile() {
-      for (let i = 0; i < this.upfile.length; i++) {
-        let formData = new FormData();
+    onUpload() {
+
+      for (let i = 0; i < this.files.length; i++) {
+        let gallery = this.gallery;
+        const formData = new FormData();
         formData.append("title", this.title);
-        formData.append("upfile", this.upfile[i]);
+        formData.append("files", this.files[i]);
         axios
-          .post(`${SERVER_URL}/gallary/upload`, formData, {
+          .post('http://localhost:8081/api/gallery/upload', gallery, formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
@@ -191,10 +155,6 @@ export default {
             console.log("FAILURE!!");
           });
       }
-    },
-    handleFileUpload() {
-      this.upfile = this.$refs.upfile.upfile;
-      console.log(this.upfile);
     }
   },
   created() {

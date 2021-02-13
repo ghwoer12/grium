@@ -65,7 +65,7 @@ export default {
         name: "",
         password: "",
         phone: ""
-      },
+      }
     };
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
         .then(response => {
           // this.$router.replace("/user/profile");
           // this.$store.dispatch("LOGOUT").then(() => {
-            this.$router.replace("/user/profile");
+          this.$router.replace("/user/profile");
           // });
         })
         .catch(({ message }) => {

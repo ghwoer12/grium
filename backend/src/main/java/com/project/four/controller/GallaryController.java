@@ -88,7 +88,7 @@ public class GallaryController {
 	
 
 	@PostMapping("/upload")
-	public ResponseEntity<Map<String, Object>> upload(@RequestBody GallaryDto gallary, @RequestParam("upfile") MultipartFile[] files){
+	public ResponseEntity<Map<String, Object>> upload( GallaryDto gallary, @RequestParam("upfile") MultipartFile[] files){
 		Map<String, Object> resultMap = new HashMap<>();
 		System.out.println("하이루");
 		HttpStatus status = null;

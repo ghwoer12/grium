@@ -16,22 +16,50 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
-import com.project.four.model.dto.GallaryDto;
-import com.project.four.model.repo.GallaryRepository;
+import com.project.four.model.dto.GalleryDto;
+import com.project.four.model.dto.GoneDto;
+import com.project.four.model.repo.GalleryRepository;
+import com.project.four.util.Pagination;
 
 @Service
-public class GallaryServiceImpl implements GallaryService{
+public class GalleryServiceImpl implements GalleryService{
 	
 	@Autowired
-	GallaryRepository grepo;
+	GalleryRepository grepo;
 	
 	@Override
 	@Transactional
-	public void upload(GallaryDto gallary) {
+	public void upload(GalleryDto gallary) {
 		// TODO Auto-generated method stub
 		grepo.upload(gallary);
 		System.out.println(gallary.getPhoto_id());
 		grepo.registfile(gallary);
+	}
+	
+	@Override
+	public String find_id(String email) {
+		// TODO Auto-generated method stub
+		String result = grepo.find_id(email);
+		System.out.println("serviceImpl : reuslt : "+ result);
+		return result;
+	}
+	
+	@Override
+	public GoneDto find_gone(String gone_id, String user_id) {
+		// TODO Auto-generated method stub
+		return grepo.find_gone(gone_id, user_id);
+	}
+	
+	@Override
+	public int get_total(int isOwner) {
+		// TODO Auto-generated method stub
+		return grepo.get_total(isOwner);
+	}
+	
+	@Override
+	public List<GalleryDto> get_allList(Pagination pagination) {
+		// TODO Auto-generated method stub
+		return grepo.get_allList(pagination);
 	}
 	/*
 	@Value("${cloud.aws.s3.bucket}")

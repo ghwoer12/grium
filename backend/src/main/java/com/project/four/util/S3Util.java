@@ -27,6 +27,9 @@ public class S3Util {
 	@Value("${cloud.aws.region.static}")
 	private String region;
 	
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
+	
 	private AmazonS3 conn;
 	
 	@PostConstruct

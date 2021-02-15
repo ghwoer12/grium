@@ -9,8 +9,12 @@
         <typeAlias type="com.project.four.model.dto.UserDto" alias="UserDTO" />
         <typeAlias type="com.project.four.model.dto.BoardDto" alias="BoardDTO" />
         <typeAlias type="com.project.four.model.dto.GoneDto" alias="GoneDTO" />
-        <typeAlias type="com.project.four.model.dto.GallaryDto" alias="GallaryDTO" />
+        <typeAlias type="com.project.four.model.dto.GalleryDto" alias="GalleryDTO" />
         <typeAlias type="com.project.four.model.dto.GaddressDto" alias="GaddressDTO"/>
+        <typeAlias type="com.project.four.util.Pagination" alias="Pagination" />
+
+
+        
         
     </typeAliases>
     
@@ -18,7 +22,7 @@
   <mappers>
     <mapper resource="mapper/userSQLMapper.xml" />
     <mapper resource="mapper/boardSQLMapper.xml" />
-    <mapper resource="mapper/gallarySQLMapper.xml" />
+    <mapper resource="mapper/gallerySQLMapper.xml" />
   </mappers>
 
 </configuration>

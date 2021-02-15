@@ -1,5 +1,5 @@
 <template>
-  <card title="등록">
+  <card title="글 등록">
     <div class="form-group">
       <label for="title">제목</label> &nbsp;
       <input
@@ -12,96 +12,123 @@
       />
     </div>
     <br />
-
     <div class="form-group">
       <label for="writer">작성자</label> &nbsp;
       <input
         type="text"
-        class="form-control"
+        class="form-control col-sm-5"
         id="writer"
         ref="writer"
-        placeholder="이름을 입력하세요"
+        :readonly="true"
         v-model="writer"
       />
     </div>
     <br />
-
     <div class="form-group">
-      <label for="context">내용</label> &nbsp;
+      <label for="board_dt">날짜</label> &nbsp;
+      <input
+        type="text"
+        class="form-control col-sm-6"
+        id="board_dt"
+        ref="board_dt"
+        placeholder="자동으로 날짜가 들어가게 해"
+        v-model="board_dt"
+      />
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="content">내용</label> &nbsp;
       <textarea
         type="context"
         class="form-control"
-        id="context"
-        ref="context"
+        id="content"
+        ref="content"
         placeholder="내용을 입력하세요"
-        v-model="context"
+        v-model="content"
       ></textarea>
     </div>
     <br />
 
-
     <div class="text-right">
-      <button
-        class="btn btn-dark"
-        @click="checkHandler"
-      >
+      <label>
+        <input type="checkbox" id="secret" v-model="secret" /> 비밀글
+      </label>
+      &nbsp;
+      <button class="btn btn-dark" @click="checkHandler">
         등록
       </button>
-
+      &nbsp;
       <button class="btn btn-dark" @click="moveList">목록</button>
+      &nbsp;
     </div>
     <br />
   </card>
 </template>
 
 <script>
+import axios from "axios";
+
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
-  name: "board-Form",
+  name: "boardinsert",
   props: {
     type: { type: String }
   },
   data: function() {
     return {
-      no: "",
+      gone_id: "9t8e7s6t",
+      board_id: "",
       title: "",
       writer: "",
-      date: "",
-      context: "",
-      click: "",
-      flag:""
+      board_dt: "",
+      content: "",
+      secret: "",
+        name: "",
+        user_id: ""
     };
   },
   methods: {
     checkHandler() {
       let err = true;
       let msg = "";
-      !this.writer &&
-        ((msg = "작성자를 입력해주세요"), (err = false), this.$refs.writer.focus());
-      err &&
-        !this.title &&
+      !this.title &&
         ((msg = "제목을 입력해주세요"),
         (err = false),
         this.$refs.title.focus());
       err &&
-        !this.context &&
-        ((msg = "내용을 입력해주세요"), (err = false), this.$refs.context.focus());
+        !this.content &&
+        ((msg = "내용을 입력해주세요"),
+        (err = false),
+        this.$refs.content.focus());
       if (!err) alert(msg);
       //else this.type == 'create' ? this.createHandler() : this.updateHandler();
       else this.createHandler();
     },
 
     createHandler() {
+      let {
+        gone_id,
+        board_id,
+        title,
+        writer,
+        board_dt,
+        content,
+        secret
+      } = this;
+      let board = {
+        gone_id,
+        board_id,
+        title,
+        writer,
+        board_dt,
+        content,
+        secret
+      };
+
       axios
-        .post(`${SERVER_URL}/board/insert`, {
-        //   noq: this.noq,
-        //   userid: this.userid,
-        //   name: this.name,
-        //   title: this.title,
-        //   text: this.text,
-        //   regDate: this.regDate
-        })
+        .post(`${SERVER_URL}/board/insert`, board)
         .then(({ data }) => {
           let msg = "등록 처리시 문제가 발생했습니다.";
           if (data > 0) {
@@ -116,6 +143,9 @@ export default {
     },
     moveList() {
       this.$router.push("/boardlist");
+    },
+    created() {
+      this.writer = this.$store.getters["getName"];
     }
   }
 };

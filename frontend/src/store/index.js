@@ -22,6 +22,7 @@ export default new Vuex.Store({
     phone: "",
     photo: ""
     // roll : "",
+
   },
   getters: {
     getAccessToken(state) {
@@ -166,7 +167,7 @@ export default new Vuex.Store({
         .catch(() => {
           reject();
         });
-    }
+    },
   },
   modules: {}
 });

@@ -1,0 +1,8 @@
+com\project\four\model\service\GallaryService.class
+com\project\four\model\service\S3FileUploadService.class
+com\project\four\util\S3Util.class
+com\project\four\controller\GallaryController.class
+com\project\four\model\dto\GaddressDto.class
+com\project\four\config\SwaggerConfig.class
+com\project\four\model\repo\GallaryRepository.class
+com\project\four\model\service\GallaryServiceImpl.class

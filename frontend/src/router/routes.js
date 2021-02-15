@@ -32,6 +32,9 @@ import FindpwSuccess from "@/pages/user/FindpwSuccess.vue";
 // Board
 import BoardList from "@/pages/board/BoardList.vue";
 import BoardInsert from "@/pages/board/BoardInsert.vue";
+import BoardRead from "@/pages/board/BoardRead.vue";
+import BoardUpdate from "@/pages/board/BoardUpdate.vue";
+import BoardDelete from "@/pages/board/BoardDelete.vue";
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
@@ -66,12 +69,6 @@ const routes = [
         component: Dashboard
       },
       // qna
-      {
-        path: "/qna",
-        name: "QnaList",
-        redirect: "/qna/list",
-        component: QnaList
-      },
       {
         path: "/qna/list",
         name: "QnaList",
@@ -158,7 +155,27 @@ const routes = [
         name: "BoardInsert",
         component: BoardInsert,
         // beforeEnter: requireAuth()
-      }
+      },
+      {
+        path: "/boardread",
+        name: "BoardRead",
+        component: BoardRead,
+        // beforeEnter: requireAuth()
+      },
+      {
+        path: "/boardupdate",
+        name: "BoardUpdate",
+        component: BoardUpdate,
+        props: true
+        // beforeEnter: requireAuth()
+      },
+      {
+        path: "/boarddelete",
+        name: "BoardDelete",
+        component: BoardDelete,
+        props: true
+        // beforeEnter: requireAuth()
+      },
     ]
   },
   { path: "*", component: NotFound }

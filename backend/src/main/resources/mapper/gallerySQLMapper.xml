@@ -78,24 +78,16 @@
 		where PHOTO_ID = #{photo_id}
 	</select>
 	
-<!-- 	<select id="getTotalCount" parameterType="map" resultType="int">
-		select count(articleno)
-		from guestbook
-		<if test="word != null and word != ''">
-			<if test="key == 'subject'">
-				where subject like concat('%', #{word}, '%')
-			</if>
-			<if test="key != 'subject'">
-				where ${key} = #{word}
-			</if>
-		</if>
-	</select> -->
+	<select id="IdList" parameterType="int" resultType="GaddressDTO">
+		select * from GADDRESS_TB where PHOTO_ID=#{photo_id}
+	</select>
 	
-	<!--  here we go -->
+	<update id="delupdate" parameterType="int">
+		update PHOTO_TB set FLAG=1 where PHOTO_ID=#{photo_id}
+	</update>
 	
-	
-	
-	
-
+	<select id="ListOne" parameterType="int" resultType="GalleryDTO">
+		select * from PHOTO_TB where photo_id=#{photo_id}
+	</select>
 
 </mapper>

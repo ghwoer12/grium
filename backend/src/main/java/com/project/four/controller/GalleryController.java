@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +37,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -97,6 +101,9 @@ public class GalleryController {
 			File file = new File(path ,saveFileName); //여기까지 convert
 			//경로이름을 넣는거야 . 이 경로에 file이라는 객체를 만듣꺼야
 			//file 생성시 user/dir이라는 디렉토리에 생성되도록 하기 위해서 경로를 없어오고
+			String line = "photo/";
+			saveFileName = line+saveFileName;
+			System.out.println(saveFileName);
 			
 			try {
 				mfile.transferTo(file); //현재 진행하는 디렉토리에 파일이 저장이 되고 
@@ -118,7 +125,6 @@ public class GalleryController {
 			galinfo.add(add);
 		}//포문
 		gallery.setGaddress(galinfo);
-		gallery.setGone_id("123");
 		String email = gallery.getEmail();
 		try {
 			email = util.encrypt(email);
@@ -184,15 +190,157 @@ public class GalleryController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			e.printStackTrace();
 		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@ApiOperation(value="Photo select", notes="앨범 사진 선택")
+	@GetMapping("/select/{photo_id}")
+	public ResponseEntity<Map<String, Object>> select(@PathVariable int photo_id) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+				
+		try {
+			logger.info("====================================> 번호 확인");
+			//파일 가져와서 삭제하고 db에 있는거 삭제
+			//아마 키앞에 photo/ 붙여야할꺼야
+			List<GaddressDto> list = gservice.list_id(photo_id);
+			GalleryDto dto = gservice.list_one(photo_id);
+			
+			if(dto!=null){
+				logger.info("====================================> 사진하나 선택 확인");
+				dto.setGaddress(list);	
+				resultMap.put("message", "사진 선택 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}else {
+				resultMap.put("message", "사진 선택에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("글 삭제 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	
+	
+	
+	@ApiOperation(value="Photo delete", notes="앨범 사진 삭제")
+	@DeleteMapping("/delete")
+	public ResponseEntity<Map<String, Object>> delete(@RequestBody int photo_id) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+				
+		try {
+			logger.info("====================================> 내용 삭제");
+			//파일 가져와서 삭제하고 db에 있는거 삭제
+			//아마 키앞에 photo/ 붙여야할꺼야
+//			List<GaddressDto> list = gservice.list_id(photo_id);
+//			System.out.println(list);
+//			
+//			for (GaddressDto dto : list) {
+//				String photo = dto.getServer_photo();
+//	           System.out.println("hiti : "+photo);
+//				s3util.setS3Client().deleteObject(new DeleteObjectRequest(bucket, photo));	
+//			}
+			
+			int result = gservice.delete(photo_id);
+			
+			if(result == 1) {
+				logger.info("====================================> 삭제 성공");
+				resultMap.put("message", "글 삭제에 성공하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", "글 삭제에 실패하였습니다.");
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("글 삭제 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	/*
+	@ApiOperation(value="Album good", notes="사진 추천")
+	@PostMapping("/algo")
+	public ResponseEntity<Map<String, Object>> algo(@RequestBody RipDto rip) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		int good = 0;
+		
+		try {
+			int checkrip = boardservice.checkrip(rip);
+			if(checkrip == 1) {
+				logger.info("====================================> 좋아요	 취소");
+				good = boardservice.cancle(rip);
+				resultMap.put("TYPE", 0);
+				status = HttpStatus.ACCEPTED;
+			} else if (checkrip == 2) {
+				logger.info("====================================> 빈 좋아요 상태/최초");
+				good = boardservice.pressrip(rip);
+				resultMap.put("TYPE", 1);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.info("====================================> 빈 좋아요 > 좋아요");
+				good = boardservice.updaterip(rip);
+				resultMap.put("TYPE", 1);
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("추천 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	@ApiOperation(value="Board report", notes="게시판 글 신고")
+	@PostMapping("/alert")
+	public ResponseEntity<Map<String, Object>> alert(@RequestBody AlertDto alert) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		int report = 0;
+		
+		try {
+			int checkalert = boardservice.checkalert(alert);
+			if(checkalert == 1) {
+				logger.info("====================================> 신고 취소");
+				report = boardservice.canalert(alert);
+				resultMap.put("TYPE", 0);
+				status = HttpStatus.ACCEPTED;
+			} else if (checkalert == 2) {
+				logger.info("====================================> 빈 신고 상태/최초");
+				report = boardservice.pressralert(alert);
+				resultMap.put("TYPE", 1);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.info("====================================> 신고 취소 > 재신고");
+				// Type이 0으로 돌아간 상태
+				report = boardservice.upalert(alert);
+				resultMap.put("TYPE", 1);
+				status = HttpStatus.ACCEPTED;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("신고 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	*/
 
-	
-	
-	
-	
-	
 	
 
 }

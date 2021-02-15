@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.util.Pagination;
@@ -48,5 +49,17 @@ public class GalleryRepository {
 		if(session.selectList("ssafy.gallery.allList", pagination) != null) list = session.selectList("ssafy.gallery.allList", pagination);
 		return list;
 	}
-
+	
+	public List<GaddressDto> list_id(int photo_id){
+		List<GaddressDto> list = session.selectList("ssafy.gallery.IdList", photo_id);
+		return list;
+	}
+	
+	public int delete(int photo_id) {
+		return session.update("ssafy.gallery.delupdate", photo_id);
+	}
+	
+	public GalleryDto list_one(int photo_id) {
+		return session.selectOne("ssafy.gallery.ListOne", photo_id);
+	}
 }

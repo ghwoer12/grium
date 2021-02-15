@@ -149,7 +149,7 @@ export default {
         // formData.append("files", new Blob([JSON.stringify(this.files[i])],{type:"application/json"}));
       }
         axios
-          .post(`${SERVER_URL}gallary/upload`, formData,
+          .post(`${SERVER_URL}gallery/upload`, formData,
            {  headers: {
               "Content-Type": "multipart/form-data"
             }}

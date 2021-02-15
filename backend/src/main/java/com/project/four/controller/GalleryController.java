@@ -60,7 +60,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping("/gallary")
+@RequestMapping("/gallery")
 public class GalleryController {
 
 	public static final Logger logger = LoggerFactory.getLogger(GalleryController.class);

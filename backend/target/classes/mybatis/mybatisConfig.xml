@@ -2,7 +2,6 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
-  	<!-- dtd로 검증 -->
 
 <configuration>
     <typeAliases>
@@ -13,9 +12,9 @@
         <typeAlias type="com.project.four.model.dto.GaddressDto" alias="GaddressDTO"/>
         <typeAlias type="com.project.four.util.Pagination" alias="Pagination" />
 
-
-        
-        
+        <typeAlias type="com.project.four.model.dto.AlertDto" alias="AlertDTO" />
+        <typeAlias type="com.project.four.model.dto.RipDto" alias="RipDTO" />
+        <typeAlias type="com.project.four.model.dto.ChatDto" alias="ChatDTO" />
     </typeAliases>
     
 	<!-- 이곳에 주거나 application.xml에 둘중 하나만 주면 된다. -->
@@ -23,6 +22,9 @@
     <mapper resource="mapper/userSQLMapper.xml" />
     <mapper resource="mapper/boardSQLMapper.xml" />
     <mapper resource="mapper/gallerySQLMapper.xml" />
+    <mapper resource="mapper/ripSQLMapper.xml" />
+    <mapper resource="mapper/alertSQLMapper.xml" />
+    <mapper resource="mapper/chatSQLMapper.xml" />
   </mappers>
 
 </configuration>

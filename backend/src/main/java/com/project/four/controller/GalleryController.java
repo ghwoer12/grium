@@ -48,6 +48,7 @@ import com.project.four.model.dto.BoardDto;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
+import com.project.four.model.dto.RipDto;
 import com.project.four.model.service.GalleryService;
 import com.project.four.util.AES256Util;
 import com.project.four.util.Pagination;
@@ -265,7 +266,6 @@ public class GalleryController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
 	/*
 	@ApiOperation(value="Album good", notes="사진 추천")
 	@PostMapping("/algo")
@@ -275,7 +275,7 @@ public class GalleryController {
 		int good = 0;
 		
 		try {
-			int checkrip = boardservice.checkrip(rip);
+			int checkrip = gservice.checkrip(rip);
 			if(checkrip == 1) {
 				logger.info("====================================> 좋아요	 취소");
 				good = boardservice.cancle(rip);
@@ -339,8 +339,7 @@ public class GalleryController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	*/
-
+*/
 	
 
 }

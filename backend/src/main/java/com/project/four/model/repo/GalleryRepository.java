@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
+import com.project.four.model.dto.RipDto;
 import com.project.four.util.Pagination;
 
 @Repository
@@ -62,4 +63,12 @@ public class GalleryRepository {
 	public GalleryDto list_one(int photo_id) {
 		return session.selectOne("ssafy.gallery.ListOne", photo_id);
 	}
+	
+	public int checkrip(RipDto rip) throws Exception{
+		int result =0;
+		if(session.selectOne("ssafy.rip.photorip", rip) != null) result = session.selectOne("ssafy.rip.photorip", rip);
+		return result;
+	}
+	
+	
 }

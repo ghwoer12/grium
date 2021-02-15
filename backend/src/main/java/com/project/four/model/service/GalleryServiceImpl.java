@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.transfer.Upload;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
+import com.project.four.model.dto.RipDto;
 import com.project.four.model.repo.GalleryRepository;
 import com.project.four.util.Pagination;
 
@@ -79,5 +80,11 @@ public class GalleryServiceImpl implements GalleryService{
 	public GalleryDto list_one(int photo_id) {
 		// TODO Auto-generated method stub
 		return grepo.list_one(photo_id);
+	}
+	
+	@Override
+	public int checkrip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.checkrip(rip);
 	}
 }

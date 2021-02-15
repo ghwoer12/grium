@@ -100,7 +100,7 @@ export default {
       // writer:"",
       // secret:0,
       gallery: {
-        // email: "",
+        email: "",
         writer: "",
         secret: 0
       }

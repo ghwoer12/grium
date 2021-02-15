@@ -47,6 +47,7 @@
           @change="onFileSelected"
           ref="files"
           id="files"
+          name="upfile"
           multiple="multiple"
         />
         <div>
@@ -96,8 +97,10 @@ export default {
       title: "",
       files: [],
       // galleryDatas: [],
+      // writer:"",
+      // secret:0,
       gallery: {
-        email: "",
+        // email: "",
         writer: "",
         secret: 0
       }
@@ -136,28 +139,35 @@ export default {
     // },
 
     onUpload() {
-
+      const formData = new FormData();
+        //formData.append("title", this.title);
+        // formData.append("gallery",this.gallery);
+        formData.append("gallery",
+          new Blob([JSON.stringify(this.gallery)], { type: "application/json" }));
       for (let i = 0; i < this.files.length; i++) {
-        let gallery = this.gallery;
-        const formData = new FormData();
-        formData.append("title", this.title);
-        formData.append("files", this.files[i]);
+        formData.append("files",this.files[i]);
+        // formData.append("files", new Blob([JSON.stringify(this.files[i])],{type:"application/json"}));
+      }
         axios
-          .post('http://localhost:8081/api/gallery/upload', gallery, formData, {
-            headers: {
+          .post(`${SERVER_URL}gallary/upload`, formData,
+           {  headers: {
               "Content-Type": "multipart/form-data"
-            }
-          })
+            }}
+          )
           .then(function() {
+            // console.log(gallery);
+            console.log(formData);
             console.log("SUCCESS!!");
           })
           .catch(function() {
+            console.log("바뀐거야안1221바뀐거야망할");
             console.log("FAILURE!!");
           });
-      }
+      // }
     }
   },
   created() {
+    //고인아이디도 보내줄래?
     this.gallery.email = this.$store.getters["getEmail"];
     this.gallery.writer = this.$store.getters["getName"];
   }

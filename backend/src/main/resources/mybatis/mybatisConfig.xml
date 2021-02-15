@@ -21,6 +21,7 @@
     <mapper resource="mapper/ripSQLMapper.xml" />
     <mapper resource="mapper/alertSQLMapper.xml" />
     <mapper resource="mapper/chatSQLMapper.xml" />
+    <mapper resource="mapper/condolSQLMapper.xml" />
   </mappers>
 
 </configuration>

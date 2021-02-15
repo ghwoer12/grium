@@ -16,6 +16,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
@@ -86,5 +87,29 @@ public class GalleryServiceImpl implements GalleryService{
 	public int checkrip(RipDto rip) throws Exception {
 		// TODO Auto-generated method stub
 		return grepo.checkrip(rip);
+	}
+	
+	@Override
+	public int cancle(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.cancle(rip);
+	}
+	
+	@Override
+	public int pressrip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.pressrip(rip);
+	}
+	
+	@Override
+	public int updaterip(RipDto rip) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.updaterip(rip);
+	}
+	
+	@Override
+	public int checkalert(AlertDto alert) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.checkalert(alert);
 	}
 }

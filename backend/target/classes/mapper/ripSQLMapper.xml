@@ -23,11 +23,22 @@
 		insert into RIP_TB(BOARD_ID, USER_ID, TYPE)
 		values(#{board_id}, #{user_id}, 1)
 	</insert>
+	
+	<insert id="photopressrip" parameterType="RipDTO">
+		insert into RIP_TB(PHOTO_ID, USER_ID, TYPE)
+		values(#{photo_id}, #{user_id}, 1)
+	</insert>
 
 	<update id="updaterip" parameterType="RipDTO">
 		update RIP_TB
 		set TYPE=1
 		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</update>
+	
+	<update id="photoupdaterip" parameterType="RipDTO">
+		update RIP_TB
+		set TYPE=1
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
 	</update>
 
 	<update id="cancle" parameterType="RipDTO">
@@ -35,17 +46,34 @@
 		set TYPE=0
 		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
 	</update>
+	
+	<update id="photocancle" parameterType="RipDTO">
+		update RIP_TB
+		set TYPE=0
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
 
 	<update id="plusCount" parameterType="RipDTO">
 		update BOARD_TB
 		set COUNT=COUNT+1
 		where BOARD_ID=#{board_id}
 	</update>
+	<update id="photoplusCount" parameterType="RipDTO">
+		update PHOTO_TB
+		set COUNT=COUNT+1
+		where PHOTO_ID=#{photo_id}
+	</update>
 
 	<update id="setCount" parameterType="RipDTO">
 		update BOARD_TB
 		set COUNT=COUNT-1
 		where BOARD_ID=#{board_id}
+	</update>
+	
+	<update id="photosetCount" parameterType="RipDTO">
+		update BOARD_TB
+		set COUNT=COUNT-1
+		where PHOTO_ID=#{photo_id}
 	</update>
 
 </mapper>

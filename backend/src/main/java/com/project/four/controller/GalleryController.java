@@ -44,6 +44,7 @@ import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.BoardDto;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
@@ -126,6 +127,7 @@ public class GalleryController {
 			galinfo.add(add);
 		}//포문
 		gallery.setGaddress(galinfo);
+		gallery.setGone_id("1t2e3s4t");
 		String email = gallery.getEmail();
 		try {
 			email = util.encrypt(email);
@@ -266,7 +268,8 @@ public class GalleryController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	/*
+	
+	
 	@ApiOperation(value="Album good", notes="사진 추천")
 	@PostMapping("/algo")
 	public ResponseEntity<Map<String, Object>> algo(@RequestBody RipDto rip) {
@@ -278,17 +281,17 @@ public class GalleryController {
 			int checkrip = gservice.checkrip(rip);
 			if(checkrip == 1) {
 				logger.info("====================================> 좋아요	 취소");
-				good = boardservice.cancle(rip);
+				good = gservice.cancle(rip);
 				resultMap.put("TYPE", 0);
 				status = HttpStatus.ACCEPTED;
 			} else if (checkrip == 2) {
 				logger.info("====================================> 빈 좋아요 상태/최초");
-				good = boardservice.pressrip(rip);
+				good = gservice.pressrip(rip);
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.info("====================================> 빈 좋아요 > 좋아요");
-				good = boardservice.updaterip(rip);
+				good = gservice.updaterip(rip);
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			}
@@ -302,7 +305,7 @@ public class GalleryController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+	/*
 	@ApiOperation(value="Board report", notes="게시판 글 신고")
 	@PostMapping("/alert")
 	public ResponseEntity<Map<String, Object>> alert(@RequestBody AlertDto alert) {
@@ -311,7 +314,7 @@ public class GalleryController {
 		int report = 0;
 		
 		try {
-			int checkalert = boardservice.checkalert(alert);
+			int checkalert = gservice.checkalert(alert);
 			if(checkalert == 1) {
 				logger.info("====================================> 신고 취소");
 				report = boardservice.canalert(alert);

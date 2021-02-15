@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
@@ -21,4 +22,9 @@ public interface GalleryService {
 	int delete(int photo_id);
 	GalleryDto list_one(int photo_id);
 	int checkrip(RipDto rip) throws Exception;
+	int cancle(RipDto rip) throws Exception;
+	int pressrip(RipDto rip) throws Exception;
+	int updaterip(RipDto rip) throws Exception;
+	int checkalert(AlertDto alert) throws Exception;
+	
 }

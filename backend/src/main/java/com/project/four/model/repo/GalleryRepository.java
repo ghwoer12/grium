@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.four.model.dto.AlertDto;
 import com.project.four.model.dto.GaddressDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
@@ -69,6 +70,34 @@ public class GalleryRepository {
 		if(session.selectOne("ssafy.rip.photorip", rip) != null) result = session.selectOne("ssafy.rip.photorip", rip);
 		return result;
 	}
+	
+	public int cancle(RipDto rip) throws Exception{
+		int result = session.update("ssafy.rip.photocancle", rip);
+		result = session.update("ssafy.rip.photosetCount", rip);
+		return result;
+	}
+	
+	public int pressrip(RipDto rip) throws Exception{
+		int result = session.insert("ssafy.rip.photopressrip", rip);
+		result = session.update("ssafy.rip.photoplusCount", rip);
+		return result;
+	}
+	
+	public int updaterip(RipDto rip) throws Exception{
+		int result = session.update("ssafy.rip.photoupdaterip", rip);
+		result = session.update("ssafy.rip.photoplusCount", rip);
+		return result;
+	}
+	
+	public int checkalert(AlertDto alert) throws Exception{
+		int result = 2;
+		if(session.selectOne("ssafy.alert.checkalert", alert) != null) result = session.selectOne("ssafy.alert.checkalert", alert);
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 }

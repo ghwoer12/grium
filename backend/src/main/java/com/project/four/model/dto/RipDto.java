@@ -6,7 +6,7 @@ public class RipDto {
 	private int board_id;
 	private int photo_id;
 	private String user_id;
-	private int type; //프론트에 좋아요 눌렸는지 안눌렷는지 알려주는용도 눌렸으면 1, 0
+	private int type;
 	
 	public RipDto() {
 		super();

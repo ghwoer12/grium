@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @ComponentScan("com.project.four")
@@ -19,5 +18,4 @@ public class AppConfig {
     public PlatformTransactionManager getTransactionManager(DataSource ds) {
         return new DataSourceTransactionManager(ds);
     }
-
 }

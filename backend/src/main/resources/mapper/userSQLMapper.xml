@@ -58,5 +58,16 @@
 	<update id="newPassword" parameterType="map">
 		update USER_TB set PASSWORD=#{password} where EMAIL=#{email}	
 	</update>
+	
+	<insert id="loginsert" parameterType="map">
+		insert into AUTHLOG_TB(EMAIL, AUTH_NUM)
+		values(#{email}, #{authKey})
+	</insert>
+	
+	<select id="authemail" parameterType="map" resultType="int">
+		select count(*) as listCnt
+		from AUTHLOG_TB
+		where EMAIL=#{email} and AUTH_NUM=#{auth_num}
+	</select>
  
 </mapper>

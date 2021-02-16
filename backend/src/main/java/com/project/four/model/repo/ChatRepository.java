@@ -47,7 +47,7 @@ public class ChatRepository {
 		int result = session.update("ssafy.chat.alertCancel", alert);
 		return result;
 	}
-
+	
 	public int reAlert(AlertDto alert) throws Exception {
 		int result = session.update("ssafy.chat.reAlert", alert);
 		return result;

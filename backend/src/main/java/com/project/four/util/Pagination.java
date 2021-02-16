@@ -1,5 +1,8 @@
 package com.project.four.util;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Pagination {
 	
 	private int listSize = 10; // 초기값으로 목록개수를 10으로 셋팅

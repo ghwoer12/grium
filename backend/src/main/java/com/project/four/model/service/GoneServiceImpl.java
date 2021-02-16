@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.four.model.dto.CondolanceDto;
 import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
+import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
 import com.project.four.model.repo.GoneRepository;
@@ -52,5 +53,11 @@ public class GoneServiceImpl implements GoneService {
 	public FuneralDto getfuneral(String gone_id) throws Exception {
 		// TODO Auto-generated method stub
 		return grepo.callfuneral(gone_id);
+	}
+	
+	@Override
+	public List<GalleryDto> getgallery(String gone_id) throws Exception {
+		// TODO Auto-generated method stub
+		return grepo.getgallery(gone_id);
 	}
 }

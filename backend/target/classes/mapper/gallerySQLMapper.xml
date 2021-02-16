@@ -79,7 +79,7 @@
 	</select>
 	
 	<select id="IdList" parameterType="int" resultType="GaddressDTO">
-		select * from GADDRESS_TB where PHOTO_ID=#{photo_id}
+		select * from GADDRESS_TB where PHsOTO_ID=#{photo_id}
 	</select>
 	
 	<update id="delupdate" parameterType="int">
@@ -88,6 +88,10 @@
 	
 	<select id="ListOne" parameterType="int" resultType="GalleryDTO">
 		select * from PHOTO_TB where photo_id=#{photo_id}
+	</select>
+	
+	<select id="callgallery" parameterType="String" resultMap="galleryList">
+		select * from PHOTO_TB order by PHOTO_ID desc limit 2;
 	</select>
 
 </mapper>

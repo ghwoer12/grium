@@ -5,6 +5,7 @@ import java.util.List;
 import com.project.four.model.dto.CondolanceDto;
 import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
+import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
 
@@ -21,4 +22,6 @@ public interface GoneService {
 	CondolanceDto getcondolance(String gone_id) throws Exception; // 부의함 정보 가져오기
 	
 	FuneralDto getfuneral(String gone_id) throws Exception; // 장례식 정보 가져오기
+	
+	List<GalleryDto> getgallery(String gone_id) throws Exception;
 }

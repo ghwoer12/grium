@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.four.model.dto.CondolanceDto;
 import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
+import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
 import com.project.four.model.service.GoneService;
@@ -99,6 +100,7 @@ public class GoneController {
 				ProcedureDto proceduredto = goneservice.getprocedure(gone_id);
 				CondolanceDto condolancedto = goneservice.getcondolance(gone_id);
 				FuneralDto funeraldto = goneservice.getfuneral(gone_id);
+				List<GalleryDto> gallerydto = goneservice.getgallery(gone_id);
 				
 				// 복호화
 //				dto.setGone_nm(util.decrypt(dto.getGone_nm()));
@@ -108,6 +110,7 @@ public class GoneController {
 				resultMap.put("procedure", proceduredto);
 				resultMap.put("condolance", condolancedto);
 				resultMap.put("funeral", funeraldto);
+				resultMap.put("gallery", gallerydto);
 				resultMap.put("message", "고인 정보 가져오기에 성공하였습니다.");
 				status = HttpStatus.ACCEPTED;
 			} else {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.project.four.model.dto.CondolanceDto;
 import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
+import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
 
@@ -53,5 +54,9 @@ public class GoneRepository {
 		FuneralDto dto = null;
 		dto = session.selectOne("ssafy.gone.callFuneral", gone_id);
 		return dto;
+	}
+	
+	public List<GalleryDto> getgallery(String gone_id){
+		return session.selectList("ssafy.gallery.callGallery",gone_id);
 	}
 }

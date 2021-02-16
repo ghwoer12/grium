@@ -27,4 +27,6 @@ public interface UserService {
 
 	public int authemail(String email, String auth_num) throws Exception;
 
+	public int delauth(String email, String auth_num) throws Exception;
+
 }

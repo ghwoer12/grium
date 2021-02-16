@@ -69,5 +69,10 @@
 		from AUTHLOG_TB
 		where EMAIL=#{email} and AUTH_NUM=#{auth_num}
 	</select>
+	
+	<delete id="delauth" parameterType="map">
+		delete from AUTHLOG_TB
+		where EMAIL=#{email} and AUTH_NUM=#{auth_num}
+	</delete>
  
 </mapper>

@@ -46,9 +46,10 @@ public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@PostMapping("/checkmail")
-	public boolean checkmail(@RequestBody String mail) {
+	public boolean checkmail(@RequestBody UserDto user) {
 		boolean isTrue = false;
 
+		String mail = user.getEmail();
 		try {
 			String authKey = userservice.sendAuthMail(mail);
 			System.out.println("====================================> " + authKey);
@@ -73,6 +74,7 @@ public class UserController {
 			
 			if(result == 1) {
 				System.out.println("====================================> 성공");
+				int res = userservice.delauth(email, auth_num);
 				isTrue = true;
 			} else {
 				System.out.println("====================================> 실패");

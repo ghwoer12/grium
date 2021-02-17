@@ -90,6 +90,7 @@ export default {
         this.list = res.data.board;
         console.log(res.data.board);
         this.riptype = res.data.TYPE;
+        this.alerttype = res.data.TYPE2;
         console.log(res.data);
         this.isAuth = res.data.isAuth;
       });
@@ -132,7 +133,7 @@ export default {
         });
     },
     Rip() {
-      let ids = { board_id: this.list.board_id, user_id: "h4r5z5u9o6p6m" };
+      let ids = { board_id: this.list.board_id, user_id: this.user_id };
 
       axios
         .post(`${SERVER_URL}/board/rip`, ids)
@@ -145,7 +146,11 @@ export default {
         });
     },
     Alert() {
-      let ids = { board_id: this.list.board_id, user_id: "h4r5z5u9o6p6m" };
+      let ids = {
+        board_id: this.list.board_id,
+        user_id: this.user_id,
+        gone_id: "9t8e7s6t"
+      };
 
       axios
         .post(`${SERVER_URL}/board/alert`, ids)

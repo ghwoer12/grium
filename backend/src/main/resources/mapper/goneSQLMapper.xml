@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="callProcedure" parameterType="String"
-		resultType="FamilyDTO">
+		resultType="ProcedureDTO">
 		select *
 		from PROCEDURE_TB where GONE_ID=#{gone_id}
 	</select>

@@ -57,6 +57,6 @@ public class GoneRepository {
 	}
 	
 	public List<GalleryDto> getgallery(String gone_id){
-		return session.selectList("ssafy.gallery.callGallery",gone_id);
+		return session.selectList("ssafy.gallery.callGallery", gone_id);
 	}
 }

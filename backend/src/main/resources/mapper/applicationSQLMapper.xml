@@ -15,27 +15,27 @@
 	</select>
 	
 	<insert id="registfu" parameterType="FuneralDTO">
-		insert into BOARD_TB(GONE_ID, FUNERAL_NM, FUNERAL_ADR)
+		insert into FUNERAL_TB(GONE_ID, FUNERAL_NM, FUNERAL_ADR)
 		values(#{gone_id}, #{funeral_nm}, #{funeral_adr})
 	</insert>
 	
 	<insert id="registpro" parameterType="ProcedureDTO">
-		insert into BOARD_TB(GONE_ID, ENTER_DT, LEAVE_DT, START_DT, END_DT, KIND, OPEN)
+		insert into PROCEDURE_TB(GONE_ID, ENTER_DT, LEAVE_DT, START_DT, END_DT, KIND, OPEN)
 		values(#{gone_id}, #{enter_dt}, #{leave_dt}, #{start_dt}, #{end_dt}, #{kind}, #{open})
 	</insert>
 	
 	<insert id="registfamily" parameterType="FamilyDTO">
-		insert into BOARD_TB(GONE_ID, ENTER_DT, LEAVE_DT, START_DT, END_DT, KIND, OPEN)
+		insert into FAMILY_TB(GONE_ID, ENTER_DT, LEAVE_DT, START_DT, END_DT, KIND, OPEN)
 		values(#{gone_id}, #{enter_dt}, #{leave_dt}, #{start_dt}, #{end_dt}, #{kind}, #{open})
 	</insert>
 	
 	<insert id="registcon" parameterType="CondolanceDTO">
-		insert into BOARD_TB(ACCOUNT, GONE_ID, HOLDER, BANK)
+		insert into CONDOLANCE_TB(ACCOUNT, GONE_ID, HOLDER, BANK)
 		values(#{account}, #{gone_id}, #{holder}, #{bank})
 	</insert>
 	
 	<insert id="registgone" parameterType="GoneDTO">
-		insert into BOARD_TB(GONE_ID, USER_ID, GONE_NM, BIRTH_DT, DEATH_DT, PHOTO_PATH, SERVER_PHOTO, ORIGIN_PHOTO)
+		insert into GONE_TB(GONE_ID, USER_ID, GONE_NM, BIRTH_DT, DEATH_DT, PHOTO_PATH, SERVER_PHOTO, ORIGIN_PHOTO)
 		values(#{gone_id}, #{user_id}, #{gone_nm}, #{birth_dt}, #{death_dt}, #{photo_path}, #{server_photo}, #{origin_photo})
 	</insert>
 	

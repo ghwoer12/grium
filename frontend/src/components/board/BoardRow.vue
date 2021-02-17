@@ -1,21 +1,32 @@
 <template>
-  <tr class="table-info">
-    <td colspan="4" style="background-color: white">
+  <tr class="b-table">
+    <td style="background-color: white">
+      <b-col sm>
       <router-link :to="`/boardread?board_id=${board_id}`">
         <strong>{{ board_id }}</strong>
       </router-link>
+      </b-col>
     </td>
-    <td colspan="4">
+    <td style="background-color: white">
+      <b-col sm>
       <router-link :to="`/boardread?board_id=${board_id}`">
         <strong>{{ title }}</strong>
       </router-link>
+      </b-col>
     </td>
-    <td colspan="4" style="background-color: white">
-      <strong>{{ writer }}</strong>
+
+    <td style="background-color: white">
+      <b-col sm>
+        {{ writer }}
+      </b-col>
     </td>
-    <td colspan="4">
-      <strong>{{ board_dt }}</strong>
+
+        <td style="background-color: white">
+      <b-col sm>
+      {{ board_dt }}
+      </b-col>
     </td>
+
   </tr>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <card title="글 등록">
+  <card title=" ">
     <div class="form-group">
       <label for="title">제목</label> &nbsp;
       <input
@@ -16,23 +16,11 @@
       <label for="writer">작성자</label> &nbsp;
       <input
         type="text"
-        class="form-control col-sm-5"
+        class="form-control"
         id="writer"
         ref="writer"
-        :readonly="true"
         v-model="writer"
-      />
-    </div>
-    <br />
-    <div class="form-group">
-      <label for="board_dt">날짜</label> &nbsp;
-      <input
-        type="text"
-        class="form-control col-sm-6"
-        id="board_dt"
-        ref="board_dt"
-        placeholder="자동으로 날짜가 들어가게 해"
-        v-model="board_dt"
+        :readonly="true"
       />
     </div>
     <br />
@@ -45,13 +33,16 @@
         ref="content"
         placeholder="내용을 입력하세요"
         v-model="content"
+        rows="10"
+        cols="40"
       ></textarea>
     </div>
     <br />
 
     <div class="text-right">
       <label>
-        <input type="checkbox" id="secret" v-model="secret" /> 비밀글
+        <input type="checkbox" v-model="secret" @change="checked" />
+        비밀글
       </label>
       &nbsp;
       <button class="btn btn-dark" @click="checkHandler">
@@ -67,7 +58,6 @@
 
 <script>
 import axios from "axios";
-
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -85,8 +75,7 @@ export default {
       board_dt: "",
       content: "",
       secret: "",
-        name: "",
-        user_id: ""
+      user_id: ""
     };
   },
   methods: {
@@ -103,7 +92,6 @@ export default {
         (err = false),
         this.$refs.content.focus());
       if (!err) alert(msg);
-      //else this.type == 'create' ? this.createHandler() : this.updateHandler();
       else this.createHandler();
     },
 
@@ -115,7 +103,8 @@ export default {
         writer,
         board_dt,
         content,
-        secret
+        secret,
+        user_id
       } = this;
       let board = {
         gone_id,
@@ -124,16 +113,14 @@ export default {
         writer,
         board_dt,
         content,
-        secret
+        secret,
+        user_id
       };
 
       axios
         .post(`${SERVER_URL}/board/insert`, board)
         .then(({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
-          if (data > 0) {
-            msg = "등록이 완료되었습니다.";
-          }
+          let msg = "등록이 완료되었습니다";
           alert(msg);
           this.moveList();
         })
@@ -144,11 +131,20 @@ export default {
     moveList() {
       this.$router.push("/boardlist");
     },
-    created() {
-      this.writer = this.$store.getters["getName"];
+    checked() {
+      if (this.secret == true) {
+        this.secret = 1;
+        console.log(this.secret);
+      } else if (this.secret == false) {
+        this.secret = 0;
+        console.log(this.secret);
+      }
     }
+  },
+  created() {
+    this.writer = this.$store.getters["getName"];
+    this.user_id = this.$store.getters["getUserid"];
+    console.log(this.writer);
   }
 };
 </script>
-
-<style scoped></style>

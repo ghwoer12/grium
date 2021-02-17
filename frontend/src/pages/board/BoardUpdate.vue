@@ -1,15 +1,5 @@
 <template>
   <card title="글 수정">
-    <div class="form-group">
-      <label for="list.board_id">글 번호</label> &nbsp;
-      <input
-        type="number"
-        class="form-control"
-        id="list.board_id"
-        ref="list.board_id"
-        v-model="list.board_id"
-      />
-    </div>
     <br />
     <div class="form-group">
       <label for="list.title">제목</label> &nbsp;
@@ -26,21 +16,11 @@
       <label for="list.writer">작성자</label> &nbsp;
       <input
         type="text"
-        class="form-control col-sm-5"
+        class="form-control"
         id="list.writer"
         ref="list.writer"
         v-model="list.writer"
-      />
-    </div>
-    <br />
-    <div class="form-group">
-      <label for="list.board_dt">날짜</label> &nbsp;
-      <input
-        type="text"
-        class="form-control col-sm-6"
-        id="list.board_dt"
-        ref="list.board_dt"
-        v-model="list.board_dt"
+        :readonly="true"
       />
     </div>
     <br />
@@ -52,22 +32,19 @@
         id="list.content"
         ref="list.content"
         v-model="list.content"
+        rows="10"
+        cols="40"
       ></textarea>
     </div>
     <br />
 
     <div class="text-right">
       <label>
-        <input type="checkbox" id="secret" v-model="secret" /> 비밀글
+        <input type="checkbox" v-model="list.secret" @change="checked" />
+        비밀글
       </label>
       &nbsp;
-      <button class="btn btn-dark" @click="checkHandler">
-        수정
-      </button>
-      &nbsp;
-      <button class="btn btn-dark" @click="claer">
-        초기화
-      </button>
+      <button class="btn btn-dark" @click="checkHandler">수정</button>
       &nbsp;
       <button class="btn btn-dark" @click="moveList">목록</button>
       &nbsp;
@@ -83,16 +60,16 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "BoardUpdate",
-  // props: {
-  //   board_id: { type: Number },
-  //   title: { type: String },
-  //   writer: { type: String },
-  //   board_dt: { type: String },
-  //   content: { type: String }
-  // },
   data: function() {
     return {
-      list: { board_id: "", title: "", writer: "", board_dt: "", content: "" },
+      list: {
+        board_id: "",
+        title: "",
+        writer: "",
+        board_dt: "",
+        content: "",
+        secret: ""
+      },
       go: this.$route.query.board_id
       // URL 쿼리를 받아 오는 방식
       // go: this.$route.params.board_id
@@ -101,44 +78,62 @@ export default {
     };
   },
   created() {
-    // let god = this.$route.query.go
-    // alert(go);
     axios
-      // .get(`${SERVER_URL}/board/callmodi/${this.$route.query.board_id}`
       .get(`${SERVER_URL}/board/callmodi/${this.go}`)
       .then(res => {
         this.list = res.data.board;
         console.log(res.data);
       })
       .catch(() => {
-        console.log(this.board_id);
+        console.log(this.list.board_id);
         console.log("에러가 발생했습니다.");
       });
   },
   methods: {
+    moveList() {
+      this.$router.push("/boardlist");
+    },
+    checked() {
+      if (this.list.secret == true) {
+        this.list.secret = 1;
+        console.log(this.list.secret);
+      } else if (this.list.secret == false) {
+        this.list.secret = 0;
+        console.log(this.list.secret);
+      }
+    },
     checkHandler() {
       let err = true;
       let msg = "";
-      !this.title &&
+      !this.list.title &&
         ((msg = "제목을 입력해주세요"),
         (err = false),
         this.$refs.title.focus());
       err &&
-        !this.content &&
+        !this.list.content &&
         ((msg = "내용을 입력해주세요"),
         (err = false),
         this.$refs.content.focus());
       if (!err) alert(msg);
       else this.createHandler();
     },
-    moveList() {
-      this.$router.push("/boardlist");
-    },
-    clear() {
-      this.content = "";
-      this.title = "";
-    },
-    createHandler() {}
+
+    createHandler() {
+      axios
+        .put(`${SERVER_URL}/board/modify`, {
+          board_id: this.list.board_id,
+          title: this.list.title,
+          writer: this.list.writer,
+          board_dt: this.list.board_dt,
+          content: this.list.content,
+          secret: this.list.secret
+        })
+        .then(({ data }) => {
+          let msg = "수정이 완료되었습니다";
+          alert(msg);
+          this.moveList();
+        });
+    }
   }
 };
 </script>

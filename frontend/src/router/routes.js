@@ -28,13 +28,17 @@ import Update from "@/pages/user/Update.vue";
 import PassCheck from "@/pages/user/PassCheck.vue";
 import Findpw from "@/pages/user/Findpw.vue";
 import FindpwSuccess from "@/pages/user/FindpwSuccess.vue";
+import Application from "@/pages/user/Application.vue";
 
 // Board
 import BoardList from "@/pages/board/BoardList.vue";
 import BoardInsert from "@/pages/board/BoardInsert.vue";
 import BoardRead from "@/pages/board/BoardRead.vue";
 import BoardUpdate from "@/pages/board/BoardUpdate.vue";
-import BoardDelete from "@/pages/board/BoardDelete.vue";
+
+// Gone
+import GoneList from "@/pages/gone/GoneList.vue";
+import GoneDetail from "@/pages/gone/GoneDetail.vue";
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
@@ -143,6 +147,12 @@ const routes = [
         name: "FindpwSuccess",
         component: FindpwSuccess
       },
+      {
+        path: "/user/application",
+        name: "Application",
+        component: Application,
+        beforeEnter: requireAuth()
+      },
       // board
       {
         path: "/boardlist",
@@ -153,13 +163,13 @@ const routes = [
       {
         path: "/boardinsert",
         name: "BoardInsert",
-        component: BoardInsert,
+        component: BoardInsert
         // beforeEnter: requireAuth()
       },
       {
         path: "/boardread",
         name: "BoardRead",
-        component: BoardRead,
+        component: BoardRead
         // beforeEnter: requireAuth()
       },
       {
@@ -169,13 +179,18 @@ const routes = [
         props: true
         // beforeEnter: requireAuth()
       },
+      // gone
       {
-        path: "/boarddelete",
-        name: "BoardDelete",
-        component: BoardDelete,
-        props: true
-        // beforeEnter: requireAuth()
+        path: "/gone/list",
+        name: "GoneList",
+        component: GoneList
       },
+      {
+        path: "/gonedetail",
+        name: "GoneDetail",
+        component: GoneDetail,
+        props: true
+      }
     ]
   },
   { path: "*", component: NotFound }

@@ -1,33 +1,29 @@
 <template>
-<card title="글 상세">
   <div class="container" align="center">
-    <div class="col-lg-6" align="center">
-      <div class="form-group" align="left">
-        <label for=""><strong>글번호 </strong></label>
-        <p>{{ board_id }}</p>
+    <div class="col-lg-8" align="center">
+      <div class="form-group" align="center">
+        <h1>{{ title }}</h1>
       </div>
-      <div class="form-group" align="left">
-        <label for=""><strong>작성자 </strong></label>
-        <p>{{ writer }}</p>
+      <div class="form-group" style="float:left">
+        <label>{{ writer }}</label>
       </div>
-      <div class="form-group" align="left">
-        <label for=""><strong>작성일 </strong></label>
-        <p>{{ board_dt }}</p>
+      <div class="form-group" style="float:right">
+        <label>{{ board_dt }} </label>
       </div>
+    
       <div class="form-group" align="left">
-        <label for=""><strong>제목 </strong></label>
-        <p>{{ title }}</p>
-      </div>
-      <div class="form-group" align="left">
-        <label for=""><strong>내용 </strong></label>
+        <br>
+        <br>
+        <br>
         <p>{{ content }}</p>
       </div>
     </div>
   </div>
-</card>
+
 </template>
 
 <script>
+
 export default {
   name: "boarddetail",
   props: {

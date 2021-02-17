@@ -61,7 +61,8 @@ public class ApplicationController {
 	
 	@ApiOperation(value="Application regist", notes="장례 신청")
 	@PostMapping("/regist")
-	public ResponseEntity<Map<String, Object>> regist(@RequestPart MultipartFile pfile, @RequestPart GoneDto g_dto, @RequestPart FamilyDto f_dto, @RequestPart FuneralDto fu_dto, @RequestPart ProcedureDto p_dto, @RequestPart CondolanceDto c_dto) {
+	public ResponseEntity<Map<String, Object>> regist(@RequestPart MultipartFile pfile, @RequestPart GoneDto g_dto, @RequestPart FuneralDto fu_dto, @RequestPart ProcedureDto p_dto, @RequestPart CondolanceDto c_dto) {
+		// @RequestPart FamilyDto f_dto,
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		boolean isOk = true;
@@ -125,7 +126,6 @@ public class ApplicationController {
 				e.printStackTrace();
 			}
 			
-			g_dto.setGone_nm(util.encrypt(g_dto.getGone_nm()));
 			int result_g = appliservice.registgone(g_dto);
 			
 			if (result_g == 1) {
@@ -140,21 +140,22 @@ public class ApplicationController {
 			
 			
 			logger.info("====================================> 장례 신청/장례 정보 입력"); // FUNERAL_TB, PROCEDURE_TB, FAMILY_TB
+			System.out.println(fu_dto.getFuneral_nm());
 			fu_dto.setGone_id(g_dto.getGone_id());
 			int result_fu = appliservice.registfuneral(fu_dto);
 			
 			p_dto.setGone_id(g_dto.getGone_id());
 			int result_p = appliservice.registpro(p_dto);
 			
-			f_dto.setGone_id(g_dto.getGone_id());
-			int result_f = appliservice.registfamily(f_dto);
+//			f_dto.setGone_id(g_dto.getGone_id());
+//			int result_f = appliservice.registfamily(f_dto);
 			
-			if (result_fu == 1 && result_p == 1 && result_f == 1) {
+			if (result_fu == 1 && result_p == 1) {
 				logger.info("====================================> 장례 신청/장례 정보 등록 성공");
 				resultMap.put("message", "등록에 성공하였습니다.");
 				status = HttpStatus.ACCEPTED;
 			} else {
-				logger.info("====================================> 실패" + result_fu + result_p + result_f);
+//				logger.info("====================================> 실패" + result_fu + result_p + result_f);
 				resultMap.put("message", "등록에 실패하였습니다.");
 				status = HttpStatus.ACCEPTED;
 			}

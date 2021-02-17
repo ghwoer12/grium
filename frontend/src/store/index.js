@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 
 // 새로고침을 했을 때 로그인이 풀리는 걸 방지하는 npm 설치 프로그램
-import createPersistedState from 'vuex-persistedstate';
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -11,18 +11,16 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default new Vuex.Store({
   // 플러그인으로 설치해준다.
-  plugins:[
-    createPersistedState()
-  ],
+  plugins: [createPersistedState()],
   state: {
     accessToken: null,
     email: "",
     name: "",
     password: "",
     phone: "",
-    photo: ""
+    photo: "",
+    userid: ""
     // roll : "",
-
   },
   getters: {
     getAccessToken(state) {
@@ -42,6 +40,9 @@ export default new Vuex.Store({
     },
     getPhoto(state) {
       return state.photo;
+    },
+    getUserid(state) {
+      return state.userid;
     }
     // getRoll(state) {
     //   return state.roll;
@@ -54,6 +55,7 @@ export default new Vuex.Store({
       state.name = payload["name"];
       state.password = payload["password"];
       state.phone = payload["phone"];
+      state.userid = payload["userid"];
       // state.photo = payload["photo"];
       // state.roll = payload["roll"];
     },
@@ -63,6 +65,7 @@ export default new Vuex.Store({
       state.name = "";
       state.password = "";
       state.phone = "";
+      state.userid = "";
       // state.photo = "";
       // state.roll = "";
     },
@@ -97,6 +100,8 @@ export default new Vuex.Store({
           );
           sessionStorage.setItem("email", `${response.data["email"]}`);
           sessionStorage.setItem("passwoard", `${response.data["password"]}`);
+          console.log(`${response.data["userid"]}`);
+          sessionStorage.setItem("userid", `${response.data["userid"]}`);
         })
         .catch(() => {
           reject();
@@ -119,9 +124,6 @@ export default new Vuex.Store({
     //   .catch(() => {
     //     reject();
     //   });
-
-
-
 
     // },
 
@@ -167,7 +169,7 @@ export default new Vuex.Store({
         .catch(() => {
           reject();
         });
-    },
+    }
   },
   modules: {}
 });

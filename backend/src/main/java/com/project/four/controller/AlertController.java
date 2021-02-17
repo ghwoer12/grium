@@ -66,6 +66,15 @@ public static final Logger logger = LoggerFactory.getLogger(AlertController.clas
 						} else if(dto.getPhoto_id() != 0) {
 							GalleryDto gdto = alertService.getagallary(dto.getPhoto_id());
 							plist.add(gdto);
+							List<GaddressDto> gglist = new LinkedList<GaddressDto>();
+							gglist = alertService.getgglist(dto.getPhoto_id());
+							if(gglist.size() != 0) {
+								GaddressDto ggdto = new GaddressDto();
+								for (int k = 0; k < gglist.size(); k++) {
+									ggdto = gglist.get(k);
+									gadrlist.add(ggdto);
+								}
+							}
 						}
 					}
 				}

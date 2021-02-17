@@ -331,8 +331,9 @@ export default {
           }
         })
         .then(response => {
-          alert(response.data.url);
+          alert("식장 URL :::" + response.data.url);
           console.log("SUCCESS!!");
+          this.$router.push("/");
         })
         .catch(function() {
           console.log("FAILURE!!");

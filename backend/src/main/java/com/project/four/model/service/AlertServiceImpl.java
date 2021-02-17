@@ -40,5 +40,11 @@ public class AlertServiceImpl implements AlertService{
 		// TODO Auto-generated method stub
 		return arepo.getagallary(photo_id);
 	}
+
+	@Override
+	public List<GaddressDto> getgglist(int photo_id) throws Exception {
+		// TODO Auto-generated method stub
+		return arepo.getgglist(photo_id);
+	}
 	
 }

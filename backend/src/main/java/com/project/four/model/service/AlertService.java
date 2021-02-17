@@ -17,4 +17,6 @@ public interface AlertService {
 
 	GalleryDto getagallary(int photo_id) throws Exception;
 
+	List<GaddressDto> getgglist(int photo_id) throws Exception;
+
 }

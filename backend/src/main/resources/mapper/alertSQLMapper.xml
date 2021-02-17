@@ -67,4 +67,10 @@
 		where PHOTO_ID=#{photo_id}
 	</select>
 	
+	<select id="getgglist" parameterType="int" resultType="GaddressDTO">
+		select *
+		from GADDRESS_TB
+		where PHOTO_ID=#{photo_id}
+	</select>
+	
 </mapper>

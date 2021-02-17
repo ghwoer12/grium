@@ -40,5 +40,11 @@ public class AlertRepository {
 		dto = session.selectOne("ssafy.alert.getagallary", photo_id);
 		return dto;
 	}
+
+	public List<GaddressDto> getgglist(int photo_id) throws Exception{
+		List<GaddressDto> list = null;
+		if(session.selectList("ssafy.alert.getgglist", photo_id) != null) list = session.selectList("ssafy.alert.getgglist", photo_id);
+		return list;
+	}
 	
 }

@@ -19,4 +19,6 @@ public interface AlertService {
 
 	List<GaddressDto> getgglist(int photo_id) throws Exception;
 
+	String getname(String user_id) throws Exception;
+
 }

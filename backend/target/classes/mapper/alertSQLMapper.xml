@@ -73,4 +73,10 @@
 		where PHOTO_ID=#{photo_id}
 	</select>
 	
+	<select id="getname" parameterType="String" resultType="String">
+		select NAME
+		from USER_TB
+		where USER_ID=#{user_id}
+	</select>
+	
 </mapper>

@@ -46,5 +46,11 @@ public class AlertServiceImpl implements AlertService{
 		// TODO Auto-generated method stub
 		return arepo.getgglist(photo_id);
 	}
+
+	@Override
+	public String getname(String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return arepo.getname(user_id);
+	}
 	
 }

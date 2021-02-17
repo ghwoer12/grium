@@ -94,4 +94,27 @@ public static final Logger logger = LoggerFactory.getLogger(AlertController.clas
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	@ApiOperation(value="Get name", notes="신고자 찾기")
+	@GetMapping("/getname")
+	public ResponseEntity<Map<String, Object>> getname(@RequestParam String user_id) {
+		HttpStatus status = null;
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		try {
+			logger.info("====================================> 신고자 찾기");
+			String name = alertService.getname(user_id);
+			String unname = util.decrypt(name);
+			
+			resultMap.put("name", unname);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("신고자 찾기 실패 : {}", e);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 }

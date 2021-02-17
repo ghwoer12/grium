@@ -46,5 +46,11 @@ public class AlertRepository {
 		if(session.selectList("ssafy.alert.getgglist", photo_id) != null) list = session.selectList("ssafy.alert.getgglist", photo_id);
 		return list;
 	}
+
+	public String getname(String user_id) throws Exception{
+		String name = null;
+		if(session.selectOne("ssafy.alert.getname", user_id) != null) name = session.selectOne("ssafy.alert.getname", user_id);
+		return name;
+	}
 	
 }

@@ -46,4 +46,6 @@ public interface BoardService {
 
 	int checktype(int board_id, String user_id) throws Exception;
 
+	int checkatype(int board_id, String user_id) throws Exception;
+
 }

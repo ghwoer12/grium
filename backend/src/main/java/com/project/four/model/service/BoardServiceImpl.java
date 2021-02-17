@@ -126,4 +126,10 @@ public class BoardServiceImpl implements BoardService{
 		return brepo.checktype(board_id, user_id);
 	}
 
+	@Override
+	public int checkatype(int board_id, String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checkatype(board_id, user_id);
+	}
+
 }

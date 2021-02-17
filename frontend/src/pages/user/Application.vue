@@ -330,7 +330,8 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(function() {
+        .then(response => {
+          alert(response.data.url);
           console.log("SUCCESS!!");
         })
         .catch(function() {

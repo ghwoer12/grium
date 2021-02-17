@@ -147,9 +147,6 @@ public class ApplicationController {
 			p_dto.setGone_id(g_dto.getGone_id());
 			int result_p = appliservice.registpro(p_dto);
 			
-//			f_dto.setGone_id(g_dto.getGone_id());
-//			int result_f = appliservice.registfamily(f_dto);
-			
 			if (result_fu == 1 && result_p == 1) {
 				logger.info("====================================> 장례 신청/장례 정보 등록 성공");
 				resultMap.put("message", "등록에 성공하였습니다.");
@@ -170,7 +167,7 @@ public class ApplicationController {
 			
 			if (result_c == 1) {
 				logger.info("====================================> 장례 신청/계좌 정보 등록 성공");
-				String url = "http://localhost:8080/homepage/" + g_dto.getGone_id(); // 임시 url
+				String url = "http://localhost:8080/gone/" + g_dto.getGone_id();
 				resultMap.put("url", url);
 				resultMap.put("message", "등록에 성공하였습니다.");
 				status = HttpStatus.ACCEPTED;

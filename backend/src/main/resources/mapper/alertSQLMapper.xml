@@ -13,8 +13,8 @@
 	</select>
 	
 	<insert id="pressalert" parameterType="AlertDTO">
-		insert into ALERT_TB(BOARD_ID, USER_ID, ALERT_DT, READ_CHECK, TYPE)
-		values(#{board_id}, #{user_id}, now(), 0, 1)
+		insert into ALERT_TB(BOARD_ID, USER_ID, GONE_ID, ALERT_DT, READ_CHECK, TYPE)
+		values(#{board_id}, #{user_id}, #{gone_id}, now(), 0, 1)
 	</insert>
 	
 	<update id="upalert" parameterType="AlertDTO">
@@ -34,6 +34,37 @@
 		TYPE
 		from RIP_TB
 		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</select>
+	
+	<select id="checkatype" parameterType="map" resultType="int">
+		select
+		TYPE
+		from ALERT_TB
+		where BOARD_ID=#{board_id} and USER_ID=#{user_id}
+	</select>
+	
+	<select id="getalarm" parameterType="String" resultType="AlertDTO">
+		select *
+		from ALERT_TB
+		where GONE_ID=#{gone_id} and READ_CHECK=0 and TYPE=1
+	</select>
+	
+	<select id="getgone" parameterType="String" resultType="String">
+		select GONE_ID
+		from GONE_TB
+		where USER_ID=#{user_id}
+	</select>
+	
+	<select id="getabaord" parameterType="int" resultType="BoardDTO">
+		select *
+		from BOARD_TB
+		where BOARD_ID=#{board_id}
+	</select>
+	
+	<select id="getagallary" parameterType="int" resultType="BoardDTO">
+		select *
+		from PHOTO_TB
+		where PHOTO_ID=#{photo_id}
 	</select>
 	
 </mapper>

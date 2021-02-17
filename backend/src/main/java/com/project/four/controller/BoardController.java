@@ -287,6 +287,8 @@ public class BoardController {
 			
 			int type = boardservice.checktype(board_id, user_id);
 			resultMap.put("TYPE", type);
+			int type2 = boardservice.checkatype(board_id, user_id);
+			resultMap.put("TYPE2", type2);
 			
 			if(check > 0 || gone != null) {
 				logger.info("====================================> 작성자");

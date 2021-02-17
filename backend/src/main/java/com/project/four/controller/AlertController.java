@@ -82,6 +82,7 @@ public static final Logger logger = LoggerFactory.getLogger(AlertController.clas
 			
 			resultMap.put("blist", blist);
 			resultMap.put("plist", plist);
+			resultMap.put("gadrlist", gadrlist);
 			status = HttpStatus.ACCEPTED;
 			
 		} catch (Exception e) {

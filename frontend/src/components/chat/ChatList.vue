@@ -1,20 +1,20 @@
 <template>
   <div class="row">
-    <tr class="b-table" v-for="(chat, idx) in chatList" :key="idx">
+    <tr class="" v-for="(chat, idx) in chatList" :key="idx">
       <td>
-        <b-col sm>
+        <b-col>
           <img class="" v-if="chat.flower == 1" src="@/assets/img/condol_basic.png" alt="">
           <img class="" v-else-if="chat.flower == 2" src="@/assets/img/black-ribbon.png" alt="">
           <img class="" v-else src="@/assets/img/wreath.png" alt="">
         </b-col>
       </td>
       <td>
-        <b-col sm>
+        <b-col>
           {{ chat.writer }}
         </b-col>
       </td>
       <td>
-        <b-col sm>
+        <b-col>
           {{ chat.content }}
         </b-col>
       </td>
@@ -66,10 +66,7 @@ export default {
 </script>
 
 <style>
-  .parent{
-    display:flex;
-  }
-  .child{
-    flex: 1;
+  .chatheight{
+    height: 450px;
   }
 </style>

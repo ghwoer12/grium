@@ -68,7 +68,7 @@ export default {
   },
   data: function() {
     return {
-      gone_id: "9t8e7s6t",
+      gone_id: "",
       board_id: "",
       title: "",
       writer: "",
@@ -116,6 +116,9 @@ export default {
         secret,
         user_id
       };
+      
+      console.log(this.gone_id);
+      console.log(this.user_id);
 
       axios
         .post(`${SERVER_URL}/board/insert`, board)
@@ -144,6 +147,7 @@ export default {
   created() {
     this.writer = this.$store.getters["getName"];
     this.user_id = this.$store.getters["getUserid"];
+    this.gone_id = this.$store.getters["getGone"];
     console.log(this.writer);
   }
 };

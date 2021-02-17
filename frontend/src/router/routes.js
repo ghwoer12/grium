@@ -40,6 +40,9 @@ import BoardUpdate from "@/pages/board/BoardUpdate.vue";
 import GoneList from "@/pages/gone/GoneList.vue";
 import GoneDetail from "@/pages/gone/GoneDetail.vue";
 
+// Alert
+import Alert from "@/pages/alert/Alert.vue";
+
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
   const nextRoute = to.path;
@@ -190,7 +193,14 @@ const routes = [
         name: "GoneDetail",
         component: GoneDetail,
         props: true
-      }
+      },
+      // alert
+      {
+        path: "/alert",
+        name: "Alert",
+        component: Alert,
+        beforeEnter: requireAuth()
+      },
     ]
   },
   { path: "*", component: NotFound }

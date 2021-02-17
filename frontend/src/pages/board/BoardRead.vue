@@ -74,15 +74,19 @@ export default {
       riptype: "",
       alerttype: "",
       isAuth: "",
-      user_id: ""
+      user_id: "",
+      gone_id:""
     };
   },
   created() {
     this.user_id = this.$store.getters["getUserid"];
+    this.gone_id = this.$store.getters["getGone"];
+    console.log(this.user_id);
+    
     axios
       .get(`${SERVER_URL}/board/getboard/${this.$route.query.board_id}`, {
         params: {
-          gone_id: "9t8e7s6t",
+          gone_id: this.gone_id,
           user_id: this.user_id
         }
       })

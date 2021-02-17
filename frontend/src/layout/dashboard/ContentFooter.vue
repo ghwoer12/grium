@@ -1,23 +1,44 @@
 <template>
   <footer class="footer">
-    <div class="container-fluid d-flex flex-wrap justify-content-between">
+    <div class="container-fluid d-flex flex-wrap">
       <nav>
         <ul>
           <li>
-            <router-link :to="{ path: '/admin' }">그리움</router-link>
+            <router-link :to="{ path: '/admin' }"> </router-link>
           </li>
         </ul>
       </nav>
-      <div class="copyright d-flex flex-wrap">
+      <div class="copyright d-flex">
         <p>
+          <br />
+          <br />
+          &nbsp;&nbsp;&nbsp;
+          <img src="@/assets/img/insta.png" @click="insta" />
+          &nbsp;
+          <img src="@/assets/img/twi.png" @click="twi" />
+          &nbsp;
+          <img src="@/assets/img/notion.png" @click="notion" />
+          &nbsp;
+          <br />
           with by FOUR TEAM
-          <i class="fa fa-heart heart"></i>
         </p>
       </div>
     </div>
   </footer>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    twi() {
+      window.open("https://twitter.com/grium_ssafy");
+    },
+    insta() {
+      window.open("https://www.instagram.com/ssafy_fls/");
+    },
+    notion() {
+      window.open("https://www.notion.so/GIT-FLOW-941628b953104c0882f6a4cb889e7981");
+    }
+  }
+};
 </script>
 <style></style>

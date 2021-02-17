@@ -15,12 +15,6 @@
 		from GONE_TB where GONE_ID=#{gone_id}
 	</select>
 
-	<select id="callFamily" parameterType="String"
-		resultType="FamilyDTO">
-		select *
-		from FAMILY_TB where GONE_ID=#{gone_id}
-	</select>
-
 	<select id="callProcedure" parameterType="String"
 		resultType="ProcedureDTO">
 		select *
@@ -37,6 +31,12 @@
 		resultType="FuneralDTO">
 		select *
 		from FUNERAL_TB where GONE_ID=#{gone_id}
+	</select>
+
+	<select id="callUser" parameterType="String"
+		resultType="UserDTO">
+		select *
+		from USER_TB where USER_ID=#{user_id}
 	</select>
 
 </mapper>

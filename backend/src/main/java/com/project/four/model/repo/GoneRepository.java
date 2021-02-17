@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.four.model.dto.CondolanceDto;
-import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
+import com.project.four.model.dto.UserDto;
 
 @Repository
 public class GoneRepository {
@@ -32,11 +32,11 @@ public class GoneRepository {
 		return dto;
 	}
 	
-	public FamilyDto callfamily(String gone_id) {
-		FamilyDto dto = null;
-		dto = session.selectOne("ssafy.gone.callFamily", gone_id);
-		return dto;
-	}
+//	public FamilyDto callfamily(String gone_id) {
+//		FamilyDto dto = null;
+//		dto = session.selectOne("ssafy.gone.callFamily", gone_id);
+//		return dto;
+//	}
 	
 	public ProcedureDto callprocedure(String gone_id) {
 		ProcedureDto dto = null;
@@ -58,5 +58,11 @@ public class GoneRepository {
 	
 	public List<GalleryDto> getgallery(String gone_id){
 		return session.selectList("ssafy.gallery.callGallery", gone_id);
+	}
+	
+	public UserDto calluser(String user_id) {
+		UserDto dto = null;
+		dto = session.selectOne("ssafy.gone.callUser", user_id);
+		return dto;
 	}
 }

@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.four.model.dto.CondolanceDto;
-import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
+import com.project.four.model.dto.UserDto;
 import com.project.four.model.repo.GoneRepository;
 
 @Service
@@ -29,12 +29,6 @@ public class GoneServiceImpl implements GoneService {
 	public GoneDto getgone(String gone_id) throws Exception {
 		// TODO Auto-generated method stub
 		return grepo.callgone(gone_id);
-	}
-	
-	@Override
-	public FamilyDto getfamily(String gone_id) throws Exception {
-		// TODO Auto-generated method stub
-		return grepo.callfamily(gone_id);
 	}
 	
 	@Override
@@ -59,5 +53,10 @@ public class GoneServiceImpl implements GoneService {
 	public List<GalleryDto> getgallery(String gone_id) throws Exception {
 		// TODO Auto-generated method stub
 		return grepo.getgallery(gone_id);
+	}
+	
+	@Override
+	public UserDto getuser(String user_id) throws Exception {
+		return grepo.calluser(user_id);
 	}
 }

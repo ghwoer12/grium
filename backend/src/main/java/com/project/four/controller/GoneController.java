@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.four.model.dto.CondolanceDto;
-import com.project.four.model.dto.FamilyDto;
 import com.project.four.model.dto.FuneralDto;
 import com.project.four.model.dto.GalleryDto;
 import com.project.four.model.dto.GoneDto;
 import com.project.four.model.dto.ProcedureDto;
+import com.project.four.model.dto.UserDto;
 import com.project.four.model.service.GoneService;
 import com.project.four.util.AES256Util;
 
@@ -48,15 +47,21 @@ public class GoneController {
 		try {
 			logger.info("====================================> 고인 리스트 받기");
 			List<GoneDto> baseList = goneservice.getList();
-			System.out.println("zzzzzzzzz");
 
 			// 오픈 여부 확인
 //			logger.info("====================================> 조문관 오픈 여부 확인");
-//			for (GoneDto gone : goneList) {
+//			for (GoneDto gone : baseList) {
 //				String gone_id = gone.getGone_id();
 //				ProcedureDto proceduredto = goneservice.getprocedure(gone_id);
-//				if(proceduredto.getOpen() == 0) {
-//					goneList.remove(gone);
+//				if(proceduredto != null) {
+//					if(proceduredto.getOpen() == 0) {
+//						baseList.remove(gone);
+//						System.out.println(gone);
+//					}
+//				}
+//				else {
+//					baseList.remove(gone);
+//					System.out.println(gone);
 //				}
 //			}
 			
@@ -97,17 +102,23 @@ public class GoneController {
 
 			if (gonedto != null) {
 				logger.info("====================================> 고인 정보 가져오기 성공");
-				FamilyDto familydto = goneservice.getfamily(gone_id);
+				String user_id = gonedto.getUser_id();
+				UserDto userdto = goneservice.getuser(user_id);
+				String user_name = userdto.getName();
+				userdto.setName(util.decrypt(user_name));
 				ProcedureDto proceduredto = goneservice.getprocedure(gone_id);
 				CondolanceDto condolancedto = goneservice.getcondolance(gone_id);
+				if( condolancedto != null) {
+					String account = condolancedto.getAccount();
+					condolancedto.setAccount(util.decrypt(account));
+					String holder = condolancedto.getHolder();
+					condolancedto.setHolder(util.decrypt(holder));					
+				}
 				FuneralDto funeraldto = goneservice.getfuneral(gone_id);
 				List<GalleryDto> gallerydto = goneservice.getgallery(gone_id);
-				
-				// 복호화
-//				dto.setGone_nm(util.decrypt(dto.getGone_nm()));
 
+				resultMap.put("user", userdto);
 				resultMap.put("gone", gonedto);
-				resultMap.put("family", familydto);
 				resultMap.put("procedure", proceduredto);
 				resultMap.put("condolance", condolancedto);
 				resultMap.put("funeral", funeraldto);

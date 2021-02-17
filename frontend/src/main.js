@@ -29,6 +29,8 @@ Vue.use(BootstrapVue)
 
 Vue.use(PaperDashboard);
 
+Vue.use(require('vue-moment'));
+
 /* eslint-disable no-new */
 new Vue({
   router,

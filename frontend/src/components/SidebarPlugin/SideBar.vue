@@ -11,9 +11,9 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="#" class="simple-text">
+        <a href="/dashboard" class="simple-text">
           <div class="logo-img">
-            <img src="@/assets/img/grium.png" alt="" />
+            <img src="@/assets/img/title.png" alt="로고" />
           </div>
           그리움
         </a>

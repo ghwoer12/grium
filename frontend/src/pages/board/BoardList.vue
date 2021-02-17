@@ -72,15 +72,20 @@ export default {
         listCnt: ""
       },
       currentPage: 1,
-      perPage: ""
+      perPage: "",
+      user_id:"",
+      gone_id:""
     };
   },
   created() {
+    this.user_id = this.$store.getters["getUserid"];
+    this.gone_id = this.$store.getters["getGone"];
+
     axios
       .get(`${SERVER_URL}/board/makelist`, {
         params: {
-          gone_id: "9t8e7s6t",
-          user_id: "h4r5z5u9o6p6m"
+          gone_id: this.gone_id,
+          user_id: this.user_id
         }
       })
       .then(res => {
@@ -107,8 +112,8 @@ export default {
       axios
         .get(`${SERVER_URL}/board/list/${this.currentPage}`, {
           params: {
-            gone_id: "9t8e7s6t",
-            user_id: "h4r5z5u9o6p6m"
+            gone_id: this.gone_id,
+            user_id: this.user_id
           }
         })
         .then(res => {

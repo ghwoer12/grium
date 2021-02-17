@@ -49,36 +49,42 @@ public static final Logger logger = LoggerFactory.getLogger(AlertController.clas
 		List<GaddressDto> gadrlist = new LinkedList<GaddressDto>();
 		
 		try {
-			logger.info("====================================> 고인 아이디 찾기");
-			g_list = alertService.getgone(user_id);
-			
-			for (int i = 0; i < g_list.size(); i++) {
-				String gone_id = g_list.get(i);
-				list = alertService.getalarm(gone_id);
-				
-				if(list.size() != 0) {
-					logger.info("====================================> 알람 목록 부르기");
-					for (int j = 0; j < list.size(); j++) {
-						AlertDto dto = list.get(j);
-						if (dto.getBoard_id() != 0) {
-							BoardDto bdto = alertService.getaboard(dto.getBoard_id());
-							blist.add(bdto);
-						} else if(dto.getPhoto_id() != 0) {
-							GalleryDto gdto = alertService.getagallary(dto.getPhoto_id());
-							plist.add(gdto);
-							List<GaddressDto> gglist = new LinkedList<GaddressDto>();
-							gglist = alertService.getgglist(dto.getPhoto_id());
-							if(gglist.size() != 0) {
-								GaddressDto ggdto = new GaddressDto();
-								for (int k = 0; k < gglist.size(); k++) {
-									ggdto = gglist.get(k);
-									gadrlist.add(ggdto);
-								}
-							}
-						}
-					}
-				}
-			}
+            logger.info("====================================> 고인 아이디 찾기");
+            g_list = alertService.getgone(user_id);
+
+            for (int i = 0; i < g_list.size(); i++) {
+                String gone_id = g_list.get(i);
+                list = alertService.getalarm(gone_id);
+
+                if(list.size() != 0) {
+                    logger.info("====================================> 알람 목록 부르기");
+                    for (int j = 0; j < list.size(); j++) {
+                        AlertDto dto = list.get(j);
+                        if (dto.getBoard_id() != 0) {
+                            BoardDto bdto = alertService.getaboard(dto.getBoard_id());
+                            String name = alertService.getname(bdto.getUser_id());
+                            bdto.setName(util.decrypt(name));
+
+                            blist.add(bdto);
+                        } else if(dto.getPhoto_id() != 0) {
+                            GalleryDto gdto = alertService.getagallary(dto.getPhoto_id());
+                            String name = alertService.getname(gdto.getUser_id());
+                            gdto.setName(util.decrypt(name));
+                            plist.add(gdto);
+
+                            List<GaddressDto> gglist = new LinkedList<GaddressDto>();
+                            gglist = alertService.getgglist(dto.getPhoto_id());
+                            if(gglist.size() != 0) {
+                                GaddressDto ggdto = new GaddressDto();
+                                for (int k = 0; k < gglist.size(); k++) {
+                                    ggdto = gglist.get(k);
+                                    gadrlist.add(ggdto);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 			
 			resultMap.put("blist", blist);
 			resultMap.put("plist", plist);

@@ -8,8 +8,8 @@
       <img src="@/assets/img/wreath.png" alt="" @click="chatFlower3">
     </drop-down>
     <input class="col-2" placeholder="이름" :value="chat.writer" @input="inputWriter">
-    <input class="col-5" placeholder="내용" :value="chat.content" @input="inputContent">
-    <button class="col-3" @click="makeChat">등록</button>
+    <input class="col-5" placeholder="한마디" :value="chat.content" @input="inputContent">
+    <button class="btn btn-dark button col-3" @click="makeChat">등록</button>
   </div>
 </template>
 

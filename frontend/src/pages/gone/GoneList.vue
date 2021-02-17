@@ -1,12 +1,18 @@
 <template>
   <div class="row">
-    <card class="mr-3" v-for="gone in goneList" :key="gone.gone_id">
+    <card class="mr-3 size" v-for="gone in goneList" :key="gone.gone_id">
       <div class="text-center">
-        <img :src="gone.photo_path" alt="" width="100px" height="100px" />
+        <img
+          :src="gone.photo_path"
+          alt=""
+          width="100px"
+          height="100px"
+          class="listphoto"
+        />
         <br />
         <strong>故 {{ gone.gone_nm }} 님</strong>
         <p>삼가 고인의 명복을 빕니다.</p>
-        <p>별세 일시 : {{ gone.death_dt }}</p>
+        <p>별세 일시 : {{ $moment(gone.death_dt).format("YYYY-MM-DD") }}</p>
         <router-link :to="`/gonedetail?gone_id=${gone.gone_id}`">
           <button class="btn btn-dark button">
             조문관으로 이동하기
@@ -52,4 +58,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.size {
+  width: 250px;
+  height: 300px;
+}
+.listphoto {
+  width: 100px;
+  height: 100px;
+}
+</style>

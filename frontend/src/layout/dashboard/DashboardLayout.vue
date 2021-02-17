@@ -9,7 +9,7 @@
         <!-- <sidebar-link to="/typography" name="Typography" icon="ti-text" /> -->
         <!-- <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2" /> -->
         <!-- <sidebar-link to="/maps" name="지도" icon="ti-map" /> -->
-        <sidebar-link to="/qna/list" name="질문" icon="ti-bell" />
+        <!-- <sidebar-link to="/qna/list" name="질문" icon="ti-bell" /> -->
         <sidebar-link
           to="/user/application"
           name="신청페이지"
@@ -22,14 +22,14 @@
           name="예비 게시판"
           icon="ti-pencil-alt2"
         />
+
+      <!-- 신고 페이지 -->
+        <sidebar-link to="/alert" name="신고" icon="ti-bell" />
+        
+        <content-footer></content-footer>
       </template>
       <mobile-menu>
-        <!-- <li class="nav-item">
-          <a class="nav-link">
-            <i class="ti-panel"></i>
-            <p>Stats</p>
-          </a>
-        </li> -->
+        
         <drop-down
           class="nav-item"
           title="알림"
@@ -55,7 +55,7 @@
 
       <dashboard-content @click.native="toggleSidebar"> </dashboard-content>
 
-      <content-footer></content-footer>
+      
     </div>
   </div>
 </template>
@@ -65,6 +65,7 @@ import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "./MobileMenu";
+
 export default {
   components: {
     TopNavbar,

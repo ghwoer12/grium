@@ -145,6 +145,17 @@ public class GalleryRepository {
 		map.put("photo_id", photo_id);
 		session.update("ssafy.rip.RipZero", map);
 	}
+	public int areuAuth(String gone_id, String user_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gone_id", gone_id);
+		map.put("user_id", user_id);
+		int result =0;
+		System.out.println("gone_id"+gone_id);
+		System.out.println("user_id"+user_id);
+		if(session.selectOne("ssafy.gallery.AreUAuth", map) != null) result = session.selectOne("ssafy.gallery.AreUAuth", map);
+		System.out.println("여기는 레포지토리 : "+ result);
+		return result;
+	}
 	
 	
 	

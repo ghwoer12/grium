@@ -61,7 +61,7 @@
 		where BOARD_ID=#{board_id}
 	</select>
 	
-	<select id="getagallary" parameterType="int" resultType="BoardDTO">
+	<select id="getagallary" parameterType="int" resultType="GalleryDTO">
 		select *
 		from PHOTO_TB
 		where PHOTO_ID=#{photo_id}

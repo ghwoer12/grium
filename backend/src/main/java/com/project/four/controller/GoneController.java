@@ -49,33 +49,19 @@ public class GoneController {
 			List<GoneDto> baseList = goneservice.getList();
 
 			// 오픈 여부 확인
-//			logger.info("====================================> 조문관 오픈 여부 확인");
-//			for (GoneDto gone : baseList) {
-//				String gone_id = gone.getGone_id();
-//				ProcedureDto proceduredto = goneservice.getprocedure(gone_id);
-//				if(proceduredto != null) {
-//					if(proceduredto.getOpen() == 0) {
-//						baseList.remove(gone);
-//						System.out.println(gone);
-//					}
-//				}
-//				else {
-//					baseList.remove(gone);
-//					System.out.println(gone);
-//				}
-//			}
-			
-			// 상주 이름 가져와서 고인 정보와 리스트에 넣기
-			List<Object> goneList = new ArrayList<Object>();
-			logger.info("====================================> 상주 이름 가져오기");
+			List<GoneDto> goneList = new ArrayList<GoneDto>();
+ 			logger.info("====================================> 조문관 오픈 여부 확인");
 			for (GoneDto gone : baseList) {
-//				String gone_id = gone.getGone_id();
-//				FamilyDto familydto = goneservice.getfamily(gone_id);
-//				String family_nm = familydto.getFamily_nm();
-				goneList.add(gone);
-//				goneList.add(family_nm);
+				String gone_id = gone.getGone_id();
+				ProcedureDto proceduredto = goneservice.getprocedure(gone_id);
+				if(proceduredto != null) {
+					if(proceduredto.getOpen() == 1) {
+						goneList.add(gone);
+						System.out.println(gone);
+					}
+				}
 			}
-
+			
 			resultMap.put("goneList", goneList);
 			resultMap.put("message", "고인 리스트 가져오기에 성공하였습니다.");
 			status = HttpStatus.ACCEPTED;

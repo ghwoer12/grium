@@ -16,26 +16,27 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
-        <drop-down
-          class="nav-item"
-          title="5 Notifications"
-          title-classes="nav-link"
-          icon="ti-bell"
-        >
-          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-        </drop-down>
         <li class="nav-item">
           <drop-down
             class="nav-item"
-            title="회원관리"
+            title=" "
+            title-classes="nav-link"
+            icon="ti-bell"
+          >
+            <router-link to="/alert" class="nav-link">
+              신고 관리
+            </router-link>
+          </drop-down>
+        </li>
+        <li class="nav-item">
+          <drop-down
+            class="nav-item"
+            title=" "
             title-classes="nav-link"
             icon="ti-user"
           >
             <router-link to="/login" class="nav-link" v-if="getName === ''">
-              <p>
-                로그인
-              </p>
+              로그인
             </router-link>
             <router-link @click.native="logout" to="/" class="nav-link" v-else>
               로그아웃

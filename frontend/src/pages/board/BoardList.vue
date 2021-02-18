@@ -31,15 +31,52 @@
           </table>
         </div>
       </div>
-      <b-pagination
-        v-model="currentPage"
-        @page-click="MovePage"
-        :total-rows="rows"
-        :per-page="paginations.listSize"
-        aria-controls="my-table"
-        align="center"
-      >
-      </b-pagination>
+      <div class="Page" align="center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item">
+            <input
+              type="button"
+              class="page-link"
+              @click="prevPage"
+              style="width:40px;text-align:center; color:black;"
+              value="<"
+            />
+          </li>
+
+          <li
+            class="page-item"
+            v-for="(list, idx) in this.listmaker"
+            v-bind:key="idx"
+          >
+            <input
+              type="button"
+              class="page-link"
+              @click="movePage"
+              v-bind:value="idx + 1"
+              style="width:40px;text-align:center; color:black;"
+            />
+            <input
+              type="text"
+              placeholder="listData"
+              v-bind:value="idx + 1"
+              @change="updateList"
+              disabled
+              style="display:none; color:black;"
+            />
+          </li>
+          <li class="page-item">
+            <input
+              type="button"
+              class="page-link"
+              @click="nextPage"
+              style="width:40px;text-align:center; color:black;"
+              value=">"
+            />
+          </li>
+        </ul>
+      </nav>
+      </div>
     </card>
   </div>
 </template>
@@ -60,6 +97,8 @@ export default {
   },
   data: function() {
     return {
+      listmaker: 0,
+      prevnext: 0,
       lists: {
         board_id: "",
         title: "",
@@ -73,8 +112,8 @@ export default {
       },
       currentPage: 1,
       perPage: "",
-      user_id:"",
-      gone_id:""
+      user_id: "",
+      gone_id: ""
     };
   },
   created() {
@@ -91,6 +130,10 @@ export default {
       .then(res => {
         this.lists = res.data.list;
         this.paginations = res.data.pagination;
+        this.listmaker = parseInt(
+          this.paginations.listCnt / this.paginations.listSize + 1
+        );
+
         console.log(res.data.list);
         console.log(res.data.pagination);
       })
@@ -99,6 +142,84 @@ export default {
       });
   },
   methods: {
+    movePage(event) {
+      var updatedText = event.target.value;
+      this.currentPage = updatedText;
+      this.prevnext = updatedText;
+
+      axios
+        .get(`${SERVER_URL}/board/list/${this.currentPage}`, {
+          params: {
+            gone_id: this.gone_id,
+            user_id: this.user_id
+          }
+        })
+        .then(res => {
+          this.lists = res.data.list;
+          console.log(res.data.list);
+
+          this.list = parseInt(
+            this.paginations.listCnt / this.paginations.listSize
+          );
+        })
+        .catch(() => {
+          console.log("FAILURE!!");
+        });
+    },
+    prevPage() {
+      if (this.prevnext > 1) {
+        this.prevnext -= 1;
+        this.currentPage = this.prevnext;
+        // alert(this.prevnext);
+        axios
+          .get(`${SERVER_URL}/board/list/${this.currentPage}`, {
+            params: {
+              gone_id: this.gone_id,
+              user_id: this.user_id
+            }
+          })
+          .then(res => {
+            this.lists = res.data.list;
+            console.log(res.data.list);
+
+            this.list = parseInt(
+              this.paginations.listCnt / this.paginations.listSize
+            );
+          })
+          .catch(() => {
+            console.log("FAILURE!!");
+          });
+      }
+    },
+    nextPage() {
+      if (this.prevnext <= this.list) {
+        this.prevnext++;
+        this.currentPage = this.prevnext;
+        alert(this.prevnext);
+        axios
+          .get(`${SERVER_URL}/board/list/${this.currentPage}`, {
+            params: {
+              gone_id: this.gone_id,
+              user_id: this.user_id
+            }
+          })
+          .then(res => {
+            this.lists = res.data.list;
+            console.log(res.data.list);
+
+            this.list = parseInt(
+              this.paginations.listCnt / this.paginations.listSize
+            );
+          })
+          .catch(() => {
+            console.log("FAILURE!!");
+          });
+      }
+    },
+    updateList: function(event) {
+      var updatedText = event.target.value;
+      this.currentPage = updatedText;
+    },
     insert() {
       this.$router.push("/boardinsert");
     },
@@ -138,5 +259,8 @@ tr {
 }
 #thead {
   height: 50px;
+}
+.page-item {
+  color: black;
 }
 </style>

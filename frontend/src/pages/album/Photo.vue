@@ -1,188 +1,4 @@
 <template>
-  <div class="row">
-    <div class="col-sm-6 col-md-3">
-      <card class="cardsize">
-        <div class="text-center">
-          <img
-            id="filechange"
-            alt="PHOTO"
-            v-on:click="fileopenclick"
-            style="width: 50%; height:50%"
-            src="@/assets/img/plus_unpush.png"
-          />
-
-          <div>
-            <input
-              style="display: none"
-              type="text"
-              placeholder="userid"
-              v-bind:value="this.user.email"
-              v-on:input="updateUserid"
-              disabled
-            />
-            <input
-              style="display: none"
-              type="text"
-              placeholder="writer"
-              v-bind:value="this.user.writer"
-              v-on:input="updateWriter"
-              disabled
-            />
-            <input
-              style="display: none"
-              type="text"
-              placeholder="secret"
-              v-bind:value="this.user.secret"
-              disabled
-            />
-          </div>
-          <input
-            style="display: none"
-            type="file"
-            @change="onFileSelected"
-            ref="files"
-            id="files"
-            name="upfile"
-            multiple="multiple"
-          />
-        </div>
-        <div class="text-center" style="margin-top: 25px">
-          <p>
-            <strong
-              >If you press the
-              <mark style="background-color: #aad4ff">plus button</mark>,
-              <br />you can register photos.</strong
-            >
-          </p>
-          <div>
-            <button
-              v-on:click="onUpload()"
-              style="border: none"
-              class="btn btn-dark"
-            >
-              UPLOAD
-            </button>
-          </div>
-          <br />
-          <p><mark>SECRET</mark></p>
-          <p style="color: grey; font-size: 12px">
-            If you want secret version, Switch the button
-          </p>
-
-          <div>
-            <ToggleButton
-              id="onoff"
-              :defaultState="true"
-              v-on:change="triggerEvent"
-            />
-          </div>
-        </div> </card
-      ><!--카드 마지막-->
-    </div>
-    <div
-      class="col-sm-6 col-md-3"
-      v-for="(gall, idx) in gallery"
-      v-bind:key="idx"
-    >
-      <card class="cardsize">
-        <div class="text-center">
-          <div class="text-center">
-            <h6 style="margin-bottom:15px;">
-              <mark style="background-color:#eef3ff"
-                ><b>E-mail : </b>{{ gall.email }}</mark
-              >
-            </h6>
-          </div>
-          <div id="demo" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-              <div
-                class="carousel-item active"
-                v-for="(photo, idx) in gall.gaddress"
-                v-bind:key="idx"
-              >
-                <div>
-                  <img
-                    :src="photo.server_path"
-                    alt="SORRY"
-                    class="photosize"
-                  />
-                </div>
-              </div>
-              <!-- <div class="carousel-item ">
-                <div>
-                  <img src="@/assets/img/condol_push.png" alt="PHOTO" />
-                </div>
-              </div> -->
-            </div>
-            <a
-              class="carousel-control-prev"
-              href="#ab"
-              role="button"
-              data-slide="prev"
-            >
-              <span class="prev"></span>
-            </a>
-
-            <a
-              class="carousel-control-next"
-              href="#ab"
-              role="button"
-              data-slide="next"
-            >
-              <span class="next"></span>
-            </a>
-          </div>
-        </div>
-        <hr />
-
-        <div class="text-center" style="height: 30px">
-            <button class="btn-danger" @click="DeletePhoto(gall)">
-
-            <!-- <v-btn
-              depressed
-              color="pink"
-              style="text-color:white"
-              @click="deletePhoto(gall)"
-            > -->
-              DELETE
-            </button>
-          <div class="btn-group">
-            <a class="btn" @click="Alert(gall)">
-              <img
-                v-if="gall.alerttype == 0"
-                src="@/assets/img/report_basic.png"
-                alt="신고"
-                style="margin: 15px"
-              />
-              <img
-                v-else-if="gall.alerttype == 1"
-                src="@/assets/img/report_msc.png"
-                alt="신고"
-                style="margin: 15px"
-              />
-            </a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" @click="Rip(gall)">
-              <img
-                v-if="gall.riptype == 0"
-                src="@/assets/img/condol_unpush.png"
-                alt="photo_condol"
-                style="height: 25px; width: 25px; margin: 15px"
-              />
-              <img
-                v-else-if="gall.riptype == 1"
-                src="@/assets/img/condol_push.png"
-                alt="photo_condol"
-                style="height: 25px; width: 25px"
-              />
-            </a>
-          </div>
-        </div>
-      </card>
-    </div>
-
   <div>
     <nav aria-label="Page navigation">
       <ul class="pagination">
@@ -651,7 +467,7 @@ export default {
         // formData.append("files", new Blob([JSON.stringify(this.files[i])],{type:"application/json"}));
       }
       axios
-        .post(`${SERVER_URL}/gallery/upload`, formData, {
+        .post(`${SERVER_URL}gallery/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -675,7 +491,7 @@ export default {
         new Blob([JSON.stringify(this.rip)], { type: "application/json" })
       );
       axios
-        .post(`${SERVER_URL}/gallery/algo`, formData)
+        .post(`${SERVER_URL}gallery/algo`, formData)
         .then(response => {
           this.gallery.riptype = response.data.TYPE;
           console.log("RIP SUCCESS !!");
@@ -702,7 +518,7 @@ export default {
         new Blob([JSON.stringify(this.alert)], { type: "application/json" })
       );
       axios
-        .post(`${SERVER_URL}/gallery/alert`, formData)
+        .post(`${SERVER_URL}gallery/alert`, formData)
         .then(response => {
           this.gallery.alerttype = response.data.TYPE;
           console.log("ALERT SUCCESS !!");

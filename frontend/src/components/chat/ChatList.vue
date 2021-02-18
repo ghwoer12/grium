@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <tr class="" v-for="(chat, idx) in chatList" :key="idx">
+  <!-- <div class="row"> -->
+    <!-- <tr class="" v-for="(chat, idx) in chatList" :key="idx">
       <td>
         <b-col>
           <img class="" v-if="chat.flower == 1" src="@/assets/img/condol_basic.png" alt="">
@@ -18,20 +18,20 @@
           {{ chat.content }}
         </b-col>
       </td>
-    </tr>
+    </tr> -->
     <!-- <div class="col-12 d-flex" v-for="(chat, idx) in chatList" :key="idx">
        <div class="">
         <img class="" v-if="chat.flower == 1" src="@/assets/img/condol_basic.png" alt="">
         <img class="" v-else-if="chat.flower == 2" src="@/assets/img/black-ribbon.png" alt="">
         <img class="" v-else src="@/assets/img/wreath.png" alt="">
       </div>
-      <div class="">{{ chat.writer }} | </div> 
+      <div class="">{{ chat.writer }} | </div>
       <div class="">{{chat.content }}</div>
     </div> -->
 
 
 <!-- 한빈 테스트용 -->
-    <!-- <v-simple-table fixed-header height="300px">
+    <v-simple-table  height="300px">
     <template v-slot:default>
       <thead colspan="12">
         <tr class="b-table" v-for="(chat, idx) in chatList" :key="idx">
@@ -60,8 +60,8 @@
         </tr>
       </thead>
     </template></v-simple-table
-  > -->
-  </div>
+  >
+  <!-- </div> -->
 </template>
 
 <script>

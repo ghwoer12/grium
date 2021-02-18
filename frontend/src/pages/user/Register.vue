@@ -154,6 +154,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.istrue = response.data;
+          alert("인증번호가 발송되었습니다.");
         })
         .catch(({ message }) => {
           this.msg = message;

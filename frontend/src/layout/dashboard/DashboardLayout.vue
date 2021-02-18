@@ -3,13 +3,11 @@
     <side-bar>
       <template slot="links">
         <sidebar-link to="/dashboard" name="Main" icon="ti-panel" />
-        <sidebar-link to="/user/profile" name="My page" icon="ti-user" />
+        <!-- <sidebar-link to="/user/profile" name="My page" icon="ti-user" /> -->
         <sidebar-link to="/gone/list" name="장례 페이지" icon="ti-user" />
-        <sidebar-link to="/album/photo" name="Album" icon="ti-view-list-alt" />
-        <!-- <sidebar-link to="/typography" name="Typography" icon="ti-text" /> -->
-        <!-- <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2" /> -->
-        <!-- <sidebar-link to="/maps" name="지도" icon="ti-map" /> -->
-        <!-- <sidebar-link to="/qna/list" name="질문" icon="ti-bell" /> -->
+        <!-- <sidebar-link to="/album/photo" name="Album" icon="ti-view-list-alt" /> -->
+
+        <!-- 신청페이지 -->
         <sidebar-link
           to="/user/application"
           name="신청페이지"
@@ -17,19 +15,18 @@
         />
 
         <!-- 예비 게시판 추가 -->
-        <sidebar-link
+        <!-- <sidebar-link
           to="/boardlist"
           name="예비 게시판"
           icon="ti-pencil-alt2"
-        />
+        /> -->
 
-      <!-- 신고 페이지 -->
-        <sidebar-link to="/alert" name="신고" icon="ti-bell" />
-        
+        <!-- 신고 페이지 -->
+        <!-- <sidebar-link to="/alert" name="신고" icon="ti-bell" /> -->
+
         <content-footer></content-footer>
       </template>
       <mobile-menu>
-        
         <drop-down
           class="nav-item"
           title="알림"
@@ -54,8 +51,6 @@
       <top-navbar></top-navbar>
 
       <dashboard-content @click.native="toggleSidebar"> </dashboard-content>
-
-      
     </div>
   </div>
 </template>

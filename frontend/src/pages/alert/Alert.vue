@@ -6,8 +6,7 @@
           <h1>ALERT</h1>
         </div>
       </div>
-
-      <div>
+      <div v-if="blength != 0 || plength != 0">
         <table class="b-table" >
           <bAlert
             v-for="blist in blists"
@@ -24,6 +23,11 @@
             :photo_id="plist.photo_id"
             :name="plist.name"
           />
+        </table>
+      </div>
+      <div v-else>
+        <table class="b-table">
+          <h3>신고된 게시물이 없습니다.</h3>
         </table>
       </div>
     </card>
@@ -59,10 +63,12 @@ export default {
     };
   },
   created() {
+    this.user_id = this.$store.getters["getUserid"];
+
     axios
       .get(`${SERVER_URL}/alert/getalarm`, {
         params: {
-          user_id: "a9x2o6g2z2y6s"
+          user_id: this.user_id
         }
       })
       .then(res => {

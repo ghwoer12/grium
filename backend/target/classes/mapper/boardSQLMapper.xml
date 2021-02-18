@@ -17,28 +17,28 @@
 	</select>
 
 	<select id="listall" parameterType="Pagination"
-		resultType="BoardDTO">
-		select *
-		from BOARD_TB
-		<if test="isOwner == 0">
-			where SECRET=0 and FLAG=0
-		</if>
-		<if test="isOwner == 1">
-			where FLAG=0
-		</if>
-		limit #{startList}, #{listSize}
-	</select>
+        resultType="BoardDTO">
+        select *
+        from BOARD_TB
+        <if test="isOwner == 0">
+            where SECRET=0 and FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        <if test="isOwner == 1">
+            where FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        limit #{startList}, #{listSize}
+    </select>
 
-	<select id="getCnt" parameterType="int" resultType="int">
-		select count(*) as listCnt
-		from BOARD_TB
-		<if test="isOwner == 0">
-			where SECRET=0 and FLAG=0
-		</if>
-		<if test="isOwner == 1">
-			where FLAG=0
-		</if>
-	</select>
+	<select id="getCnt" parameterType="map" resultType="int">
+        select count(*) as listCnt
+        from BOARD_TB
+        <if test="isOwner == 0">
+            where SECRET=0 and FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        <if test="isOwner == 1">
+            where FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+    </select>
 	
 	<select id="callboard" parameterType="int" resultType="BoardDTO">
 		select *

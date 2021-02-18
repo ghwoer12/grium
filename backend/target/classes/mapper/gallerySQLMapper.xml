@@ -37,14 +37,14 @@
 	</select>
 
 	<select id="getCnt" parameterType="int" resultType="int">
-		select count(*) as listCnt from PHOTO_TB
-		<if test="isOwner == 0">
-			where SECRET=0 and FLAG=0
-		</if>
-		<if test="isOwner == 1">
-			where FLAG=0
-		</if>
-	</select>
+        select count(*) as listCnt from PHOTO_TB
+        <if test="isOwner == 0">
+            where SECRET=0 and FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        <if test="isOwner == 1">
+            where FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+    </select>
 
 	<!-- here we go -->
 
@@ -63,17 +63,17 @@
 	</resultMap>
 
 	<select id="allList" parameterType="Pagination"
-		resultMap="galleryList">
-		select * from PHOTO_TB
-		<if test="isOwner == 0">
-			where SECRET=0 and FLAG=0
-		</if>
-		<if test="isOwner == 1">
-			where FLAG=0
-		</if>
-		order by PHOTO_ID desc
-		limit #{startList}, #{listSize}
-	</select>
+        resultMap="galleryList">
+        select * from PHOTO_TB
+        <if test="isOwner == 0">
+            where SECRET=0 and FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        <if test="isOwner == 1">
+            where FLAG=0 and GONE_ID=#{gone_id}
+        </if>
+        order by PHOTO_ID desc
+        limit #{startList}, #{listSize}
+    </select>
 
 	<select id="fileInfoList" resultType="GaddressDTO">
 		select SERVER_PHOTO,
@@ -83,7 +83,7 @@
 
 	<select id="IdList" parameterType="int" resultType="GaddressDTO">
 		select * from
-		GADDRESS_TB where PHsOTO_ID=#{photo_id}
+		GADDRESS_TB where PHOTO_ID=#{photo_id}
 	</select>
 
 	<update id="delupdate" parameterType="int">

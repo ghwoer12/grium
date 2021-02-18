@@ -262,6 +262,7 @@ export default {
       this.$refs["my-modal"].hide();
       this.funeral.funeral_nm = data.search_nm;
       this.funeral.funeral_adr = data.search_addr;
+      console.log(this.funeral.funeral_nm);
     },
     makeauth: function() {
       let user = this.user;
@@ -333,6 +334,7 @@ export default {
         .then(response => {
           alert(response.data.url);
           console.log("SUCCESS!!");
+          this.$router.push("/dashboard");
         })
         .catch(function() {
           console.log("FAILURE!!");

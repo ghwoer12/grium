@@ -8,11 +8,23 @@
           </li>
         </ul>
       </nav>
-      <div class="copyright d-flex">
+      <div class="copyright-center">
         <p>
           <br />
           <br />
-          &nbsp;&nbsp;&nbsp;
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <img src="@/assets/img/insta.png" @click="insta" />
           &nbsp;
           <img src="@/assets/img/twi.png" @click="twi" />
@@ -41,4 +53,8 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.copyright-center{
+  color: white;
+}
+</style>

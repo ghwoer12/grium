@@ -42,12 +42,12 @@
 
     <div class="row">
       <div class="col-md-5">
-        <b-button variant="primary" @click="update" class="col-md-6"
-          >정보수정</b-button
-        >
-        <b-button variant="danger" @click="withdraw" class="col-md-6"
-          >회원탈퇴</b-button
-        >
+        <button @click="update" class="col-md-6 btn btn-dark">
+          정보수정
+        </button>
+        <button @click="withdraw" class="col-md-6 btn btn-danger">
+          회원탈퇴
+        </button>
       </div>
     </div>
   </card>

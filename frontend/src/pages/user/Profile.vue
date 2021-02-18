@@ -1,5 +1,5 @@
 <template>
-  <card class="card" title="Profile" sub-title="my data" style="width:80%">
+  <card class="card" title=" " sub-title="My profile" style="width:80%">
     <div class="row">
       <div class="col-md-6">
         <fg-input
@@ -32,8 +32,8 @@
 
     <div class="row">
       <div class="col-md-6">
-        <b-button variant="dark" @click="checkform" class="col-md-6"
-          >정보수정</b-button
+        <button @click="checkform" class="col-md-6 btn btn-dark button"
+          >정보수정</button
         >
       </div>
     </div>

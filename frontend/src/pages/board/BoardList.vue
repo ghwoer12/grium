@@ -25,57 +25,57 @@
           <table class="table table-active">
             <tbody>
               <tr class="table-info" align="center">
-                <td>작성된 글이 없습니다.</td>
+                <td style="background-color: white">작성된 글이 없습니다.</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="Page" align="center">
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item">
-            <input
-              type="button"
-              class="page-link"
-              @click="prevPage"
-              style="width:40px;text-align:center; color:black;"
-              value="<"
-            />
-          </li>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item">
+              <input
+                type="button"
+                class="page-link"
+                @click="prevPage"
+                style="width:40px;text-align:center; color:black;"
+                value="<"
+              />
+            </li>
 
-          <li
-            class="page-item"
-            v-for="(list, idx) in this.listmaker"
-            v-bind:key="idx"
-          >
-            <input
-              type="button"
-              class="page-link"
-              @click="movePage"
-              v-bind:value="idx + 1"
-              style="width:40px;text-align:center; color:black;"
-            />
-            <input
-              type="text"
-              placeholder="listData"
-              v-bind:value="idx + 1"
-              @change="updateList"
-              disabled
-              style="display:none; color:black;"
-            />
-          </li>
-          <li class="page-item">
-            <input
-              type="button"
-              class="page-link"
-              @click="nextPage"
-              style="width:40px;text-align:center; color:black;"
-              value=">"
-            />
-          </li>
-        </ul>
-      </nav>
+            <li
+              class="page-item"
+              v-for="(list, idx) in this.listmaker"
+              v-bind:key="idx"
+            >
+              <input
+                type="button"
+                class="page-link"
+                @click="movePage"
+                v-bind:value="idx + 1"
+                style="width:40px;text-align:center; color:black;"
+              />
+              <input
+                type="text"
+                placeholder="listData"
+                v-bind:value="idx + 1"
+                @change="updateList"
+                disabled
+                style="display:none; color:black;"
+              />
+            </li>
+            <li class="page-item">
+              <input
+                type="button"
+                class="page-link"
+                @click="nextPage"
+                style="width:40px;text-align:center; color:black;"
+                value=">"
+              />
+            </li>
+          </ul>
+        </nav>
       </div>
     </card>
   </div>
@@ -100,7 +100,7 @@ export default {
       listmaker: 0,
       prevnext: 0,
       lists: {
-        board_id: "",
+        board_id: 0,
         title: "",
         writer: "",
         board_dt: ""

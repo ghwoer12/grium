@@ -26,8 +26,8 @@
 
     <div class="row">
       <div class="col-md-6">
-        <b-button variant="primary" @click="check" class="col-md-6"
-          >본인확인</b-button
+        <button @click="check" class="col-md-6 btn btn-dark button"
+          >본인확인</button
         >
       </div>
     </div>

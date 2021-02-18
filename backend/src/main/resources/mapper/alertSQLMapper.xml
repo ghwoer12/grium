@@ -79,4 +79,36 @@
 		where USER_ID=#{user_id}
 	</select>
 	
+	<select id="PCheckalert" parameterType="AlertDTO" resultType="int">
+		select
+		TYPE
+		from ALERT_TB
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</select>
+	
+	<insert id="PPressalert" parameterType="AlertDTO">
+		insert into ALERT_TB(PHOTO_ID, USER_ID, GONE_ID, ALERT_DT, READ_CHECK, TYPE)
+		values(#{photo_id}, #{user_id}, #{gone_id}, now(), 0, 1)
+	</insert> 	
+	
+	<update id="PUpalert" parameterType="AlertDTO">
+		update ALERT_TB
+		set TYPE=1
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
+	
+	<update id="PCanalert" parameterType="AlertDTO">
+		update ALERT_TB
+		set TYPE=0
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
+	
+	<!-- AlertType -->
+	<update id="AlterZero" parameterType="map">
+		update PHOTO_TB set ALERTTYPE = 0 where PHOTO_ID=#{photo_id} and GONE_ID=#{gone_id}
+	</update>
+	
+	<update id="AlterOne" parameterType="map">
+		update PHOTO_TB set ALERTTYPE =1 where PHOTO_ID=#{photo_id} and GONE_ID=#{gone_id}
+	</update>
 </mapper>

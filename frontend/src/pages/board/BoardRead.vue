@@ -144,6 +144,11 @@ export default {
         .then(response => {
           this.riptype = response.data.TYPE;
           console.log(this.riptype);
+          if (this.riptype == 1) {
+            alert("애도합니다.");
+          } else if (this.riptype == 0) {
+            alert("취소되었습니다.");
+          }
         })
         .catch(() => {
           alert("등록 처리시 에러가 발생했습니다.");

@@ -42,9 +42,12 @@ public class GalleryRepository {
 		return session.selectOne("ssafy.gallery.findgone", map);
 	}
 	
-	public int get_total(int isOwner) {
-		return session.selectOne("ssafy.gallery.getCnt", isOwner);
-	}
+	public int get_total(int isOwner, String gone_id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("isOwner", isOwner);
+        map.put("gone_id", gone_id);
+        return session.selectOne("ssafy.gallery.getCnt", map);
+    }
 	
 	public List<GalleryDto> get_allList(Pagination pagination){
 		List<GalleryDto> list = null;
@@ -65,8 +68,10 @@ public class GalleryRepository {
 		return session.selectOne("ssafy.gallery.ListOne", photo_id);
 	}
 	
+	//RIP : 애도합니다!
+	
 	public int checkrip(RipDto rip) throws Exception{
-		int result =0;
+		int result =2;
 		if(session.selectOne("ssafy.rip.photorip", rip) != null) result = session.selectOne("ssafy.rip.photorip", rip);
 		return result;
 	}
@@ -89,14 +94,57 @@ public class GalleryRepository {
 		return result;
 	}
 	
+	//너이놈! 신고합니다
 	public int checkalert(AlertDto alert) throws Exception{
 		int result = 2;
-		if(session.selectOne("ssafy.alert.checkalert", alert) != null) result = session.selectOne("ssafy.alert.checkalert", alert);
+		if(session.selectOne("ssafy.alert.PCheckalert", alert) != null) result = session.selectOne("ssafy.alert.PCheckalert", alert);
+		System.out.println(result);
+		System.out.println("alert.photo.id"+alert.getPhoto_id());
 		return result;
 	}
 	
+	public int pressalert(AlertDto alert) throws Exception{
+		int result = session.insert("ssafy.alert.PPressalert", alert);
+		return result;
+	}
+
+	public int upalert(AlertDto alert) throws Exception{
+		int result = session.update("ssafy.alert.PUpalert", alert);
+		return result;
+	}
+
+	public int canalert(AlertDto alert) throws Exception{
+		int result = session.update("ssafy.alert.PCanalert", alert);
+		return result;
+	}
 	
+	public void alterzero(String gone_id, int photo_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gone_id", gone_id);
+		map.put("photo_id", photo_id);
+		session.update("ssafy.alert.AlterZero", map);
+	}
 	
+	public void alterone(String gone_id, int photo_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gone_id", gone_id);
+		map.put("photo_id", photo_id);
+		session.update("ssafy.alert.AlterOne", map);
+	}
+	
+	public void ripone(String user_id, int photo_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("photo_id", photo_id);
+		session.update("ssafy.rip.RipOne", map);
+	}
+	
+	public void ripzero(String user_id, int photo_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("photo_id", photo_id);
+		session.update("ssafy.rip.RipZero", map);
+	}
 	
 	
 	

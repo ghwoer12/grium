@@ -15,14 +15,15 @@
 		#{content}, now(),
 		#{flower}, 0)
 	</insert>
-
+	
 	<select id="getList" resultType="ChatDTO">
-		select *
-		from CHAT_TB
-		where
-		GONE_ID=#{gone_id} and FLAG=0
-	</select>
-
+        select *
+        from CHAT_TB
+        where
+        GONE_ID=#{gone_id} and FLAG=0
+        order by CHAT_ID desc
+    </select>
+    
 	<update id="delete" parameterType="ChatDTO">
 		update CHAT_TB
 		set FLAG=1

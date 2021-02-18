@@ -28,6 +28,39 @@
       <div class="">{{ chat.writer }} | </div> 
       <div class="">{{chat.content }}</div>
     </div> -->
+
+
+<!-- 한빈 테스트용 -->
+    <!-- <v-simple-table fixed-header height="300px">
+    <template v-slot:default>
+      <thead colspan="12">
+        <tr class="b-table" v-for="(chat, idx) in chatList" :key="idx">
+          <th id="flower">
+            <img
+              class=""
+              v-if="chat.flower == 1"
+              src="@/assets/img/condol_basic.png"
+              alt=""
+            />
+            <img
+              class=""
+              v-else-if="chat.flower == 2"
+              src="@/assets/img/black-ribbon.png"
+              alt=""
+            />
+            <img class="" v-else src="@/assets/img/wreath.png" alt="" />
+          </th>
+          <th id="contents" style="text-align:left;width:5px">
+            <strong>{{ chat.writer }}</strong>
+          </th>
+
+          <th id="contents2" style="text-align:left;width:15px;">
+            <h5 style="font-size:12px;color:#87ceeb   ">{{ chat.content }}</h5>
+          </th>
+        </tr>
+      </thead>
+    </template></v-simple-table
+  > -->
   </div>
 </template>
 

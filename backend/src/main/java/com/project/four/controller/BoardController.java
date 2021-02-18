@@ -86,99 +86,99 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value="Board initial list", notes="게시판 create 글 목록")
-	@GetMapping("/makelist")
-	public ResponseEntity<Map<String, Object>> makeList(@RequestParam String gone_id, @RequestParam String user_id) {
-		HttpStatus status = null;
-		Map<String, Object> resultMap = new HashMap<>();
+    @GetMapping("/makelist")
+    public ResponseEntity<Map<String, Object>> makeList(@RequestParam String gone_id, @RequestParam String user_id) {
+        HttpStatus status = null;
+        Map<String, Object> resultMap = new HashMap<>();
 
-		int page = 1;
-		int range = (page / 10) + 1;
-		int listCnt = 0;
-		int isOwner = 0;
-		List<BoardDto> list = null;
-		
-		// 상주 확인 => 상주는 1
-		try {
-			logger.info("====================================> 상주 확인");
-			GoneDto gone = boardservice.checkchild(gone_id, user_id);
-			if(gone != null) isOwner = 1;
-			
-			// 총 게시물 개수
-			listCnt = boardservice.getcnt(isOwner);
-			
-			// 페이지 처리
-			logger.info("====================================> 페이징");
-			Pagination pagination = new Pagination();
-			pagination.pageInfo(page, range, listCnt, isOwner);
-			
-			logger.info("====================================> 글 목록 받기");
-			list = boardservice.getallList(pagination);
-			
-			// 복호화
-			for (int i = 0; i < list.size(); i++) {
-				list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
-			}
-			
-			resultMap.put("pagination", pagination);
-			resultMap.put("list", list);
-			status = HttpStatus.ACCEPTED;
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("초기 리스트업 실패 : {}", e);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			e.printStackTrace();
-		}
-		
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	}
-	
-	@ApiOperation(value="Board page list", notes="게시판 페이지 글 목록")
-	@GetMapping("/list/{page}")
-	public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @RequestParam String gone_id, @RequestParam String user_id) {
-		HttpStatus status = null;
-		Map<String, Object> resultMap = new HashMap<>();
-		
-		int range = (page / 10) + 1;
-		int listCnt = 0;
-		int isOwner = 0;
-		List<BoardDto> list = null;
-		
-		// 상주 확인
-		try {
-			logger.info("====================================> 상주 확인");
-			GoneDto gone = boardservice.checkchild(gone_id, user_id);
-			if(gone != null) isOwner = 1;
-			
-			// 총 게시물 개수
-			listCnt = boardservice.getcnt(isOwner);
-			
-			// 페이지 처리
-			logger.info("====================================> 페이징");
-			Pagination pagination = new Pagination();
-			pagination.pageInfo(page, range, listCnt, isOwner);
-			
-			logger.info("====================================> 글 목록 받기");
-			list = boardservice.getallList(pagination);
-			
-			// 복호화
-			for (int i = 0; i < list.size(); i++) {
-				list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
-			}
-			
-			resultMap.put("pagination", pagination);
-			resultMap.put("list", list);
-			status = HttpStatus.ACCEPTED;
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("리스트업 실패 : {}", e);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			e.printStackTrace();
-		}
-		
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
-	}
+    int page = 1;
+    int range = (page / 10) + 1;
+    int listCnt = 0;
+    int isOwner = 0;
+    List<BoardDto> list = null;
+    
+    // 상주 확인 => 상주는 1
+    try {
+        logger.info("====================================> 상주 확인");
+        GoneDto gone = boardservice.checkchild(gone_id, user_id);
+        if(gone != null) isOwner = 1;
+        
+        // 총 게시물 개수
+        listCnt = boardservice.getcnt(isOwner, gone_id);
+        
+        // 페이지 처리
+        logger.info("====================================> 페이징");
+        Pagination pagination = new Pagination();
+        pagination.pageInfo(page, range, listCnt, isOwner, gone_id);
+        
+        logger.info("====================================> 글 목록 받기");
+        list = boardservice.getallList(pagination);
+        
+        // 복호화
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
+        }
+        
+        resultMap.put("pagination", pagination);
+        resultMap.put("list", list);
+        status = HttpStatus.ACCEPTED;
+        
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        logger.error("초기 리스트업 실패 : {}", e);
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        e.printStackTrace();
+    }
+    
+    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+}
+
+@ApiOperation(value="Board page list", notes="게시판 페이지 글 목록")
+@GetMapping("/list/{page}")
+public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @RequestParam String gone_id, @RequestParam String user_id) {
+    HttpStatus status = null;
+    Map<String, Object> resultMap = new HashMap<>();
+    
+    int range = (page / 10) + 1;
+    int listCnt = 0;
+    int isOwner = 0;
+    List<BoardDto> list = null;
+    
+    // 상주 확인
+    try {
+        logger.info("====================================> 상주 확인");
+        GoneDto gone = boardservice.checkchild(gone_id, user_id);
+        if(gone != null) isOwner = 1;
+        
+        // 총 게시물 개수
+        listCnt = boardservice.getcnt(isOwner, gone_id);
+        
+        // 페이지 처리
+        logger.info("====================================> 페이징");
+        Pagination pagination = new Pagination();
+        pagination.pageInfo(page, range, listCnt, isOwner, gone_id);
+        
+        logger.info("====================================> 글 목록 받기");
+        list = boardservice.getallList(pagination);
+        
+        // 복호화
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setWriter(util.decrypt(list.get(i).getWriter()));
+        }
+        
+        resultMap.put("pagination", pagination);
+        resultMap.put("list", list);
+        status = HttpStatus.ACCEPTED;
+        
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        logger.error("리스트업 실패 : {}", e);
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        e.printStackTrace();
+    }
+    
+    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+}
 	
 	@ApiOperation(value="Call Modify", notes="게시판 수정 내용 불러오기")
 	@GetMapping("/callmodi/{board_id}")

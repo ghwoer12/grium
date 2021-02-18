@@ -41,4 +41,50 @@
 		where BOARD_ID=#{board_id}
 	</update>
 
+<!-- KY -->
+	
+	<select id="photorip" parameterType="RipDTO" resultType="int">
+		select
+		TYPE
+		from RIP_TB
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</select>
+
+	<insert id="photopressrip" parameterType="RipDTO">
+		insert into RIP_TB(PHOTO_ID, USER_ID, TYPE)
+		values(#{photo_id}, #{user_id}, 1)
+	</insert>
+
+	<update id="photoupdaterip" parameterType="RipDTO">
+		update RIP_TB
+		set TYPE=1
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
+
+	<update id="photocancle" parameterType="RipDTO">
+		update RIP_TB
+		set TYPE=0
+		where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
+
+	<update id="photoplusCount" parameterType="RipDTO">
+		update PHOTO_TB
+		set COUNT=COUNT+1
+		where PHOTO_ID=#{photo_id}
+	</update>
+
+	<update id="photosetCount" parameterType="RipDTO">
+		update PHOTO_TB
+		set COUNT=COUNT-1
+		where PHOTO_ID=#{photo_id}
+	</update>
+
+	<!-- RipType -->
+	<update id="RipOne" parameterType="map">
+		update PHOTO_TB set RIPTYPE =1 where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
+	
+	<update id="RipZero" parameterType="map">
+		update PHOTO_TB set RIPTYPE =0 where PHOTO_ID=#{photo_id} and USER_ID=#{user_id}
+	</update>
 </mapper>

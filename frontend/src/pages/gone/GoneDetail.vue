@@ -48,15 +48,15 @@
         </div>
         <div v-else>
           <card class="left mr-2" v-for="(gall, idx) in goneData.gallery" :key="idx">
+            <div v-if="gall.secret == 0">
               <img :src="gall.gaddress[0].server_path" alt="" width="150px" height="150px">
               <p>{{ gall.writer }}</p>
+            </div>
           </card>
         </div>
-        <router-link :to="`/gallery/list?gone_id=${gone_id}`">
-          <button class="btn btn-dark button">
+          <button class="btn btn-dark button" @click="GoPhoto">
             갤러리 보기
           </button>
-        </router-link>
       </card>
     </div>
   </div>
@@ -96,6 +96,11 @@ export default {
       })
       // $route.query.gone_id
   },
+  methods:{
+    GoPhoto(){
+      this.$router.replace("/album/photo");
+    }
+  }
 }
 </script>
 

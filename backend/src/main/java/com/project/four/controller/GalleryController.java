@@ -127,8 +127,7 @@ public class GalleryController {
 			galinfo.add(add);
 		}//포문
 		gallery.setGaddress(galinfo);
-		gallery.setGone_id("1t2e3s4t");
-		String email = gallery.getEmail();
+		String email = gallery.getEmail(); //이메일 가져와서 
 		try {
 			email = util.encrypt(email);
 		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
@@ -136,12 +135,12 @@ public class GalleryController {
 			e.printStackTrace();
 		}
 //		System.out.println("email :: "+email); //암호화 망할
-		String user_id = gservice.find_id(email);
+		String user_id = gservice.find_id(email); //이메일 통해서 user_id 찾아줄꺼얌
 		gallery.setUser_id(user_id);
 		System.out.println("넣기전에 확인차 : >>> "+gallery);
 		
 		gservice.upload(gallery);
-		System.out.println("끝입니다!!");
+		logger.info("사진 등록 끝입니다!!!끝입니다!!");
 		
 //		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		return null;
@@ -167,13 +166,15 @@ public class GalleryController {
 			if(gone != null) isOwner = 1; // 상주이니? 
 			
 			// 총 게시물 개수
-			listCnt = gservice.get_total(isOwner); //상주인지 확인해주는거야 상주는 비밀글도 확인할수있자나
+			listCnt = gservice.get_total(isOwner, gone_id);
 			 
 			// 페이지 처리
 			logger.info("====================================> 페이징");
 			Pagination pagination = new Pagination();
-			pagination.setListSize(9);
-			pagination.pageInfo(page, range, listCnt, isOwner);
+			pagination.setListSize(7);
+			pagination.pageInfo(page, range, listCnt, isOwner, gone_id);
+			List<Integer> giveme_alert;
+			
 			
 			logger.info("====================================> 글 목록 받기");
 			list = gservice.get_allList(pagination);
@@ -185,6 +186,7 @@ public class GalleryController {
 			
 			resultMap.put("pagination", pagination);
 			resultMap.put("list", list);
+			
 			status = HttpStatus.ACCEPTED;
 			
 		} catch (Exception e) {
@@ -270,28 +272,33 @@ public class GalleryController {
 	}
 	
 	
-	@ApiOperation(value="Album good", notes="사진 추천")
+	@ApiOperation(value="Album sad", notes="사진 애도")
 	@PostMapping("/algo")
-	public ResponseEntity<Map<String, Object>> algo(@RequestBody RipDto rip) {
+	public ResponseEntity<Map<String, Object>> algo(@RequestPart RipDto rip) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		int good = 0;
-		
+		System.out.println(rip.getPhoto_id());
+		System.out.println(rip.getUser_id());
+		System.out.println("혹시너니? "+rip.getType());
 		try {
 			int checkrip = gservice.checkrip(rip);
 			if(checkrip == 1) {
 				logger.info("====================================> 좋아요	 취소");
 				good = gservice.cancle(rip);
+				gservice.ripzero(rip.getUser_id(), rip.getPhoto_id());
 				resultMap.put("TYPE", 0);
 				status = HttpStatus.ACCEPTED;
 			} else if (checkrip == 2) {
 				logger.info("====================================> 빈 좋아요 상태/최초");
 				good = gservice.pressrip(rip);
+				gservice.ripone(rip.getUser_id(), rip.getPhoto_id());
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.info("====================================> 빈 좋아요 > 좋아요");
 				good = gservice.updaterip(rip);
+				gservice.ripone(rip.getUser_id(), rip.getPhoto_id());
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			}
@@ -305,30 +312,35 @@ public class GalleryController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	/*
-	@ApiOperation(value="Board report", notes="게시판 글 신고")
+	
+	@ApiOperation(value="Board report", notes="앨범 사진 신고")
 	@PostMapping("/alert")
-	public ResponseEntity<Map<String, Object>> alert(@RequestBody AlertDto alert) {
+	public ResponseEntity<Map<String, Object>> alert(@RequestPart AlertDto alert) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		int report = 0;
 		
 		try {
 			int checkalert = gservice.checkalert(alert);
+			
 			if(checkalert == 1) {
 				logger.info("====================================> 신고 취소");
-				report = boardservice.canalert(alert);
+				report = gservice.canalert(alert);
+				//flag를 0으로 바꿔줘야겟지?
+				gservice.alterzero(alert.getGone_id(),alert.getPhoto_id());
 				resultMap.put("TYPE", 0);
 				status = HttpStatus.ACCEPTED;
 			} else if (checkalert == 2) {
 				logger.info("====================================> 빈 신고 상태/최초");
-				report = boardservice.pressralert(alert);
+				report = gservice.pressralert(alert);
+				gservice.alterone(alert.getGone_id(), alert.getPhoto_id());
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.info("====================================> 신고 취소 > 재신고");
 				// Type이 0으로 돌아간 상태
-				report = boardservice.upalert(alert);
+				report = gservice.upalert(alert);
+				gservice.alterone(alert.getGone_id(), alert.getPhoto_id());
 				resultMap.put("TYPE", 1);
 				status = HttpStatus.ACCEPTED;
 			}
@@ -342,7 +354,7 @@ public class GalleryController {
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-*/
+
 	
 
 }

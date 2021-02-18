@@ -283,11 +283,14 @@ public ResponseEntity<Map<String, Object>> allList(@PathVariable int page, @Requ
 		try {
 			logger.info("====================================> 버튼 권한 체크");
 			int check = boardservice.checkAuth(board_id, user_id);
+			System.out.println("checkou"+check);
 			GoneDto gone = boardservice.checkchild(gone_id, user_id);
-			
+			System.out.println("chei"+gone);
 			int type = boardservice.checktype(board_id, user_id);
+			System.out.println("che2323"+type);
 			resultMap.put("TYPE", type);
 			int type2 = boardservice.checkatype(board_id, user_id);
+			System.out.println("chei"+type2);
 			resultMap.put("TYPE2", type2);
 			
 			if(check > 0 || gone != null) {

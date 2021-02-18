@@ -267,7 +267,7 @@ export default {
     makeauth: function() {
       let user = this.user;
       axios
-        .post(`${SERVER_URL}user/checkmail`, user)
+        .post(`${SERVER_URL}/user/checkmail`, user)
         .then(response => {
           console.log(response.data);
           this.istrue = response.data;
@@ -278,7 +278,7 @@ export default {
     },
     getfuneral: function() {
       axios
-        .get(`${SERVER_URL}appli/getfuneral`, {
+        .get(`${SERVER_URL}/appli/getfuneral`, {
           params: {
             region: this.region
           }
@@ -326,7 +326,7 @@ export default {
         })
       );
       axios
-        .post(`${SERVER_URL}appli/regist`, formData, {
+        .post(`${SERVER_URL}/appli/regist`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

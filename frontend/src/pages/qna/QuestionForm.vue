@@ -91,7 +91,7 @@ export default {
 
     createHandler() {
       axios
-        .post(`${SERVER_URL}qna/q`, {
+        .post(`${SERVER_URL}/qna/q`, {
           noq: this.noq,
           userid: this.userid,
           name: this.name,

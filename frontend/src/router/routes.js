@@ -114,7 +114,8 @@ const routes = [
       {
         path: "/album/photo",
         name: "Photo",
-        component: Photo
+        component: Photo,
+        beforeEnter: requireAuth()
       },
       // user
       {

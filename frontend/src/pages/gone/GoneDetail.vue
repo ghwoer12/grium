@@ -156,7 +156,7 @@ export default {
     let gone = this.$route.query.gone_id;
     this.$store.dispatch("createGone", gone);
     axios
-      .get(`${SERVER_URL}gone/list/${this.$store.state.gone_id}`)
+      .get(`${SERVER_URL}/gone/list/${this.$store.state.gone_id}`)
       .then(res => {
         console.log(res.data);
         this.goneData = res.data;

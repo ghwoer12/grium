@@ -26,7 +26,7 @@ export default {
   },
   created() {
     axios
-      .get(`${SERVER_URL}qna/q`)
+      .get(`${SERVER_URL}/qna/q`)
       .then(({ data }) => {
         this.items = data;
       })

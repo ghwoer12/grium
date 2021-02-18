@@ -63,7 +63,7 @@ export default {
       this.chat.gone_id = this.gone_id
       console.log(this.chat)
       axios
-      .post(`${SERVER_URL}chat/insert`, this.chat)
+      .post(`${SERVER_URL}/chat/insert`, this.chat)
       .then(res => {
         console.log(res)
         console.log("성공")

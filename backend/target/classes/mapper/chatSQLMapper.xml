@@ -22,6 +22,7 @@
         where
         GONE_ID=#{gone_id} and FLAG=0
         order by CHAT_ID desc
+        limit 13
     </select>
     
 	<update id="delete" parameterType="ChatDTO">

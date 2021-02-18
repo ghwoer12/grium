@@ -335,7 +335,7 @@ export default {
           alert(response.data.message);
         })
         .catch(() => {
-          alert("삭제 실패");
+          alert("DELETE FAIL");
           console.log("err");
         });
     },

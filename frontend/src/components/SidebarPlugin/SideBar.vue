@@ -11,7 +11,7 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="/main" class="simple-text">
+        <a href="/#main" class="simple-text">
           <div class="logo-img">
             <img src="@/assets/img/title.png" alt="로고" />
           </div>

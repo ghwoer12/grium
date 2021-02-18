@@ -136,7 +136,7 @@
         <hr />
 
         <div class="text-center" style="height: 30px">
-            <button class="btn" @click="DeletePhoto(gall)">
+            <button class="btn-danger" @click="DeletePhoto(gall)">
 
             <!-- <v-btn
               depressed
@@ -147,7 +147,7 @@
               DELETE
             </button>
           <div class="btn-group">
-            <button class="btn" @click="Alert(gall)">
+            <a class="btn" @click="Alert(gall)">
               <img
                 v-if="gall.alerttype == 0"
                 src="@/assets/img/report_basic.png"
@@ -160,11 +160,11 @@
                 alt="신고"
                 style="margin: 15px"
               />
-            </button>
+            </a>
           </div>
 
           <div class="btn-group">
-            <button class="btn" @click="Rip(gall)">
+            <a class="btn" @click="Rip(gall)">
               <img
                 v-if="gall.riptype == 0"
                 src="@/assets/img/condol_unpush.png"
@@ -177,7 +177,7 @@
                 alt="photo_condol"
                 style="height: 25px; width: 25px"
               />
-            </button>
+            </a>
           </div>
         </div>
       </card>

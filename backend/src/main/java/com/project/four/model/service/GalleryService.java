@@ -44,6 +44,8 @@ public interface GalleryService {
 	
 	void ripone(String user_id, int photo_id);
 	void ripzero(String user_id, int photo_id);
+	//삭제할꺼야
+	int areuAuth(String gone_id, String user_id);
 	
 	
 }

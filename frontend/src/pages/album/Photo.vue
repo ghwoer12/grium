@@ -136,6 +136,16 @@
         <hr />
 
         <div class="text-center" style="height: 30px">
+            <button class="btn" @click="DeletePhoto(gall)">
+
+            <!-- <v-btn
+              depressed
+              color="pink"
+              style="text-color:white"
+              @click="deletePhoto(gall)"
+            > -->
+              DELETE
+            </button>
           <div class="btn-group">
             <button class="btn" @click="Alert(gall)">
               <img
@@ -302,6 +312,7 @@ export default {
       .then(res => {
         this.gallery = res.data.list;
         vm.pages = res.data.pagination;
+        console.log(this.gallery);
         console.log("SUCCESS!!");
         this.list = parseInt(this.pages.listCnt / this.pages.listSize + 1);
       })
@@ -310,6 +321,24 @@ export default {
       });
   },
   methods: {
+    DeletePhoto: function(data) {
+      axios
+        .delete(`${SERVER_URL}/gallery/delete`,{
+          data:{
+            photo_id : data.photo_id,
+            user_id: this.$store.getters["getUserid"], //현재로그인한사람
+            gone_id:data.gone_id,  //고인
+          }
+        })
+        .then(response => {
+          window.location.reload();
+          alert(response.data.message);
+        })
+        .catch(() => {
+          alert("DELETE FAIL");
+          console.log("err");
+        });
+    },
     movePage(event) {
       var updatedText = event.target.value;
       this.pages.page = updatedText;

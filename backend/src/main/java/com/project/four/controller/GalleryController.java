@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -161,7 +162,7 @@ public class GalleryController {
 		
 		// 상주 확인
 		try {
-			logger.info("====================================> 상주 확인");
+			logger.info("===========================s=========> 상주 확인");
 			GoneDto gone = gservice.find_gone(gone_id, user_id);
 			if(gone != null) isOwner = 1; // 상주이니? 
 			
@@ -234,14 +235,19 @@ public class GalleryController {
 	
 	@ApiOperation(value="Photo delete", notes="앨범 사진 삭제")
 	@DeleteMapping("/delete")
-	public ResponseEntity<Map<String, Object>> delete(@RequestBody int photo_id) {
+	public ResponseEntity<Map<String, Object>> delete(@RequestBody GalleryDto dto) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
-				
-		try {
-			logger.info("====================================> 내용 삭제");
-			//파일 가져와서 삭제하고 db에 있는거 삭제
-			//아마 키앞에 photo/ 붙여야할꺼야
+		
+		System.out.println("삭제할꺼 dto" + dto);
+		
+		int check =gservice.areuAuth(dto.getGone_id(), dto.getUser_id());
+		
+		if(check ==1) { //권한이 있는 친구야
+			try {
+				logger.info("====================================> 내용 삭제");
+				//파일 가져와서 삭제하고 db에 있는거 삭제
+				//아마 키앞에 photo/ 붙여야할꺼야
 //			List<GaddressDto> list = gservice.list_id(photo_id);
 //			System.out.println(list);
 //			
@@ -250,24 +256,32 @@ public class GalleryController {
 //	           System.out.println("hiti : "+photo);
 //				s3util.setS3Client().deleteObject(new DeleteObjectRequest(bucket, photo));	
 //			}
-			
-			int result = gservice.delete(photo_id);
-			
-			if(result == 1) {
-				logger.info("====================================> 삭제 성공");
-				resultMap.put("message", "글 삭제에 성공하였습니다.");
-				status = HttpStatus.ACCEPTED;
-			} else {
-				resultMap.put("message", "글 삭제에 실패하였습니다.");
-				status = HttpStatus.ACCEPTED;
+				
+				int result = gservice.delete(dto.getPhoto_id());
+				
+				
+				if(result == 1) {
+					logger.info("====================================> 삭제 성공");
+					resultMap.put("message", "글 삭제에 성공하였습니다.");
+					status = HttpStatus.ACCEPTED;
+				} else {
+					resultMap.put("message", "글 삭제에 실패하였습니다.");
+					status = HttpStatus.ACCEPTED;
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.error("글 삭제 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("글 삭제 실패 : {}", e);
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}else {
+			logger.error("글 삭제 권한이없다 : {}");
+			resultMap.put("message", "글 삭제 권한이 없습니다.");
+			status = HttpStatus.ACCEPTED;
 		}
+				
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	

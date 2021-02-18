@@ -157,4 +157,11 @@ public class GalleryServiceImpl implements GalleryService {
 		grepo.ripzero(user_id, photo_id);
 
 	}
+
+	//삭제
+	@Override
+	public int areuAuth(String gone_id, String user_id) {
+		// TODO Auto-generated method stub
+		return grepo.areuAuth(gone_id, user_id);
+	}
 }

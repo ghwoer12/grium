@@ -102,4 +102,8 @@
 		6;
 	</select>
 
+	<select id="AreUAuth" parameterType="map" resultType="int">
+		select count(*) from GONE_TB where GONE_ID=#{gone_id} and USER_ID=#{user_id}
+	</select>
+
 </mapper>

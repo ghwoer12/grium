@@ -1,7 +1,33 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">{{ routeName }}</a>
+      <div class="row">
+                <a class="navbar-brand" href="#">{{ routeName }}</a>
+
+        <!-- <div class="navbar-brand" v-if="this.route === 'Photo'">GALLERY</div>
+        <div class="navbar-brand" v-if="this.route === 'BoardList'">LETTER</div>
+        <div class="navbar-brand" v-if="this.route === 'GoneList'">
+          CONDOLENCE
+        </div>
+        <div class="navbar-brand" v-if="this.route === 'Application'">
+          APPLICATION
+        </div>
+        <div class="navbar-brand" v-if="this.route === 'GoneDetail'">
+          CONDOLENCE OFFICER
+        </div> -->
+
+        <div>
+          <ToggleButtonpage
+            id="onoff"
+            :defaultState="true"
+            v-on:change="triggerEvent"
+            style="margin-left:100px;margin-top:25px;display:absolute"
+            v-if="this.route === 'Photo' || this.route === 'BoardList'"
+          />
+
+          <p v-else></p>
+        </div>
+      </div>
       <button
         class="navbar-toggler navbar-burger"
         type="button"
@@ -16,28 +42,36 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
-        <drop-down
-          class="nav-item"
-          title="5 Notifications"
-          title-classes="nav-link"
-          icon="ti-bell"
-        >
-          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-          <a class="dropdown-item" href="#">편지에 대한 신고 2건입니다.</a>
-        </drop-down>
         <li class="nav-item">
           <drop-down
             class="nav-item"
-            title="회원관리"
+            title=" "
+            title-classes="nav-link"
+            icon="ti-bell"
+          >
+            <router-link to="/alert" class="nav-link">
+              신고 관리
+            </router-link>
+          </drop-down>
+        </li>
+        <li class="nav-item">
+          <drop-down
+            class="nav-item"
+            title=" "
             title-classes="nav-link"
             icon="ti-user"
           >
             <router-link to="/login" class="nav-link" v-if="getName === ''">
-                로그인
+              LOGIN
             </router-link>
-            <router-link @click.native="logout" to="/" class="nav-link" v-else>
-              로그아웃
+            <div v-else>
+            <router-link to="/user/profile" class="nav-link">
+              MY PAGE
             </router-link>
+            <router-link @click.native="logout" to="/" class="nav-link">
+              LOGOUT
+            </router-link>
+            </div>
           </drop-down>
         </li>
       </ul>
@@ -46,7 +80,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import ToggleButtonpage from "../../components/ToggleButtonpage.vue";
+
 export default {
+  components: {
+    ToggleButtonpage
+  },
   computed: {
     ...mapGetters([
       "getAccessToken",
@@ -58,19 +97,21 @@ export default {
     ]),
     routeName() {
       const { name } = this.$route;
+      this.route = name;
       return this.capitalizeFirstLetter(name);
     }
   },
   data() {
     return {
-      activeNotifications: false
+      activeNotifications: false,
+      route: ""
     };
   },
   methods: {
     logout: function() {
       this.$store.dispatch("LOGOUT").then(() => {
-            this.$router.replace("/login");
-          });
+        this.$router.replace("/login");
+      });
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -86,6 +127,16 @@ export default {
     },
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
+    },
+    triggerEvent(value) {
+      this.active = value;
+      if (this.active) {
+        this.$router.push("/album/photo");
+        // alert(this.route);
+      } else {
+        this.$router.push("/boardlist");
+        // alert(this.route);
+      }
     }
   }
 };

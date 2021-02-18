@@ -22,15 +22,24 @@ import store from "./store";
 import PaperDashboard from "./plugins/paperDashboard";
 import "vue-notifyjs/themes/default.css";
 
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-Vue.use(BootstrapVue)
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
+
+Vue.use(BootstrapVue);
 
 Vue.use(PaperDashboard);
 
+Vue.use(require("vue-moment"));
+
+Vue.use(Vuetify);
+
 /* eslint-disable no-new */
 new Vue({
+  vuetify: new Vuetify(),
   router,
   store,
   render: h => h(App)

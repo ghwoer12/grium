@@ -37,10 +37,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int getcnt(int isOwner) throws Exception {
-		// TODO Auto-generated method stub
-		return brepo.getcnt(isOwner);
-	}
+    public int getcnt(int isOwner, String gone_id) throws Exception {
+        // TODO Auto-generated method stub
+        return brepo.getcnt(isOwner, gone_id);
+    }
 
 	@Override
 	public int update(BoardDto board) throws Exception {
@@ -124,6 +124,12 @@ public class BoardServiceImpl implements BoardService{
 	public int checktype(int board_id, String user_id) throws Exception {
 		// TODO Auto-generated method stub
 		return brepo.checktype(board_id, user_id);
+	}
+
+	@Override
+	public int checkatype(int board_id, String user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return brepo.checkatype(board_id, user_id);
 	}
 
 }

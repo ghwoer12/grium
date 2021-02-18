@@ -11,7 +11,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default new Vuex.Store({
   // 플러그인으로 설치해준다.
-  plugins:[
+  plugins: [
     createPersistedState()
   ],
   state: {
@@ -20,8 +20,10 @@ export default new Vuex.Store({
     name: "",
     password: "",
     phone: "",
-    photo: ""
+    photo: "",
     // roll : "",
+    gone_id: "",
+    userid: ""
 
   },
   getters: {
@@ -42,10 +44,16 @@ export default new Vuex.Store({
     },
     getPhoto(state) {
       return state.photo;
-    }
+    },
     // getRoll(state) {
     //   return state.roll;
-    // }
+    // },
+    getGone(state) {
+      return state.gone_id;
+    },
+    getUserid(state) {
+      return state.userid;
+    }
   },
   mutations: {
     LOGIN(state, payload) {
@@ -56,6 +64,7 @@ export default new Vuex.Store({
       state.phone = payload["phone"];
       // state.photo = payload["photo"];
       // state.roll = payload["roll"];
+      state.userid = payload["userid"];
     },
     LOGOUT(state) {
       state.accessToken = null;
@@ -65,6 +74,8 @@ export default new Vuex.Store({
       state.phone = "";
       // state.photo = "";
       // state.roll = "";
+      state.gone_id = "";
+      state.userid = "";
     },
     FINDPW(state, payload) {
       state.accessToken = payload["auth-token"];
@@ -79,6 +90,9 @@ export default new Vuex.Store({
       state.name = payload["name"];
       state.phone = payload["phone"];
       // state.roll = payload["roll"];
+    },
+    CREATE_GONE(state, gone_id) {
+      state.gone_id = gone_id;
     }
   },
   actions: {
@@ -97,6 +111,7 @@ export default new Vuex.Store({
           );
           sessionStorage.setItem("email", `${response.data["email"]}`);
           sessionStorage.setItem("passwoard", `${response.data["password"]}`);
+          sessionStorage.setItem("userid", `${response.data["userid"]}`);
         })
         .catch(() => {
           reject();
@@ -168,6 +183,11 @@ export default new Vuex.Store({
           reject();
         });
     },
+    // gone_id 가져오기
+    createGone({ commit }, gone_id) {
+      commit('CREATE_GONE', gone_id)
+    }
+
   },
   modules: {}
 });

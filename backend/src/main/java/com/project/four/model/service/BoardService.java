@@ -16,7 +16,7 @@ public interface BoardService {
 
 	List<BoardDto> getallList(Pagination pagination) throws Exception;
 
-	int getcnt(int isOwner) throws Exception;
+	int getcnt(int isOwner, String gone_id) throws Exception;
 
 	int update(BoardDto board) throws Exception;
 
@@ -45,5 +45,7 @@ public interface BoardService {
 	int canalert(AlertDto alert) throws Exception;
 
 	int checktype(int board_id, String user_id) throws Exception;
+
+	int checkatype(int board_id, String user_id) throws Exception;
 
 }

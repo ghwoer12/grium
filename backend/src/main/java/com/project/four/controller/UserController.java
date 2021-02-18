@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +44,48 @@ public class UserController {
 	private AES256Util util;
 
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@PostMapping("/checkmail")
+	public boolean checkmail(@RequestBody UserDto user) {
+		boolean isTrue = false;
+
+		String mail = user.getEmail();
+		try {
+			String authKey = userservice.sendAuthMail(mail);
+			System.out.println("====================================> " + authKey);
+			
+			if(!authKey.equals(null)) {
+				isTrue = true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return isTrue;
+	}
+	
+	@GetMapping("/authemail")
+	public boolean authemail(@RequestParam String email, @RequestParam String auth_num) {
+		boolean isTrue = false;
+		
+		try {
+			int result = userservice.authemail(email, auth_num);
+			
+			if(result == 1) {
+				System.out.println("====================================> 성공");
+				int res = userservice.delauth(email, auth_num);
+				isTrue = true;
+			} else {
+				System.out.println("====================================> 실패");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return isTrue;
+	}
 
 	@PostMapping("/signup")
 	@ResponseBody

@@ -1,12 +1,12 @@
 import store from "@/store";
 
-import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
+import MainLayout from "@/layout/dashboard/MainLayout.vue";
 
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
 
 // Admin pages
-import Dashboard from "@/pages/Dashboard.vue";
+import Main from "@/pages/Main.vue";
 
 // Q&A pages
 import QnaList from "@/pages/qna/QnaList.vue";
@@ -18,7 +18,7 @@ import AnswerDetail from "@/components/qna/AnswerDetail";
 import QuestionUpdate from "@/pages/qna/QuestionUpdate";
 
 // search pages
-import SearchHouse from "@/pages/search/House";
+import Photo from "@/pages/album/Photo.vue";
 
 // user pages
 import Login from "@/pages/Login.vue";
@@ -28,13 +28,20 @@ import Update from "@/pages/user/Update.vue";
 import PassCheck from "@/pages/user/PassCheck.vue";
 import Findpw from "@/pages/user/Findpw.vue";
 import FindpwSuccess from "@/pages/user/FindpwSuccess.vue";
+import Application from "@/pages/user/Application.vue";
 
 // Board
 import BoardList from "@/pages/board/BoardList.vue";
 import BoardInsert from "@/pages/board/BoardInsert.vue";
 import BoardRead from "@/pages/board/BoardRead.vue";
 import BoardUpdate from "@/pages/board/BoardUpdate.vue";
-import BoardDelete from "@/pages/board/BoardDelete.vue";
+
+// Gone
+import GoneList from "@/pages/gone/GoneList.vue";
+import GoneDetail from "@/pages/gone/GoneDetail.vue";
+
+// Alert
+import Alert from "@/pages/alert/Alert.vue";
 
 // https://router.vuejs.org/kr/guide/advanced/navigation-guards.html
 const requireAuth = () => (to, from, next) => {
@@ -48,8 +55,8 @@ const requireAuth = () => (to, from, next) => {
 const routes = [
   {
     path: "/",
-    component: DashboardLayout,
-    redirect: "/dashboard",
+    component: MainLayout,
+    redirect: "/main",
     children: [
       {
         path: "/login",
@@ -64,9 +71,9 @@ const routes = [
         beforeEnter: requireAuth()
       },
       {
-        path: "dashboard",
-        name: "dashboard",
-        component: Dashboard
+        path: "main",
+        name: "main",
+        component: Main
       },
       // qna
       {
@@ -105,9 +112,9 @@ const routes = [
         component: AnswerDetail
       },
       {
-        path: "/search/house",
-        name: "SearchHouse",
-        component: SearchHouse
+        path: "/album/photo",
+        name: "Photo",
+        component: Photo
       },
       // user
       {
@@ -143,6 +150,12 @@ const routes = [
         name: "FindpwSuccess",
         component: FindpwSuccess
       },
+      {
+        path: "/user/application",
+        name: "Application",
+        component: Application,
+        beforeEnter: requireAuth()
+      },
       // board
       {
         path: "/boardlist",
@@ -153,13 +166,13 @@ const routes = [
       {
         path: "/boardinsert",
         name: "BoardInsert",
-        component: BoardInsert,
+        component: BoardInsert
         // beforeEnter: requireAuth()
       },
       {
         path: "/boardread",
         name: "BoardRead",
-        component: BoardRead,
+        component: BoardRead
         // beforeEnter: requireAuth()
       },
       {
@@ -169,12 +182,24 @@ const routes = [
         props: true
         // beforeEnter: requireAuth()
       },
+      // gone
       {
-        path: "/boarddelete",
-        name: "BoardDelete",
-        component: BoardDelete,
+        path: "/gone/list",
+        name: "GoneList",
+        component: GoneList
+      },
+      {
+        path: "/gonedetail",
+        name: "GoneDetail",
+        component: GoneDetail,
         props: true
-        // beforeEnter: requireAuth()
+      },
+      // alert
+      {
+        path: "/alert",
+        name: "Alert",
+        component: Alert,
+        beforeEnter: requireAuth()
       },
     ]
   },

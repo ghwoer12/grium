@@ -23,4 +23,10 @@ public interface UserService {
 
 	public int newPassword(String email, String newPassword) throws Exception; //KY 임시비밀번호발급
 
+	public String sendAuthMail(String mail) throws Exception;
+
+	public int authemail(String email, String auth_num) throws Exception;
+
+	public int delauth(String email, String auth_num) throws Exception;
+
 }

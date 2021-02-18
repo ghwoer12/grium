@@ -71,4 +71,22 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return urepo.newPassword(email, newPassword);
 	}
+
+	@Override
+	public String sendAuthMail(String mail) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.sendAuthMail(mail);
+	}
+
+	@Override
+	public int authemail(String email, String auth_num) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.authemail(email, auth_num);
+	}
+
+	@Override
+	public int delauth(String email, String auth_num) throws Exception {
+		// TODO Auto-generated method stub
+		return urepo.delauth(email, auth_num);
+	}
 }

@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
       <div class="row">
-                <a class="navbar-brand" href="#">{{ routeName }}</a>
+        <a class="navbar-brand" href="#">{{ routeName }}</a>
 
         <!-- <div class="navbar-brand" v-if="this.route === 'Photo'">GALLERY</div>
         <div class="navbar-brand" v-if="this.route === 'BoardList'">LETTER</div>
@@ -17,15 +17,24 @@
         </div> -->
 
         <div>
-          <ToggleButtonpage
-            id="onoff"
-            :defaultState="true"
-            v-on:change="triggerEvent"
-            style="margin-left:100px;margin-top:25px;display:absolute"
-            v-if="this.route === 'Photo' || this.route === 'BoardList'"
-          />
-
-          <p v-else></p>
+          <button
+            v-on:click="onUpload()"
+            style="border: none;margin-left:100px;margin-top:20px;display:absolute"
+            class="btn btn-dark"
+            @click="goto"
+            v-if="routeName === 'Photo'"
+          >
+            GO TO BOARD
+          </button>
+          <button
+            v-on:click="onUpload()"
+            style="border: none;margin-left:100px;margin-top:20px;display:absolute"
+            class="btn btn-dark"
+            @click="goto"
+            v-else
+          >
+            GO TO PHOTO
+          </button>
         </div>
       </div>
       <button
@@ -65,12 +74,12 @@
               LOGIN
             </router-link>
             <div v-else>
-            <router-link to="/user/profile" class="nav-link">
-              MY PAGE
-            </router-link>
-            <router-link @click.native="logout" to="/" class="nav-link">
-              LOGOUT
-            </router-link>
+              <router-link to="/user/profile" class="nav-link">
+                MY PAGE
+              </router-link>
+              <router-link @click.native="logout" to="/" class="nav-link">
+                LOGOUT
+              </router-link>
             </div>
           </drop-down>
         </li>
@@ -80,11 +89,13 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import Button from "../../components/Button.vue";
 import ToggleButtonpage from "../../components/ToggleButtonpage.vue";
 
 export default {
   components: {
-    ToggleButtonpage
+    ToggleButtonpage,
+    Button
   },
   computed: {
     ...mapGetters([
@@ -97,7 +108,6 @@ export default {
     ]),
     routeName() {
       const { name } = this.$route;
-      this.route = name;
       return this.capitalizeFirstLetter(name);
     }
   },
@@ -128,9 +138,9 @@ export default {
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
     },
-    triggerEvent(value) {
-      this.active = value;
-      if (this.active) {
+    goto() {
+      // this.active = value;
+      if (this.routeName === "BoardList") {
         this.$router.push("/album/photo");
         // alert(this.route);
       } else {

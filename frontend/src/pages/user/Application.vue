@@ -334,7 +334,7 @@ export default {
         .then(response => {
           alert(response.data.url);
           console.log("SUCCESS!!");
-          this.$router.push("/dashboard");
+          this.$router.push("/main");
         })
         .catch(function() {
           console.log("FAILURE!!");

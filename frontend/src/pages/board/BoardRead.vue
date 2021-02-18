@@ -158,7 +158,7 @@ export default {
       let ids = {
         board_id: this.list.board_id,
         user_id: this.user_id,
-        gone_id: "9t8e7s6t"
+        gone_id: this.gone_id
       };
 
       axios

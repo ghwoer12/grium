@@ -17,6 +17,7 @@
         </div> -->
 
         <div v-if="routeName === 'Photo' || routeName ==='BoardList'">
+
           <button
             v-on:click="onUpload()"
             style="border: none;margin-left:100px;margin-top:20px;display:absolute"
@@ -37,6 +38,7 @@
           </button>
         </div>
         <div v-else></div>
+
       </div>
       <button
         class="navbar-toggler navbar-burger"

@@ -157,7 +157,7 @@ export default {
       // 서버와 통신(axios)을 해 토큰값을 얻어야 하므로 Actions를 호출.
       this.$store
         .dispatch("LOGIN", user)
-        .then(() => this.$router.push(`/dashboard`))
+        .then(() => this.$router.push(`/main`))
         // .then(() => this.$router.replace(`/${this.nextRoute}`))
         .catch(
           ({ message }) => (this.message = "아이디/비밀번호를 확인해주세요.")

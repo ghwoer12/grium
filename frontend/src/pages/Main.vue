@@ -29,7 +29,7 @@
         <v-row class="fill-height" align="center" justify="center">
           <div class="display-3">
             <!-- <img src="https://cdn.pixabay.com/photo/2021/02/05/18/05/paper-5985445_960_720.jpg" alt=""> -->
-            <h3>{{ slide }}</h3>
+            <p>{{ slide }}</p>
           </div>
         </v-row>
       </v-sheet>

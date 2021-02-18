@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     home: function () {
-      this.$router.replace("/dashboard");
+      this.$router.replace("/main");
     },
         login: function () {
       this.$router.replace("/login");

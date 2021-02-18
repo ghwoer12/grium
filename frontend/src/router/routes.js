@@ -1,12 +1,12 @@
 import store from "@/store";
 
-import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
+import MainLayout from "@/layout/dashboard/MainLayout.vue";
 
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
 
 // Admin pages
-import Dashboard from "@/pages/Dashboard.vue";
+import Main from "@/pages/Main.vue";
 
 // Q&A pages
 import QnaList from "@/pages/qna/QnaList.vue";
@@ -55,8 +55,8 @@ const requireAuth = () => (to, from, next) => {
 const routes = [
   {
     path: "/",
-    component: DashboardLayout,
-    redirect: "/dashboard",
+    component: MainLayout,
+    redirect: "/main",
     children: [
       {
         path: "/login",
@@ -71,9 +71,9 @@ const routes = [
         beforeEnter: requireAuth()
       },
       {
-        path: "dashboard",
-        name: "dashboard",
-        component: Dashboard
+        path: "main",
+        name: "main",
+        component: Main
       },
       // qna
       {

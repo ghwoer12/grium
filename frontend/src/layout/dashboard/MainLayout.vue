@@ -2,7 +2,7 @@
   <div class="wrapper">
     <side-bar>
       <template slot="links">
-        <sidebar-link to="/dashboard" name="Main" icon="ti-panel" />
+        <sidebar-link to="/main" name="Main" icon="ti-panel" />
         <!-- <sidebar-link to="/user/profile" name="My page" icon="ti-user" /> -->
         <sidebar-link to="/gone/list" name="장례 페이지" icon="ti-user" />
         <!-- <sidebar-link to="/album/photo" name="Album" icon="ti-view-list-alt" /> -->

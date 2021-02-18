@@ -6,7 +6,7 @@
 <mapper namespace="ssafy.gone">
 
 	<select id="getList" resultType="GoneDTO">
-		select * from GONE_TB
+		select * from GONE_TB order by DEATH_DT desc
 	</select>
 
 	<select id="callGone" parameterType="String"

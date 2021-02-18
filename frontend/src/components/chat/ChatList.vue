@@ -83,7 +83,7 @@ export default {
   created() {
     setTimeout(() => {
       axios
-      .get(`${SERVER_URL}chat/list`, {
+      .get(`${SERVER_URL}/chat/list`, {
           params: {gone_id:this.gone_id}
       })
       .then(res => {

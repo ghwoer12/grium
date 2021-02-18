@@ -50,7 +50,7 @@ export default {
   methods: {
     refresh() {
       axios
-        .get(`${SERVER_URL}qna/a/${this.$route.query.noq}`)
+        .get(`${SERVER_URL}/qna/a/${this.$route.query.noq}`)
         .then(({ data }) => {
           this.answers = data;
           console.log(data);
@@ -61,13 +61,13 @@ export default {
   },
   created() {
     axios
-      .get(`${SERVER_URL}qna/q/${this.$route.query.noq}`)
+      .get(`${SERVER_URL}/qna/q/${this.$route.query.noq}`)
       .then(({ data }) => {
         this.question = data;
         console.dir(data);
       });
     axios
-      .get(`${SERVER_URL}qna/a/${this.$route.query.noq}`)
+      .get(`${SERVER_URL}/qna/a/${this.$route.query.noq}`)
       .then(({ data }) => {
         this.answers = data;
         console.log(data);

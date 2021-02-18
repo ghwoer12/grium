@@ -8,7 +8,7 @@ export default {
   name: "delete",
   created() {
     axios
-      .delete(`${SERVER_URL}qna/q/${this.$route.query.noq}`)
+      .delete(`${SERVER_URL}/qna/q/${this.$route.query.noq}`)
       .then(({ data }) => {
         let msg = "삭제 처리시 문제가 발생했습니다.";
         if (data > 0) {

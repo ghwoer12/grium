@@ -82,7 +82,6 @@ public class ChatController {
 	public ResponseEntity<Map<String, Object>> chatList(@RequestParam String gone_id) {
 		HttpStatus status = null;
 		Map<String, Object> resultMap = new HashMap<>();
-
 		try {
 			logger.info("====================================> 한마디 리스트 받기");
 			List<ChatDto> chatList = chatservice.getList(gone_id);

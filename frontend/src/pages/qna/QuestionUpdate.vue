@@ -80,7 +80,7 @@ export default {
 
     updateHandler() {
       axios
-        .put(`${SERVER_URL}qna/q`, {
+        .put(`${SERVER_URL}/qna/q`, {
           noq: this.noq,
           userid: this.userid,
           name: this.name,
@@ -107,7 +107,7 @@ export default {
 
   created() {
     axios
-      .get(`${SERVER_URL}qna/q/${this.$route.query.noq}`)
+      .get(`${SERVER_URL}/qna/q/${this.$route.query.noq}`)
       .then(({ data }) => {
         this.noq = data.noq;
         this.userid = data.userid;

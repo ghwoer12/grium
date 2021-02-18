@@ -461,7 +461,7 @@ export default {
         // formData.append("files", new Blob([JSON.stringify(this.files[i])],{type:"application/json"}));
       }
       axios
-        .post(`${SERVER_URL}gallery/upload`, formData, {
+        .post(`${SERVER_URL}/gallery/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -485,7 +485,7 @@ export default {
         new Blob([JSON.stringify(this.rip)], { type: "application/json" })
       );
       axios
-        .post(`${SERVER_URL}gallery/algo`, formData)
+        .post(`${SERVER_URL}/gallery/algo`, formData)
         .then(response => {
           this.gallery.riptype = response.data.TYPE;
           console.log("RIP SUCCESS !!");
@@ -512,7 +512,7 @@ export default {
         new Blob([JSON.stringify(this.alert)], { type: "application/json" })
       );
       axios
-        .post(`${SERVER_URL}gallery/alert`, formData)
+        .post(`${SERVER_URL}/gallery/alert`, formData)
         .then(response => {
           this.gallery.alerttype = response.data.TYPE;
           console.log("ALERT SUCCESS !!");

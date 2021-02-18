@@ -167,7 +167,8 @@ public class ApplicationController {
 			
 			if (result_c == 1) {
 				logger.info("====================================> 장례 신청/계좌 정보 등록 성공");
-				String url = "http://localhost:8081/gone/" + g_dto.getGone_id() + "#/gonedetail?gone_id=" + g_dto.getGone_id();
+				//  String url = "http://localhost:8081/gone/" + g_dto.getGone_id() + "#/gonedetail?gone_id=" + g_dto.getGone_id();
+				String url = "http://i4c104.p.ssafy.io/#/gonedetail?gone_id=" + g_dto.getGone_id();
 				resultMap.put("url", url);
 				resultMap.put("message", "등록에 성공하였습니다.");
 				status = HttpStatus.ACCEPTED;

@@ -43,7 +43,7 @@ export default {
 
     deleteHandler() {
       axios
-        .delete(`${SERVER_URL}qna/a/${this.noa}`, {
+        .delete(`${SERVER_URL}/qna/a/${this.noa}`, {
           noq: this.noq,
           userid: this.name,
           name: this.name,
